@@ -7,7 +7,7 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "./libft/libft.h"
+# include "../libft/libft.h"
 # include <stdbool.h> 
 # define HISTORY "hystory"
 
