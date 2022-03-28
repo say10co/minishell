@@ -11,10 +11,8 @@
 # include <stdbool.h> 
 # define HISTORY "hystory"
 
-typedef	struct s_command
-{
-	
-
-}t_command;
+#define QUOTE 1
+#define DQUOTE 2
+#define NONE 0
 
 #endif

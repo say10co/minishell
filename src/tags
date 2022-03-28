@@ -1,0 +1,5 @@
+Mmain	main.c	/^int main(void)$/
+append	main.c	/^char *append(char *prefix, const char *sufix)$/
+get_valid_line	main.c	/^char *get_valid_line(void)$/
+is_even	main.c	/^bool is_even(int x)$/
+trace_quote_dquote	main.c	/^static bool trace_quote_dquote(char *prefix, char /

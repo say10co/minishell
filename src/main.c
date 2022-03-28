@@ -16,25 +16,28 @@ bool is_even(int x)
 
 static bool trace_quote_dquote(char *prefix, char **p_prompt)
 {
-	static unsigned int	quote;
-	static unsigned int dquote;
 	unsigned int		i;
+	static int			open_quote;
 
 	i = 0;
 	while (prefix[i])
 	{
-		if (prefix[i] == '"')
-			dquote += 1;
-		if (prefix[i] == 44)
-			quote += 1;
+		if (prefix[i] == '"' && open_quote == NONE)
+			open_quote = DQUOTE;
+		else if (prefix[i] == '"' && open_quote == DQUOTE)
+			open_quote = NONE;
+		if (prefix[i] == '\'' && open_quote == NONE)
+			open_quote = QUOTE;
+		else if (prefix[i] == '\'' && open_quote == QUOTE)
+			open_quote = NONE;
 		i++;
 	}
-	if (! is_even(dquote) && ( dquote < quote || !quote))
+	if (open_quote == DQUOTE)
 	{
 		*p_prompt = "dquote> ";
 		return (1);
 	}
-	else if (! is_even(quote) && (quote < dquote || !dquote))
+	else if (open_quote == QUOTE)
 	{	
 		*p_prompt = "quote> ";
 		return (1);
@@ -47,10 +50,11 @@ char *get_valid_line(void)
 	char	*f_command;
 	char	*command;
 	char 	*prompt;
+	char 	*tmp;
 	bool	start;
 	
 	start = 1;
-	prompt = "minishell-0.0$ ";
+	prompt = "miniSHELL-0.0$ ";
 	command = readline(prompt);
 	while (1)
 	{
@@ -62,7 +66,9 @@ char *get_valid_line(void)
 		else
 		{
 			command = append(command, "\n");
+			tmp = f_command;
 			f_command = ft_strjoin(f_command, command);
+			free(tmp);
 		}
 		if (!trace_quote_dquote(command, &prompt))
 				break;
@@ -86,9 +92,9 @@ int main(void)
 		if (command)
 			add_history(command);
 		t_command = ft_strtrim(command, " \t");
-		printf("%s\n", command);
 		free(command);
 		command = t_command;
+		printf("%s\n", t_command);
 		//system(command);
 		free(command);
 	}
