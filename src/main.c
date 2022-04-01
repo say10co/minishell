@@ -5,162 +5,134 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/30 11:19:28 by adriouic          #+#    #+#             */
-/*   Updated: 2022/03/30 20:29:51 by adriouic         ###   ########.fr       */
+/*   Created: 2022/04/01 21:29:12 by adriouic          #+#    #+#             */
+/*   Updated: 2022/04/01 21:42:20 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/30 11:19:28 by adriouic          #+#    #+#             */
+/*   Updated: 2022/04/01 21:29:00 by adriouic         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../includes/includes.h"
 
-
-char *append(char *prefix, const char *sufix)
+typedef struct s_simple_command
 {
-	char *joined_str;
+	char *simple_command;
+	int		in_file;
+	int		out_file;
 
-	joined_str = ft_strjoin(prefix, sufix);
-	free(prefix);
-	return (joined_str);
-}
+}t_simple_command;
 
-bool is_even(int x)
+/*
+char *quoted_line(char *line)
 {
-	return (x % 2 == 0);
-}
+	char *d_quote;
 
-static int trace_quote_dquote(char *prefix)
-{
-	unsigned int		i;
-	unsigned int		j;
-	unsigned int		open_quote;
-
-	i = 0;
-	j = 1;
-	open_quote = NONE;
-	while (prefix[i])
+	d_quote = ft_strnstr(line, '\"');
+	if (d_quote)
 	{
-		if (prefix[i] == '"' && open_quote == NONE)
-			open_quote = DQUOTE;
-		else if (prefix[i] == '"' && open_quote == DQUOTE)
-			open_quote = NONE;
-		if (prefix[i] == '\'' && open_quote == NONE)
-			open_quote = QUOTE;
-		else if (prefix[i] == '\'' && open_quote == QUOTE)
-			open_quote = NONE;
-		if (open_quote == NONE && prefix[i] == '|')
-				j += 1;
-		i++;
-	}
-	if (open_quote == DQUOTE)
-	{
-		ft_putstr_fd("[Error] Double Quote Unclosed!\n" ,2);
+		//get_back soon
 		return (0);
 	}
-	if (open_quote == QUOTE)
-	{
-		ft_putstr_fd("[Error] Single Quote Unclosed!\n" ,2);
-		return (0);
-	}
-	return (j);
+	return (0);
 }
+*/
 
-static char *polish(char *s)
+char *get_filename(char *s)
 {
-	char *polished;
+	int		i;
+	int		start;
+	char	delemiter;
+	bool	text_found;
 
-	polished = ft_strtrim((const char *)s, " ");
-	free(s);
-	if (polished[0] == '\0')
-		return (NULL);
-	return (polished);
-	
-}
-
-void 	free_befor_i(char **lst, int end)
-{
-	int i;
-
-	i = -1;
-	while (++i < end)
-		free(lst[i]);
-}
-
-static	char **get_fields(char *line, unsigned int nb_fields)
-{
-	char			**res;
-	unsigned int	i;
-	unsigned int	j;
-	unsigned int	start;
-	unsigned int		open_quote;
-
-	open_quote = NONE;
-	res = (char **)(malloc(sizeof(char *) * nb_fields + 1));
-	if(!res)
-		return (NULL);
-	start = 0;
 	i = 0;
-	j = 0;
-	while (line[i])
+	delemiter = ' ';
+	text_found = 0;
+	while (s[i])
 	{
-		if (line[i] == '"' && open_quote == NONE)
-			open_quote = DQUOTE;
-		else if (line[i] == '"' && open_quote == DQUOTE)
-			open_quote = NONE;
-		if (line[i] == '\'' && open_quote == NONE)
-			open_quote = QUOTE;
-		else if (line[i] == '\'' && open_quote == QUOTE)
-			open_quote = NONE;
-		if (open_quote == NONE && (line[i] == '|' || (!line[i+1] && ++i)))
+		if (s[i] == delemiter && text_found)
+			break;
+		else if ((s[i] == '\'' || s[i] == '\"') && !text_found)
 		{
-			res[j] =  polish(ft_substr(line, start, i - start));	
-			if (!res[j] || (line[i] == '|' && !line[i + 1]))
-			{
-				free_befor_i(res, i);
-				free(res);
-				ft_putstr_fd("parse error near `|'\n", 2);
-				return (NULL);
-			}
-			printf("%s<>\n", res[j]);
-			j++;
-			start = (i+1);
+			start = i;
+			text_found = 1;
+			delemiter = s[i];
+		}
+		else if (s[i] != delemiter && !text_found)
+		{
+			start = i;
+			text_found = 1;
 		}
 		i++;
 	}
-	res[nb_fields] = NULL;
-	return (res);
+	if (text_found)
+		return (ft_substr(s, start,  i - start));
+	return (NULL);
+
 }
 
-void print_pipe_fildes(char **a)
+void construct_command(char *field)//, t_simple_command *cmd)
 {
-	int	i = 0;
-	while (a[i])
+	int		i;
+
+	i = 0;
+	while (field[i])
 	{
-		//printf(">>> %s\n", a[i]);
+		if (field[i] == '>')
+		{
+			char * file_name = get_filename(field + i + 1);
+			printf("file name :[%s]\n", file_name);
+			free(file_name);
+		}
 		i++;
 	}
+}
+
+void 	parse_fielfs(int ac, char **argv)
+{
+	t_simple_command	*commands;
+	int					i;
+
+	commands = (t_simple_command *) malloc(sizeof(t_simple_command) * ac);
+	i = 0;
+	while (i < ac)
+	{
+		construct_command(argv[i]);
+		i++;
+	}
+	return ;
+
+
+
 }
 
 int main(void)
 {
-	char	*command;
-	char 	**fields;
-	int		nb_fields; 
-	
+	char **argv;
+	int		ac;
+
+	argv = NULL;
 	while (1)
 	{
-		command = readline("MiniShell-0.0$ ");
-		nb_fields = trace_quote_dquote(command);
-		printf("number of fields %d\n", nb_fields);
-		if (command && nb_fields)
+		ac = get_pipe_fileds(&argv);
+		if (!ac)
+			continue ;
+		parse_fielfs(ac, argv);
+		continue;
+		for(int i = 0; (argv && argv[i] != '\0'); i++)
 		{
-			fields =  get_fields(command, nb_fields);
-			if (!fields)
-			{
-				free(command);
-				continue;
-			}
-			add_history(command);
-			print_pipe_fildes(fields);
+			printf("Field %d: %s \n", i, argv[i]);
+			free(argv[i]);
 		}
+		free(argv);
 	}
 	return (0);
 }

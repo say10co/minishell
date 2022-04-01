@@ -1,5 +1,8 @@
 Mmain	main.c	/^int main(void)$/
-append	main.c	/^char *append(char *prefix, const char *sufix)$/
-get_valid_line	main.c	/^char *get_valid_line(void)$/
-is_even	main.c	/^bool is_even(int x)$/
-trace_quote_dquote	main.c	/^static bool trace_quote_dquote(char *prefix, char /
+append	parse_utils.c	/^char *append(char *prefix, const char *sufix)$/
+free_befor_i	parse_utils.c	/^void 	free_befor_i(char **lst, int end)$/
+get_fields	pipe_state.c	/^static	char **get_fields(char *line, unsigned int /
+get_pipe_fileds	pipe_state.c	/^char **get_pipe_fileds(void)$/
+is_even	parse_utils.c	/^bool is_even(int x)$/
+polish	pipe_state.c	/^static char *polish(char *s)$/
+trace_quote_dquote	pipe_state.c	/^static int trace_quote_dquote(char *prefix)$/
