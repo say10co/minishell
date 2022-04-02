@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/03/31 15:16:33 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/02 12:17:02 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@
 char	*append(char *prefix, const char *sufix);
 void	free_befor_end(char **lst, int end);
 bool	is_even(int x);
-bool	get_pipe_fileds(char ***argv);
+int		get_pipe_fileds(char ***argv);
 #endif

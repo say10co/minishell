@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:04:59 by adriouic          #+#    #+#             */
-/*   Updated: 2022/03/31 17:49:36 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/02 12:19:49 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -97,7 +97,7 @@ static	char *get_fields(char *line, int *end)
 	return (polish(line));
 }
 
-bool get_pipe_fileds(char ***all_fields)
+int	get_pipe_fileds(char ***all_fields)
 {
 	char	*command;
 	char 	*field;
@@ -123,7 +123,7 @@ bool get_pipe_fileds(char ***all_fields)
 	}
 	if (nb_fields != index )
 	{
-		ft_putstr_fd("[Error] Error When Parsing Pipes\n.",2);
+		ft_putstr_fd("[Error] Error When Parsing Pipes.\n",2);
 		free_befor_end(*all_fields, index);
 		free(*all_fields);
 		return (0);
