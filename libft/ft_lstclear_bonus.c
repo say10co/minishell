@@ -16,6 +16,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 	t_list	*next_node;
 	t_list	*curr;
 
+	if (!*lst)
+		return ;
 	curr = (*lst)->next;
 	ft_lstdelone(*lst, del);
 	*lst = NULL;

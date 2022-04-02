@@ -68,7 +68,6 @@ bool	veriffy_syntax(char *s, t_list **lst)
 	error = 0;
 	start = 0;
 	i = 0;
-	printf("%s\n", s);
 	while (s[i] && !error)
 	{
 		if ((s[i] == '>' && keyword_found && !text_found ) || (s[i] == '<' && keyword_found && !text_found))
@@ -109,7 +108,7 @@ bool parse_fielfs(int ac, char **argv)
 	i = 0;
 	while (i < ac)
 	{
-		if (!ft_strchr(argv[i], '>' ) || !(ft_strchr(argv[i], '<'))) 
+		if (ft_strchr(argv[i], '>' ) || (ft_strchr(argv[i], '<'))) 
 		{
 		if (veriffy_syntax(argv[i], &file_names))
 		{
@@ -119,8 +118,6 @@ bool parse_fielfs(int ac, char **argv)
 			free(argv);
 			return (1);
 		}
-		printf("%s Ok\n", argv[i]);
-		if (ft_strchr(argv[i], '>'))
 		curr = file_names;
 		while (curr)
 		{
@@ -150,7 +147,7 @@ int main(void)
 			continue ;
 		if (parse_fielfs(ac, argv))
 			continue;
-		for(int i = 0; (argv && argv[i] != '\0'); i++)
+		for(int i = 0; (argv && argv[i] != NULL); i++)
 		{
 			printf("Field %d: %s \n", i, argv[i]);
 			free(argv[i]);
