@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 11:19:28 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/02 12:32:59 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/02 19:20:21 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -19,21 +19,6 @@ typedef struct s_simple_command
 	int		out_file;
 
 }t_simple_command;
-
-/*
-char *quoted_line(char *line)
-{
-	char *d_quote;
-
-	d_quote = ft_strnstr(line, '\"');
-	if (d_quote)
-	{
-		//get_back soon
-		return (0);
-	}
-	return (0);
-}
-*/
 
 char *get_filename(char *s)
 {
@@ -68,103 +53,88 @@ char *get_filename(char *s)
 
 }
 
-void construct_command(char *field)//, t_simple_command *cmd)
+
+bool	veriffy_syntax(char *s, t_list **lst)
 {
-	int		i;
-
-	i = 0;
-	while (field[i])
-	{
-		if (field[i] == '>')
-		{
-			char * file_name = get_filename(field + i + 1);
-			printf("file name :[%s]\n", file_name);
-			free(file_name);
-		}
-		i++;
-	}
-}
-
-void 	parse_fielf(int ac, char **argv)
-{
-	t_simple_command	*commands;
-	int					i;
-
-	commands = (t_simple_command *) malloc(sizeof(t_simple_command) * ac);
-	i = 0;
-	while (i < ac)
-	{
-		construct_command(argv[i]);
-		i++;
-	}
-	return ;
-
-
-
-}
-
-bool	veriffy_syntax(char *s)
-{
-	int i;
+	int 	start;
+	int 	i;
 	bool	text_found;
 	bool	keyword_found;
 	bool 	error;
 
+	*lst = NULL;
 	keyword_found = 0;
 	text_found = 0;
 	error = 0;
+	start = 0;
 	i = 0;
-	// debugl
-	
-	int start = 0;
+	printf("%s\n", s);
 	while (s[i] && !error)
 	{
-		// Found >> for the secons time
-		if (s[i] == '>' && keyword_found && !text_found)
+		if ((s[i] == '>' && keyword_found && !text_found ) || (s[i] == '<' && keyword_found && !text_found))
 			error = 1;
-		if (s[i] == '<' && keyword_found && !text_found)
-			error = 1;
-		if (!keyword_found && s[i] == '>' && s[i+1] == '>')
-		{
-			i++;
+		if ((!keyword_found && s[i] == '>' && s[i+1] == '>' && ++i) ||
+				(!keyword_found && s[i] == '<' && s[i+1] == '<' && ++i))
 			keyword_found = 1;
-		}
-		if (!keyword_found && s[i] == '<' && s[i+1] == '<')
-		{
-			i++;
-			keyword_found = 1;
-		}
 		if (!keyword_found && (s[i] == '>' || s[i] == '<'))
 			keyword_found = 1;
-		if (keyword_found && s[i] != '>' && s[i] != '>' && s[i] != ' ')
+		if (keyword_found && !text_found && s[i] != '>' && s[i] != '<' && s[i] != ' ')
 		{
 			start = i;
 			text_found = 1;
 		}
+		if (keyword_found && text_found && (s[i] == ' ' || !s[i+1]))
+		{
+			if (!s[i+1])
+				ft_lstadd_back(lst, ft_lstnew(ft_substr(s, start, i - start + 1)));
+			else
+				ft_lstadd_back(lst, ft_lstnew(ft_substr(s, start, i - start)));
+			keyword_found = 0;
+			text_found = 0;
+			start = 0;
+		}
 		i++;
-	
 	}
 	if (error || (keyword_found && !text_found))
 		printf("minishell: syntax error near unexpected token while parsing.\n");
 	return (error);
 }
 
-void 	parse_fielfs(int ac, char **argv)
+bool parse_fielfs(int ac, char **argv)
 {
 	int					i;
+	t_list				*file_names;
+	t_list 				*curr;
 
 	i = 0;
-	printf(" i == %d ac ==  %d\n", i, ac);
 	while (i < ac)
 	{
-		if (veriffy_syntax(argv[i]))
-			break;
-		else
-			printf("Argument %d Veriffied [X]\n", i);
+		if (!ft_strchr(argv[i], '>' ) || !(ft_strchr(argv[i], '<'))) 
+		{
+		if (veriffy_syntax(argv[i], &file_names))
+		{
+			i = 0;
+			while (argv[i])
+				free(argv[i++]);
+			free(argv);
+			return (1);
+		}
+		printf("%s Ok\n", argv[i]);
+		if (ft_strchr(argv[i], '>'))
+		curr = file_names;
+		while (curr)
+		{
+			printf("file name [%s]\n", (char *)curr->content);
+			curr = curr->next;
+		}
+		ft_lstclear(&file_names, free);
+
+		}
 		i++;
 	}
-	return ;
 
+
+	return (0);
 }
 
 int main(void)
@@ -178,8 +148,8 @@ int main(void)
 		ac = get_pipe_fileds(&argv);
 		if (!ac)
 			continue ;
-		parse_fielfs(ac, argv);
-		continue;
+		if (parse_fielfs(ac, argv))
+			continue;
 		for(int i = 0; (argv && argv[i] != '\0'); i++)
 		{
 			printf("Field %d: %s \n", i, argv[i]);

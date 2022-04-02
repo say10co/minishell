@@ -6,9 +6,10 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:04:59 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/02 12:19:49 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/02 18:15:13 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../includes/includes.h"
 
 static int trace_quote_dquote(char *prefix)
@@ -126,10 +127,11 @@ int	get_pipe_fileds(char ***all_fields)
 		ft_putstr_fd("[Error] Error When Parsing Pipes.\n",2);
 		free_befor_end(*all_fields, index);
 		free(*all_fields);
+		free(command);
 		return (0);
 	}
 	add_history(command);
+	free(command);
 	(*all_fields)[nb_fields] = NULL;
 	return (index);
-
 }
