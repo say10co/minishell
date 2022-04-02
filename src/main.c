@@ -6,11 +6,18 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 11:19:28 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/02 19:20:21 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/02 21:53:59 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
 
+enum
+{
+	RARROW,
+	LARROW,
+	DRARROW,
+	DLARROW,
+};
 
 typedef struct s_simple_command
 {
@@ -54,7 +61,7 @@ char *get_filename(char *s)
 }
 
 
-bool	veriffy_syntax(char *s, t_list **lst)
+bool	veriffy_syntax(char *s, t_list **lst, int *keyword)
 {
 	int 	start;
 	int 	i;
@@ -72,11 +79,23 @@ bool	veriffy_syntax(char *s, t_list **lst)
 	{
 		if ((s[i] == '>' && keyword_found && !text_found ) || (s[i] == '<' && keyword_found && !text_found))
 			error = 1;
-		if ((!keyword_found && s[i] == '>' && s[i+1] == '>' && ++i) ||
-				(!keyword_found && s[i] == '<' && s[i+1] == '<' && ++i))
+		if (!keyword_found && s[i] == '>' && s[i+1] == '>' && ++i)
+		{
+			*keyword = DRARROW;	
 			keyword_found = 1;
+		}
+		if (!keyword_found && s[i] == '<' && s[i+1] == '<' && ++i)
+		{
+			*keyword = DLARROW;	
+			keyword_found = 1;
+		}
 		if (!keyword_found && (s[i] == '>' || s[i] == '<'))
+		{
+			*keyword = RARROW;
+			if (s[i] == '<')
+				*keyword = LARROW;
 			keyword_found = 1;
+		}
 		if (keyword_found && !text_found && s[i] != '>' && s[i] != '<' && s[i] != ' ')
 		{
 			start = i;
@@ -102,6 +121,7 @@ bool	veriffy_syntax(char *s, t_list **lst)
 bool parse_fielfs(int ac, char **argv)
 {
 	int					i;
+	int					keyword;
 	t_list				*file_names;
 	t_list 				*curr;
 
@@ -110,27 +130,26 @@ bool parse_fielfs(int ac, char **argv)
 	{
 		if (ft_strchr(argv[i], '>' ) || (ft_strchr(argv[i], '<'))) 
 		{
-		if (veriffy_syntax(argv[i], &file_names))
-		{
-			i = 0;
-			while (argv[i])
-				free(argv[i++]);
-			free(argv);
-			return (1);
-		}
-		curr = file_names;
-		while (curr)
-		{
-			printf("file name [%s]\n", (char *)curr->content);
-			curr = curr->next;
-		}
-		ft_lstclear(&file_names, free);
+			if (veriffy_syntax(argv[i], &file_names, &keyword))
+			{
+				i = 0;
+				while (argv[i])
+					free(argv[i++]);
+				free(argv);
+				return (1);
+			}
+			printf("Key is %d\n", keyword);
+			curr = file_names;
+			while (curr)
+			{
+				printf("file name [%s]\n", (char *)curr->content);
+				curr = curr->next;
+			}
+			ft_lstclear(&file_names, free);
 
 		}
 		i++;
 	}
-
-
 	return (0);
 }
 
