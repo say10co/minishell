@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:04:59 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/02 18:15:13 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/03 20:09:09 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ static int trace_quote_dquote(char *prefix)
 	return (j);
 }
 
-static char *polish(const char *s)
+char *polish(const char *s, char *charset)
 {
 	char *polished;
 
-	polished = ft_strtrim(s, " ");
+	polished = ft_strtrim(s, charset);
 	if (polished[0] == '\0')
 	{
 		free(polished);
@@ -87,7 +87,7 @@ static	char *get_fields(char *line, int *end)
 		if (open_quote == NONE && line[i] == '|')
 		{	
 			line[i] = '\0';
-			return_value = polish(line);
+			return_value = polish(line, " ");
 			line[i] = '|';
 			*end += i + 1;
 			return (return_value);
@@ -95,7 +95,7 @@ static	char *get_fields(char *line, int *end)
 		i++;
 	}
 	*end += i;
-	return (polish(line));
+	return (polish(line, " "));
 }
 
 int	get_pipe_fileds(char ***all_fields)

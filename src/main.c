@@ -6,11 +6,11 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 11:19:28 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/02 21:53:59 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/03 20:17:14 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
-
+char	**my_ft_split(const char *str, char c);
 enum
 {
 	RARROW,
@@ -27,127 +27,138 @@ typedef struct s_simple_command
 
 }t_simple_command;
 
-char *get_filename(char *s)
+char *polish(const char *s, char *charset);
+
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	int		i;
-	int		start;
-	char	delemiter;
-	bool	text_found;
+	size_t			index;
+	unsigned char	*ts1;
+	unsigned char	*ts2;
 
-	i = 0;
-	delemiter = ' ';
-	text_found = 0;
-	while (s[i])
+	ts1 = (unsigned char *)s1;
+	ts2 = (unsigned char *)s2;
+	index = 0;
+	while (ts1[index] != '\0' && ts2[index] != '\0')
 	{
-		if (s[i] == delemiter && text_found)
-			break;
-		else if ((s[i] == '\'' || s[i] == '\"') && !text_found)
-		{
-			start = i;
-			text_found = 1;
-			delemiter = s[i];
-		}
-		else if (s[i] != delemiter && !text_found)
-		{
-			start = i;
-			text_found = 1;
-		}
-		i++;
+		if (ts1[index] == ts2[index])
+			index++;
+		else
+			return (ts1[index] - ts2[index]);
 	}
-	if (text_found)
-		return (ft_substr(s, start,  i - start));
-	return (NULL);
-
+	return (ts1[index] - ts2[index]);
 }
 
-
-bool	veriffy_syntax(char *s, t_list **lst, int *keyword)
+bool	veriffy_syntax(char *s)
 {
-	int 	start;
 	int 	i;
 	bool	text_found;
 	bool	keyword_found;
 	bool 	error;
+	char	quote;
 
-	*lst = NULL;
 	keyword_found = 0;
 	text_found = 0;
 	error = 0;
-	start = 0;
 	i = 0;
+	quote = 0;
 	while (s[i] && !error)
 	{
-		if ((s[i] == '>' && keyword_found && !text_found ) || (s[i] == '<' && keyword_found && !text_found))
+		if ((s[i] == '"' && !quote) || (s[i] == '\'' && !quote) )
+			quote = s[i];
+		else if (s[i] == quote)
+			quote = 0;
+		if (!quote && ((s[i] == '>' && keyword_found && !text_found ) || (s[i] == '<' && keyword_found && !text_found)))
 			error = 1;
-		if (!keyword_found && s[i] == '>' && s[i+1] == '>' && ++i)
-		{
-			*keyword = DRARROW;	
+		if (!quote && !keyword_found && s[i] == '>' && s[i+1] == '>' && ++i)
 			keyword_found = 1;
-		}
-		if (!keyword_found && s[i] == '<' && s[i+1] == '<' && ++i)
-		{
-			*keyword = DLARROW;	
+		if (!quote && !keyword_found && s[i] == '<' && s[i+1] == '<' && ++i)
 			keyword_found = 1;
-		}
-		if (!keyword_found && (s[i] == '>' || s[i] == '<'))
-		{
-			*keyword = RARROW;
-			if (s[i] == '<')
-				*keyword = LARROW;
+		if (!quote && !keyword_found && (s[i] == '>' || s[i] == '<'))
 			keyword_found = 1;
-		}
-		if (keyword_found && !text_found && s[i] != '>' && s[i] != '<' && s[i] != ' ')
-		{
-			start = i;
+		if (!quote && keyword_found && !text_found && s[i] != '>' && s[i] != '<' && s[i] != ' ')
 			text_found = 1;
-		}
-		if (keyword_found && text_found && (s[i] == ' ' || !s[i+1]))
+		if (!quote && keyword_found && text_found && (s[i] == ' ' || !s[i+1]))
 		{
-			if (!s[i+1])
-				ft_lstadd_back(lst, ft_lstnew(ft_substr(s, start, i - start + 1)));
-			else
-				ft_lstadd_back(lst, ft_lstnew(ft_substr(s, start, i - start)));
 			keyword_found = 0;
 			text_found = 0;
-			start = 0;
 		}
 		i++;
 	}
 	if (error || (keyword_found && !text_found))
-		printf("minishell: syntax error near unexpected token while parsing.\n");
+		printf("minishell: unexpected token while parsing.\n");
 	return (error);
 }
 
-bool parse_fielfs(int ac, char **argv)
+void remove_quotes(char **all)
 {
-	int					i;
-	int					keyword;
-	t_list				*file_names;
-	t_list 				*curr;
+	int		i;
+	char	*tmp;
 
 	i = 0;
-	while (i < ac)
+	while (all[i])
 	{
-		if (ft_strchr(argv[i], '>' ) || (ft_strchr(argv[i], '<'))) 
-		{
-			if (veriffy_syntax(argv[i], &file_names, &keyword))
-			{
-				i = 0;
-				while (argv[i])
-					free(argv[i++]);
-				free(argv);
-				return (1);
-			}
-			printf("Key is %d\n", keyword);
-			curr = file_names;
-			while (curr)
-			{
-				printf("file name [%s]\n", (char *)curr->content);
-				curr = curr->next;
-			}
-			ft_lstclear(&file_names, free);
+		tmp = all[i];
+		all[i] = polish(all[i], "\'\"");
+		free(tmp);
+		i++;
+	}
+}
 
-		}
+void	expand_variables(char **all);
+
+void	open_deocument(char *eof)
+{
+	char *buffer;
+
+	
+	while (1)
+	{
+		buffer = readline("heredoc> ");
+		printf("[%s] [%s]\n", buffer, eof);
+		if (!ft_strcmp(buffer, eof))
+			break;
+		write(3, buffer,ft_strlen(buffer));
+		free(buffer);
+	}
+}
+
+void parser(char *field)
+{
+	int	i;
+	char **all;
+	char *outfile;
+	char *infile;
+
+	i = 0;
+	infile = NULL;
+	outfile = NULL;
+	all = my_ft_split(field, ' ');
+	remove_quotes(all);
+	//expand_variables(all);
+	while (all[i])
+	{
+		if (!ft_strcmp(all[i], ">") || !ft_strcmp(all[i], ">>"))
+			outfile = all[i + 1];
+		if (!ft_strcmp(all[i], "<"))
+			infile = all[i + 1];
+		if (!ft_strcmp(all[i], "<<"))
+			open_deocument(all[i + 1]);
+		i++;
+	}
+	printf("IN FILE:[%s]\n", infile);
+	printf("OUT FILE:[%s]\n", outfile);
+}
+
+bool get_data_from_subfield(char **fields)
+{
+	int i;
+
+	i = 0;
+	while (fields[i])
+	{
+		if (veriffy_syntax(fields[i]))
+			return 1;
+		parser(fields[i]);
 		i++;
 	}
 	return (0);
@@ -164,8 +175,8 @@ int main(void)
 		ac = get_pipe_fileds(&argv);
 		if (!ac)
 			continue ;
-		if (parse_fielfs(ac, argv))
-			continue;
+		get_data_from_subfield(argv);
+		continue;
 		for(int i = 0; (argv && argv[i] != NULL); i++)
 		{
 			printf("Field %d: %s \n", i, argv[i]);
