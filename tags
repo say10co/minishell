@@ -1,5 +1,12 @@
+expand_variables	lexer.c	/^char *expand_variables(char *key)$/
 ft_copy_word	my_split_.c	/^static int	ft_copy_word(const char *str, int size,/
 ft_count_words	my_split_.c	/^static int	ft_count_words(const char *str, char c)/
 ft_free	my_split_.c	/^static void	ft_free(char **ptr, int len)$/
+get_data_from_subfield	lexer.c	/^bool get_data_from_subfield(int ac, char **fields,/
 len_word	my_split_.c	/^static int	len_word(const char *str, char c)$/
 my_ft_split	my_split_.c	/^char	**my_ft_split(const char *str, char c)$/
+open_deocument	parser.c	/^void	open_deocument(char *eof)$/
+open_file	parser.c	/^int	open_file(char *file_name, int mode)$/
+parser	parser.c	/^t_command *parser(char *field)$/
+remove_quotes	lexer.c	/^void remove_quotes(char **all)$/
+veriffy_syntax	lexer.c	/^bool	veriffy_syntax(char *s)$/

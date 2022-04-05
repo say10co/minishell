@@ -2,19 +2,17 @@ Mmain	main.c	/^int main(int ac, char **argv, char **env)$/
 Mmain_old	main_old.c	/^int main(void)$/
 append	main_old.c	/^char *append(char *prefix, const char *sufix)$/
 create_env	main.c	/^t_list *create_env(char **env)$/
-expand_variables	main.c	/^char *expand_variables(char *key)$/
+expand_variables	lexer.c	/^char *expand_variables(char *key)$/
 free_befor_end	parse_utils.c	/^void 	free_befor_end(char **lst, int end)$/
-ft_strcmp	main.c	/^int	ft_strcmp(const char *s1, const char *s2)$/
-get_data_from_subfield	main.c	/^bool get_data_from_subfield(char **fields, t_comma/
+get_data_from_subfield	lexer.c	/^bool get_data_from_subfield(int ac, char **fields,/
 get_fields	pipe_state.c	/^static	char *get_fields(char *line, int *end)$/
 get_pipe_fileds	pipe_state.c	/^int	get_pipe_fileds(char ***all_fields)$/
 get_valid_line	main_old.c	/^char *get_valid_line(void)$/
 is_even	main_old.c	/^bool is_even(int x)$/
-open_deocument	main.c	/^void	open_deocument(char *eof)$/
-open_file	main.c	/^int	open_file(char *file_name, int flag)$/
-parser	main.c	/^t_command *parser(char *field)$/
+open_deocument	parser.c	/^void	open_deocument(char *eof)$/
+open_file	parser.c	/^int	open_file(char *file_name, int mode)$/
+parser	parser.c	/^t_command *parser(char *field)$/
 polish	pipe_state.c	/^char *polish(const char *s, char *charset)$/
-remove_quotes	main.c	/^void remove_quotes(char **all)$/
-t_command	main.c	/^}t_command;$/
+remove_quotes	lexer.c	/^void remove_quotes(char **all)$/
 trace_quote_dquote	main_old.c	/^static bool trace_quote_dquote(char *prefix, char /
-veriffy_syntax	main.c	/^bool	veriffy_syntax(char *s)$/
+veriffy_syntax	lexer.c	/^bool	veriffy_syntax(char *s)$/
