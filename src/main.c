@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 11:19:28 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/05 15:30:56 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/06 13:56:16 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <fcntl.h>
@@ -48,12 +48,17 @@ int main(int ac, char **argv, char **env)
 		if (!ac)
 			continue ;
 		get_data_from_subfield(ac, argv, &all_commands);
+
 		for(int i = 0; (argv && argv[i] != NULL); i++)
 		{
 			printf("_________Field %d ______:\n	::: %s \n", i, argv[i]);
 			printf("command %s\n", NULL);
-			printf("input fd : %d\n", all_commands[i]->in_file);
-			printf("output fd : %d\n", all_commands[i]->out_file);
+			printf("input fd : %d\n", (all_commands[i])->in_file);
+			printf("output fd : %d\n", (all_commands[i])->out_file);
+			if (all_commands[i]->in_file)
+				close(all_commands[i]->in_file);
+			if (all_commands[i]->out_file)
+				close(all_commands[i]->out_file);
 			free(argv[i]);
 		}
 		free(argv);

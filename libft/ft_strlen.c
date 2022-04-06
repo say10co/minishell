@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 09:29:53 by adriouic          #+#    #+#             */
-/*   Updated: 2021/11/07 15:02:51 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/06 16:26:15 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -14,7 +14,9 @@
 size_t	ft_strlen(const char *s)
 {
 	int	i;
-
+	
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i])
 		i++;

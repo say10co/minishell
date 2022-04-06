@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:04:59 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/03 20:09:09 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/06 13:42:48 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int	get_pipe_fileds(char ***all_fields)
 	int		end;
 	int		index;
 	
-
 	command = readline("MiniShell-0.0$ ");
 	nb_fields = trace_quote_dquote(command);
 	if (!nb_fields)
@@ -122,7 +121,7 @@ int	get_pipe_fileds(char ***all_fields)
 		else
 			(*all_fields)[index++] = field;
 	}
-	if (nb_fields != index )
+		if (nb_fields != index )
 	{
 		ft_putstr_fd("[Error] Error When Parsing Pipes.\n",2);
 		free_befor_end(*all_fields, index);
