@@ -13,7 +13,7 @@
 #define S_QUOTE 27
 #define SPACE 32
 
-char *polish(char *s, char *charset)
+char *polish_(char *s, char *charset)
 {
 	char *polished;
 
@@ -26,7 +26,7 @@ char *polish(char *s, char *charset)
 	}
 	free(s);
 	return (polished);
-	
+
 }
 int	append_to_sting(char **str, const char c, int len_str)
 {
@@ -55,6 +55,8 @@ int	len_lst(char **lst)
 	int	 len;
 
 	len = 0;
+	if (!lst)
+		return (0);
 	while (lst[len])
 		len++;
 	return (len);
@@ -68,7 +70,7 @@ char **merge_tow_lists(char **lst1, char **lst2)
 	int		i2;
 	int		i;
 
-	
+
 	i1 = 0;
 	i2 = 0;
 	i = 0;
@@ -76,16 +78,16 @@ char **merge_tow_lists(char **lst1, char **lst2)
 	new_lst = (char **)(malloc(sizeof(char *) * total_len + 1));
 	while (i < total_len)
 	{
-		if (lst1[i1])
-			new_lst[i++] = polish(lst1[i1++], " ");
-		if (lst2[i2])
-			new_lst[i++] = polish(lst2[i2++], " ");
+		if (lst1 && lst1[i1])
+			new_lst[i++] = polish_(lst1[i1++], " \'\"");
+		if (lst2 && lst2[i2])
+			new_lst[i++] = polish_(lst2[i2++], " \"\'");
 	}
 	new_lst[i] = 0;
 	free(lst2);
 	free(lst1);
 	return (new_lst);
-	
+
 }
 
 bool is_keyword(char c)
@@ -108,22 +110,25 @@ bool is_keyword(char c)
 }
 
 char    **ft_split_(char *str, char *charset, int s);
-
+/*
 int main(int ac, char **agv)
 {
 	char	*line;
 	char **tmp2;
+	char **tmp1;
 	int		i;
 
 	while (1){
-	i = 0;
-	line = readline("$ ");
-	add_history(line);
-	tmp2 = merge_tow_lists(ft_split_(line, "><", 1), ft_split_(line, "><", 0));
-	while (tmp2[i])
-	{
-		printf("-/-: [%s]\n", tmp2[i]);
-		i++;
-	}}
+		i = 0;
+		line = readline("$ ");
+		add_history(line);
+		tmp2 = merge_tow_lists(ft_split_(line, "><", 1), ft_split_(line, "><", 0));
+		while (tmp2[i])
+		{
+			printf("-/-: [%s]\n", tmp2[i]);
+			i++;
+		}
 
-}
+	}
+
+}*/

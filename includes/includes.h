@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/05 15:11:06 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/06 22:08:22 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		get_pipe_fileds(char ***argv);
 
 typedef struct s_command
 {
-	char 	**cmd;
+	char 	*cmd;
 	int		in_file;
 	int		out_file;
 	int		nb_pipes;

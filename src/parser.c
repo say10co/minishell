@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 14:59:25 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/06 14:11:17 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/06 22:08:59 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -64,6 +64,8 @@ void	open_deocument(char *eof)
 		free(buffer);
 	}
 }
+char **merge_tow_lists(char **lst1, char **lst2);
+char    **ft_split_(char *str, char *charset, int s);
 
 t_command *parser(char *field)
 {
@@ -74,12 +76,14 @@ t_command *parser(char *field)
 	i = 0;
 	command = (t_command *)malloc(sizeof(t_command));
 	ft_bzero(command, sizeof(t_command));
-	all = my_ft_split(field, ' ');
+	//all = my_ft_split(field, ' ');
+	all = merge_tow_lists(ft_split_(field, "<>", 1),  ft_split_(field, "<>", 0));
 	command->cmd = NULL; 
 	remove_quotes(all);
 
 	while (all[i])
 	{
+		printf("%s\n", all[i]);
 		if (!ft_strcmp(all[i], ">") || !ft_strcmp(all[i], ">>"))
 		{
 			command->append = !ft_strcmp(all[i], ">>");
@@ -100,6 +104,9 @@ t_command *parser(char *field)
 			command->in_file = open_file(all[++i], 0);
 		else if (!ft_strcmp(all[i], "<<"))
 			open_deocument(all[++i]);
+		else if (!i)
+			command->cmd = all[i];
+
 		i++;
 	}
 	return(command);
