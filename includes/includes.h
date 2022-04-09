@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/06 22:08:22 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/09 00:37:48 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,7 @@ char	**my_ft_split(const char *str, char c);
 char *polish(const char *s, char *charset);
 bool get_data_from_subfield(int ac, char **fields, t_command ***all_commands);
 t_command *parser(char *field);
+
+//parser 
+bool n_parser(t_token_list *lst);
 #endif

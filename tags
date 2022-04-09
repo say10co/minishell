@@ -1,12 +1,19 @@
-expand_variables	lexer.c	/^char *expand_variables(char *key)$/
-ft_copy_word	my_split_.c	/^static int	ft_copy_word(const char *str, int size,/
-ft_count_words	my_split_.c	/^static int	ft_count_words(const char *str, char c)/
+Mlexer1	lexer1.c	/^int main()$/
+__init_list	lexer1.c	/^void __init_list(t_token_list *lst)$/
+append_to_sting	lexer.c	/^int	append_to_sting(char **str, const char c, int /
+ft_copy_word	ft_split.c	/^char	*ft_copy_word(char *str, int size)$/
+ft_count_words	ft_split.c	/^int	ft_count_words(char *str, char *charset, int s/
 ft_free	my_split_.c	/^static void	ft_free(char **ptr, int len)$/
-get_data_from_subfield	lexer.c	/^bool get_data_from_subfield(int ac, char **fields,/
-len_word	my_split_.c	/^static int	len_word(const char *str, char c)$/
+ft_is_sep	ft_split.c	/^int	ft_is_sep(char *charset, char s, int x)$/
+ft_split_	ft_split.c	/^char	**ft_split_(char *str, char *charset, int s)$/
+get_data	lexer1.c	/^void get_data(char *buffer, int i, t_token **t, in/
+get_tokens	lexer1.c	/^void get_tokens(t_token_list *lst, char *text, siz/
+is_keyword	lexer.c	/^bool is_keyword(char c)$/
+len_lst	lexer.c	/^int	len_lst(char **lst)$/
+len_word	ft_split.c	/^int	len_word(char *str, char *charset, int s)$/
+merge_tow_lists	lexer.c	/^char **merge_tow_lists(char **lst1, char **lst2)$/
 my_ft_split	my_split_.c	/^char	**my_ft_split(const char *str, char c)$/
-open_deocument	parser.c	/^void	open_deocument(char *eof)$/
-open_file	parser.c	/^int	open_file(char *file_name, int mode)$/
-parser	parser.c	/^t_command *parser(char *field)$/
-remove_quotes	lexer.c	/^void remove_quotes(char **all)$/
-veriffy_syntax	lexer.c	/^bool	veriffy_syntax(char *s)$/
+parser	parser.c	/^bool parser(t_token_list *lst)$/
+polish_	lexer.c	/^char *polish_(char *s, char *charset)$/
+t_token	lexer.h	/^typedef struct s_token t_token;$/
+t_token_list	lexer.h	/^typedef struct s_token_list t_token_list;$/
