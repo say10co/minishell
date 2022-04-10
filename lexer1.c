@@ -29,6 +29,16 @@ bool merge(char c1, char c2, t_token *t)
 	return (0);
 }
 
+void	get_type(char c)
+{
+	if (c == '>')
+		return (R_ARROW);
+	if (c == '<')
+		return (L_ARROW);
+	if (c == '|')
+		return (PIPE);
+}
+
 void fill_token(t_token *t, char *buffer)
 {
 	char *tmp;
@@ -140,6 +150,7 @@ void get_nonquoted(t_token_list *lst, t_lexer *var, char *text)
 		{
 			var->buffer[0] = *text;
 			get_data(var->buffer, -1, &(var->token), &(var->start));
+			var->type = get_type(txt);
 		}
 		var->i = 0;
 	}

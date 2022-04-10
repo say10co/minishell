@@ -8,7 +8,9 @@
 #define D_QUOTE '"'
 #define S_QUOTE '\''
 #define L_ARROW '<'
+#define DL_ARROW 120
 #define R_ARROW '>'
+#define DR_ARROW 124
 #define PIPE	'|'
 #define SPACE	' '
 
