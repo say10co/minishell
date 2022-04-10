@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:03:56 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/10 02:38:21 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/10 15:13:36 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ bool n_parser(t_token_list *lst, t_list **env, char **env_vector)
 			return (printf("syntax error unexpected token after 'newline'\n"));
 		if (t->data == NULL)
 			return (printf("Parse Error, Uncolsed quote\n"));
+		if (lst->all->type == PIPE)
+			return (printf("syntax error unexpected token '%s'\n", t->data));
 		if (t->is_key && (t->next_token && t->next_token->is_key))
 			return (printf("syntax error unexpected token '%s'\n", t->next_token->data));
 		if (t->quoted)

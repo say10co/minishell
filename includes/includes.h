@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/09 22:44:16 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/10 16:49:03 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@
 #define DQUOTE 2
 #define NONE 0
 
+typedef struct s_cmd
+{
+	int	fd_in;
+	int	fd_out;
+	char **commad;
+	bool 	error_free;
 
-char	*append(char *prefix, const char *sufix);
-void	free_befor_end(char **lst, int end);
-bool	is_even(int x);
-int		get_pipe_fileds(char ***argv);
-
+}t_cmd;
 
 typedef struct s_command
 {
@@ -44,6 +46,11 @@ typedef struct s_command
 }t_command;
 
 
+char	*append(char *prefix, const char *sufix);
+void	free_befor_end(char **lst, int end);
+bool	is_even(int x);
+int		get_pipe_fileds(char ***argv);
+
 int	ft_strcmp(const char *s1, const char *s2);
 char	**my_ft_split(const char *str, char c);
 char *polish(const char *s, char *charset);
@@ -52,4 +59,5 @@ t_command *parser(char *field);
 
 //parser 
 bool n_parser(t_token_list *lst, t_list **env, char **env_vector);
+t_list *parser_one(t_token_list *lst, t_list *env);
 #endif

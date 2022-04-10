@@ -9,6 +9,21 @@ int	is_keyword(char c)
 	return (0);
 }
 
+int	get_type(char c, int p)
+{
+	if (c == '>' && p)
+		return (DR_ARROW);
+	if (c == '<' && p)
+		return (DL_ARROW);
+	if (c == '|')
+		return (PIPE);
+	if (c == '>')
+		return (R_ARROW);
+	if (c == '<')
+		return (L_ARROW);
+	return (0);
+}
+
 bool merge(char c1, char c2, t_token *t)
 {
 	char *both;
@@ -24,20 +39,13 @@ bool merge(char c1, char c2, t_token *t)
 		free(t->data);
 		t->data = both;
 		t->length = ft_strlen(both);
+		t->type = get_type(c1, 1);
 		return (1);
 	}
 	return (0);
 }
 
-void	get_type(char c)
-{
-	if (c == '>')
-		return (R_ARROW);
-	if (c == '<')
-		return (L_ARROW);
-	if (c == '|')
-		return (PIPE);
-}
+
 
 void fill_token(t_token *t, char *buffer)
 {
@@ -72,6 +80,7 @@ void get_data(char *buffer, int i, t_token **t, int *start)
 		(*t)->found_space = 0;
 		(*t)->next_token = NULL;
 		(*t)->quoted = 0;
+		(*t)->type = 0;
 	}
 	(*t)->is_key = is_key;
 	buffer[i] = 0;
@@ -85,6 +94,7 @@ void __init_list(t_token_list *lst)
 	lst->all->next_token = NULL;
 	lst->all->data = NULL;
 	lst->all->is_key = 0;
+	lst->all->type = 0;
 	lst->all->quoted = 0;
 	lst->all->length = 0;
 	lst->all->found_space = 0;
@@ -150,7 +160,8 @@ void get_nonquoted(t_token_list *lst, t_lexer *var, char *text)
 		{
 			var->buffer[0] = *text;
 			get_data(var->buffer, -1, &(var->token), &(var->start));
-			var->type = get_type(txt);
+			if (!var->token->type)
+				var->token->type = get_type(*text, 0);
 		}
 		var->i = 0;
 	}
@@ -196,26 +207,46 @@ void get_tokens(t_token_list *lst, char *text, int	size)
 
 int main(int ac, char **av, char **env)
 {
-	char *t_cmd;
+	char *cmd;
 	t_token_list token_lst;
 	t_token *t;
 	t_list	*enviorment;
+	t_list	*command_list;
 	
 	(void)ac;
 	(void)av;
+
+	int tmp_fd;
+	t_cmd *x;
+
 	while (1)
 	{
-		t_cmd = readline("$ ");
-		get_tokens(&token_lst, t_cmd, ft_strlen(t_cmd));
+		cmd = readline("$ ");
+		get_tokens(&token_lst, cmd, ft_strlen(cmd));
 		if (token_lst.nb_tokens && n_parser(&token_lst, &enviorment, env))
 			continue;
-		add_history(t_cmd);
+		command_list = parser_one(&token_lst, enviorment);
+		add_history(cmd);
 		t  = token_lst.all;
 		while (t)
 		{
 			printf("--/-: [%s] {%p}\n", t->data, t->next_token);
 			t = t->next_token;
 		}
-
+		
+		for (t_list *curr = command_list; curr != NULL; curr = curr->next)
+		{
+			x = curr->content;
+			tmp_fd = x->fd_in;
+			printf("-/-- input fd : %d\n", tmp_fd);
+			if (tmp_fd > 2)
+				close(tmp_fd);
+			x = curr->content;
+			tmp_fd = x->fd_out;
+			printf("-/-- output fd : %d\n", tmp_fd);
+			if (tmp_fd > 2)
+				close(tmp_fd);
+		}
 	}
+
 }
