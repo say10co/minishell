@@ -15,7 +15,6 @@ bool merge(char c1, char c2, t_token *t)
 
 	if (c1 == c2 && !(t->found_space))
 	{
-		printf("c1 : %c c2 : %c", c1, c2);
 		if (c1 == '<')
 			both = ft_strdup("<<");
 		else if (c1 == '>')
@@ -24,6 +23,7 @@ bool merge(char c1, char c2, t_token *t)
 			return (0);
 		free(t->data);
 		t->data = both;
+		t->length = ft_strlen(both);
 		return (1);
 	}
 	return (0);
@@ -40,6 +40,7 @@ void fill_token(t_token *t, char *buffer)
 		tmp = NULL;
 	}
 	t->data = tmp;
+	t->length = ft_strlen(tmp);
 }
 
 void get_data(char *buffer, int i, t_token **t, int *start)
@@ -60,13 +61,12 @@ void get_data(char *buffer, int i, t_token **t, int *start)
 		(*t) = (*t)->next_token;
 		(*t)->found_space = 0;
 		(*t)->next_token = NULL;
+		(*t)->quoted = 0;
 	}
 	(*t)->is_key = is_key;
 	buffer[i] = 0;
 	fill_token(*t, buffer);
 	*start = 0;
-
-
 }
 
 void __init_list(t_token_list *lst)
@@ -75,6 +75,8 @@ void __init_list(t_token_list *lst)
 	lst->all->next_token = NULL;
 	lst->all->data = NULL;
 	lst->all->is_key = 0;
+	lst->all->quoted = 0;
+	lst->all->length = 0;
 	lst->all->found_space = 0;
 	lst->nb_tokens = 0;
 
@@ -105,7 +107,8 @@ void get_nonquoted(t_token_list *lst, t_lexer *var, char *text)
 {
 	if (*text == D_QUOTE || *text == S_QUOTE)
 	{
-		if (var->i && 0)
+		//if (var->i  || (var->j && text[var->j - 1] == '$'))
+		if (0)
 		{
 			get_data(var->buffer, var->i, &(var->token), &(var->start));
 			var->i = 0;
@@ -150,14 +153,15 @@ void get_between_quots(t_token_list *lst, t_lexer *var, char *text)
 	var->buffer[var->i++] = *text;
 	if (*text == var->quote)
 	{
-		var->quote = 0;
 		get_data(var->buffer, var->i, &(var->token), &(var->start));
+		var->token->quoted = var->quote;
 		lst->nb_tokens += 1;
 		var->i = 0;
+		var->quote = 0;
 	}
 }
 
-void get_tokens(t_token_list *lst, char *text, size_t size)
+void get_tokens(t_token_list *lst, char *text, int	size)
 {
 	t_lexer vars;	
 
@@ -179,20 +183,22 @@ void get_tokens(t_token_list *lst, char *text, size_t size)
 
 }
 
-int main()
+int main(int ac, char **av, char **env)
 {
 	char *t_cmd;
 	t_token_list token_lst;
 	t_token *t;
-
+	t_list	*enviorment;
+	
+	(void)ac;
+	(void)av;
 	while (1)
 	{
 		t_cmd = readline("$ ");
-		add_history(t_cmd);
 		get_tokens(&token_lst, t_cmd, ft_strlen(t_cmd));
-		printf("out\n");
-		if (n_parser(&token_lst))
+		if (token_lst.nb_tokens && n_parser(&token_lst, &enviorment, env))
 			continue;
+		add_history(t_cmd);
 		t  = token_lst.all;
 		while (t)
 		{

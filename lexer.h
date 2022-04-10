@@ -19,8 +19,10 @@ struct s_token
 {
 	char *data;
 	int	type;
+	int	length;
 	bool is_key;
 	bool found_space;
+	char	quoted;
 	t_token	*next_token;
 };
 

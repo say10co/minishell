@@ -1,19 +1,27 @@
-Mlexer1	lexer1.c	/^int main()$/
+Mlexer1	lexer1.c	/^int main(int ac, char **av, char **env)$/
+__init_lexer_vars	lexer1.c	/^void __init_lexer_vars(t_lexer *vars, t_token_list/
 __init_list	lexer1.c	/^void __init_list(t_token_list *lst)$/
 append_to_sting	lexer.c	/^int	append_to_sting(char **str, const char c, int /
+create_env	parser.c	/^t_list *create_env(char **env)$/
+expand_varible	parser.c	/^void expand_varible(t_token *token, t_list *env)$/
+fill_token	lexer1.c	/^void fill_token(t_token *t, char *buffer)$/
 ft_copy_word	ft_split.c	/^char	*ft_copy_word(char *str, int size)$/
 ft_count_words	ft_split.c	/^int	ft_count_words(char *str, char *charset, int s/
 ft_free	my_split_.c	/^static void	ft_free(char **ptr, int len)$/
 ft_is_sep	ft_split.c	/^int	ft_is_sep(char *charset, char s, int x)$/
 ft_split_	ft_split.c	/^char	**ft_split_(char *str, char *charset, int s)$/
+get_between_quots	lexer1.c	/^void get_between_quots(t_token_list *lst, t_lexer /
 get_data	lexer1.c	/^void get_data(char *buffer, int i, t_token **t, in/
-get_tokens	lexer1.c	/^void get_tokens(t_token_list *lst, char *text, siz/
+get_nonquoted	lexer1.c	/^void get_nonquoted(t_token_list *lst, t_lexer *var/
+get_tokens	lexer1.c	/^void get_tokens(t_token_list *lst, char *text, int/
 is_keyword	lexer.c	/^bool is_keyword(char c)$/
 len_lst	lexer.c	/^int	len_lst(char **lst)$/
 len_word	ft_split.c	/^int	len_word(char *str, char *charset, int s)$/
+merge	lexer1.c	/^bool merge(char c1, char c2, t_token *t)$/
 merge_tow_lists	lexer.c	/^char **merge_tow_lists(char **lst1, char **lst2)$/
 my_ft_split	my_split_.c	/^char	**my_ft_split(const char *str, char c)$/
-parser	parser.c	/^bool parser(t_token_list *lst)$/
+n_parser	parser.c	/^bool n_parser(t_token_list *lst, t_list **env, cha/
 polish_	lexer.c	/^char *polish_(char *s, char *charset)$/
+t_lexer	lexer1.c	/^}t_lexer;$/
 t_token	lexer.h	/^typedef struct s_token t_token;$/
 t_token_list	lexer.h	/^typedef struct s_token_list t_token_list;$/
