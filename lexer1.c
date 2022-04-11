@@ -221,6 +221,7 @@ int main(int ac, char **av, char **env)
 
 	while (1)
 	{
+		printf("Here\n");
 		cmd = readline("$ ");
 		get_tokens(&token_lst, cmd, ft_strlen(cmd));
 		if (token_lst.nb_tokens && n_parser(&token_lst, &enviorment, env))

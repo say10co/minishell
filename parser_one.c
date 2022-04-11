@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/10 22:10:39 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/11 00:58:39 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "lexer.h"
@@ -25,22 +25,26 @@ void __init_cmd(t_cmd *cmd)
 void heredoc(char *eof, t_list *env)
 {
 	char *buffer;
+	int	fd;
 
+	fd = open("/tmp/minishell-dumy_file-0ew3d", O_CREAT | O_APPEND , 0600);
 	(void)env;
 	while (1)
 	{
 		buffer = readline("heredoc> ");
 		if (!ft_strcmp(buffer, eof))
 			break;
-		write(0, buffer,ft_strlen(buffer));
+		write(fd, buffer,ft_strlen(buffer));
 		free(buffer);
 	}
+	if (dup2(fd, 0) == -1)
+		printf("Internal Error\n");
+	unlink("/tmp/minishell-dumy_file-0ew3d");
 }
 
 int	close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd)
 {
 	int fd;
-
 
 	if (old_fd > 2)
 		close(old_fd);
