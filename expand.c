@@ -97,7 +97,7 @@ void	get_expanded_values(char *token, t_list **str_lst, t_list *env,  int *lengt
 
 
 }
-void	wrappup_exapnded_token(t_list *str_lst, int total_length)
+char	*wrappup_exapnded_token(t_list *str_lst, int total_length)
 {
 	t_list *curr;
 	char	 *result;
@@ -108,15 +108,15 @@ void	wrappup_exapnded_token(t_list *str_lst, int total_length)
 	if (!result)
 	{
 		printf("Allocation failed in 'wrappup_exapnded_token;'\n");
-		return ;
+		return (NULL);
 	}
-	curr = *str_lst;
+	curr = str_lst;
 	i = 0;
 	while (curr)
 	{
 		j = 0;
-		while (curr->data && (char **)curr->content[j])
-			result[i] == (char **)curr->content[j++];
+		while (curr->content && ((char *)curr->content)[j])
+			result[i++] = ((char *)curr->content)[j++];
 		curr = curr->next;
 	}
 	return (result);
@@ -132,10 +132,9 @@ int main(int ac, char **av, char **enviorment)
 	char *zitona;
 
 	env = create_env(enviorment); 
-	get_expanded_values("echo$hello $PATH ok ok1 $PWD : is curr wd\"\"", &lst, env, &len);
+	get_expanded_values(av[1], &lst, env, &len);
 	zitona = wrappup_exapnded_token(lst, len);
 	printf("%s\n", zitona);
 	ft_lstclear(&lst, free);
-	while (1);
 	return (0);
 }
