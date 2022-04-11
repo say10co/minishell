@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:03:56 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/10 15:13:36 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/11 18:16:11 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,8 @@ bool n_parser(t_token_list *lst, t_list **env, char **env_vector)
 			free(t->data);
 			t->data = polished;
 		}
-		if (t->data[0] == '$')
+		//if (t->data[0] == '$')
+		if (t->quoted != S_QUOTE && ft_strchr(t->data, '$'))
 			expand_varible(t, *env);
 		t = t->next_token;
 	}

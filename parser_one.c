@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/11 00:58:39 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/11 15:51:01 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "lexer.h"
@@ -37,8 +37,6 @@ void heredoc(char *eof, t_list *env)
 		write(fd, buffer,ft_strlen(buffer));
 		free(buffer);
 	}
-	if (dup2(fd, 0) == -1)
-		printf("Internal Error\n");
 	unlink("/tmp/minishell-dumy_file-0ew3d");
 }
 
@@ -87,6 +85,7 @@ void	close_files(t_cmd *cmd)
 
 t_list	*parser_one(t_token_list *lst, t_list *env)
 {
+	int i = 0;
 	int		fd;
 	t_list	*cmd_lst;
 	t_token *t;
@@ -98,6 +97,7 @@ t_list	*parser_one(t_token_list *lst, t_list *env)
 	cmd_lst = NULL;
 	while (t)
 	{
+		printf("In parser %d\n", i++);
 		if (t->type == PIPE )
 		{
 			fd = cmd->fd_out;
@@ -107,7 +107,9 @@ t_list	*parser_one(t_token_list *lst, t_list *env)
 			cmd->fd_in = fd;
 		}
 		else if (t->is_key && t->type == DL_ARROW)
-			heredoc(t->next_token->data, env);
+		{
+			heredoc(t->next_token->data, env, cmd);
+		}
 		else if (t->is_key)
 			open_file(cmd, t, t->next_token->data);
 		if (!cmd->error_free)

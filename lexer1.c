@@ -187,9 +187,9 @@ void get_tokens(t_token_list *lst, char *text, int	size)
 {
 	t_lexer vars;	
 
+	__init_list(lst);
 	if (!text)
 		return ;
-	__init_list(lst);
 	__init_lexer_vars(&vars, lst, size);
 	while (vars.j <= size)
 	{
@@ -221,11 +221,11 @@ int main(int ac, char **av, char **env)
 
 	while (1)
 	{
-		printf("Here\n");
 		cmd = readline("$ ");
 		get_tokens(&token_lst, cmd, ft_strlen(cmd));
-		if (token_lst.nb_tokens && n_parser(&token_lst, &enviorment, env))
+		if (!token_lst.nb_tokens || n_parser(&token_lst, &enviorment, env))
 			continue;
+		printf("calling parser one on (%s)\n", cmd);
 		command_list = parser_one(&token_lst, enviorment);
 		add_history(cmd);
 		t  = token_lst.all;
