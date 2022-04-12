@@ -225,7 +225,6 @@ int main(int ac, char **av, char **env)
 		get_tokens(&token_lst, cmd, ft_strlen(cmd));
 		if (!token_lst.nb_tokens || n_parser(&token_lst, &enviorment, env))
 			continue;
-		printf("calling parser one on (%s)\n", cmd);
 		command_list = parser_one(&token_lst, enviorment);
 		add_history(cmd);
 		t  = token_lst.all;
@@ -237,6 +236,7 @@ int main(int ac, char **av, char **env)
 		
 		for (t_list *curr = command_list; curr != NULL; curr = curr->next)
 		{
+			printf("-----------------------\n");
 			x = curr->content;
 			tmp_fd = x->fd_in;
 			printf("-/-- input fd : %d\n", tmp_fd);
@@ -247,6 +247,10 @@ int main(int ac, char **av, char **env)
 			printf("-/-- output fd : %d\n", tmp_fd);
 			if (tmp_fd > 2)
 				close(tmp_fd);
+			printf("[");
+			for (int y = 0; (x->command)[y] != NULL; y++)
+				printf("%s,",(x->command)[y]);
+			printf("]\n");
 		}
 	}
 

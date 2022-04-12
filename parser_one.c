@@ -6,10 +6,11 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/11 15:51:01 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/12 02:17:30 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "lexer.h"
+#include "expander.h"
 #include "libft/libft.h"
 #include "includes/includes.h"
 
@@ -19,25 +20,34 @@ void __init_cmd(t_cmd *cmd)
 	cmd->fd_in = 0;
 	cmd->fd_out = 1;
 	cmd->error_free = 1;
-	cmd->commad = NULL;
+	cmd->command = NULL;
 }
 
-void heredoc(char *eof, t_list *env)
+void heredoc(char *eof, t_list *env, int quote)
 {
+	int	length;
+	t_list	*str_lst;
 	char *buffer;
 	int	fd;
 
-	fd = open("/tmp/minishell-dumy_file-0ew3d", O_CREAT | O_APPEND , 0600);
-	(void)env;
+	str_lst = NULL;
+	fd = open("/tmp/minishell-dumy_file-0ew3d", O_CREAT | O_APPEND | O_WRONLY, 0600);
 	while (1)
 	{
+		length = 0;
 		buffer = readline("heredoc> ");
 		if (!ft_strcmp(buffer, eof))
 			break;
-		write(fd, buffer,ft_strlen(buffer));
+		if (quote != S_QUOTE && ft_strchr(buffer, '$'))
+			write(fd, get_expanded_values(buffer, &str_lst, env, &length), length);
+		else
+			write(fd, buffer, ft_strlen(buffer));
+		write(fd, "\n", 1);
 		free(buffer);
 	}
-	unlink("/tmp/minishell-dumy_file-0ew3d");
+	free(buffer);
+	close(fd);
+	//unlink("/tmp/minishell-dumy_file-0ew3d");
 }
 
 int	close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd)
@@ -82,22 +92,46 @@ void	close_files(t_cmd *cmd)
 	if (cmd->fd_out > 3)
 		close(cmd->fd_out);
 }
+void	append_to_lst(char ***vector, char *elem, size_t *vector_size)
+{
+	char **tmp;
+	if (*vector)
+	{
+		*vector = (char **)malloc(sizeof(char *) * 2);
+		*vector[0] = elem;
+		(*vector)[1] = NULL;
+		vector_size += 1;
+	}
+	else
+	{
+		tmp = *vector;
+		*vector = (char **)malloc(sizeof(char *) * *vector_size + 2);
+		ft_memmove(*vector, tmp, sizeof(char *) * *vector_size);
+		(*vector)[*vector_size] = elem;
+		(*vector)[*vector_size + 1] = 0;
+		free(tmp);
+		*vector_size += 1;
+	}
+
+}
 
 t_list	*parser_one(t_token_list *lst, t_list *env)
 {
+	size_t size;
 	int i = 0;
 	int		fd;
 	t_list	*cmd_lst;
 	t_token *t;
 	t_cmd	*cmd;
 	
+	size = 0;
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	__init_cmd(cmd);
 	t = lst->all;
 	cmd_lst = NULL;
 	while (t)
 	{
-		printf("In parser %d\n", i++);
+		
 		if (t->type == PIPE )
 		{
 			fd = cmd->fd_out;
@@ -105,13 +139,20 @@ t_list	*parser_one(t_token_list *lst, t_list *env)
 			cmd = (t_cmd *)malloc(sizeof(t_cmd));
 			__init_cmd(cmd);
 			cmd->fd_in = fd;
+			size = 0;
 		}
 		else if (t->is_key && t->type == DL_ARROW)
 		{
-			heredoc(t->next_token->data, env, cmd);
+			heredoc(t->next_token->data, env, t->quoted);
+			t = t->next_token;
 		}
 		else if (t->is_key)
+		{
 			open_file(cmd, t, t->next_token->data);
+			t = t->next_token;
+		}
+		else
+			append_to_lst(&cmd->command, t->data, &size);
 		if (!cmd->error_free)
 			close_files(cmd);
 		t = t->next_token;

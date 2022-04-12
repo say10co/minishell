@@ -10,7 +10,7 @@
 #define L_ARROW '<'
 #define DL_ARROW 120
 #define R_ARROW '>'
-#define DR_ARROW 124
+#define DR_ARROW 142
 #define PIPE	'|'
 #define SPACE	' '
 

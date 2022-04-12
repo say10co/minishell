@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/10 16:49:03 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/12 01:58:24 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_cmd
 {
 	int	fd_in;
 	int	fd_out;
-	char **commad;
+	char **command;
 	bool 	error_free;
 
 }t_cmd;
