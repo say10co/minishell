@@ -5,6 +5,19 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+void display_logo(void)
+{
+	char *logo;
+	int	fd;
+
+	logo = (char *)malloc(sizeof(char) * 330);
+	fd = open("logo.txt", O_RDONLY);
+	read(fd, logo, 329);
+	printf("\e\033[0;33m %s\n", logo);
+	printf("\e\033[0;37m");
+	close(fd);
+	free(logo);
+}
 
 int main(int ac, char **av, char **env)
 {
@@ -17,6 +30,7 @@ int main(int ac, char **av, char **env)
 	t_list		*command_list;
 
 	(void)(av);
+	display_logo();
 	while (ac)
 	{
 		cmd = readline("$ ");
