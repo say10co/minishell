@@ -1,6 +1,6 @@
-#include "lexer.h"
-#include "includes/includes.h"
-#include "libft/libft.h"
+#include "../includes/lexer.h"
+#include "../includes/includes.h"
+#include "../libft/libft.h"
 
 int	is_keyword(char c)
 {
@@ -205,53 +205,4 @@ void get_tokens(t_token_list *lst, char *text, int	size)
 
 }
 
-int main(int ac, char **av, char **env)
-{
-	char *cmd;
-	t_token_list token_lst;
-	t_token *t;
-	t_list	*enviorment;
-	t_list	*command_list;
-	
-	(void)ac;
-	(void)av;
 
-	int tmp_fd;
-	t_cmd *x;
-
-	while (1)
-	{
-		cmd = readline("$ ");
-		get_tokens(&token_lst, cmd, ft_strlen(cmd));
-		if (!token_lst.nb_tokens || n_parser(&token_lst, &enviorment, env))
-			continue;
-		command_list = parser_one(&token_lst, enviorment);
-		add_history(cmd);
-		t  = token_lst.all;
-		while (t)
-		{
-			printf("--/-: [%s] {%p}\n", t->data, t->next_token);
-			t = t->next_token;
-		}
-		
-		for (t_list *curr = command_list; curr != NULL; curr = curr->next)
-		{
-			printf("-----------------------\n");
-			x = curr->content;
-			tmp_fd = x->fd_in;
-			printf("-/-- input fd : %d\n", tmp_fd);
-			if (tmp_fd > 2)
-				close(tmp_fd);
-			x = curr->content;
-			tmp_fd = x->fd_out;
-			printf("-/-- output fd : %d\n", tmp_fd);
-			if (tmp_fd > 2)
-				close(tmp_fd);
-			printf("[");
-			for (int y = 0; (x->command)[y] != NULL; y++)
-				printf("%s,",(x->command)[y]);
-			printf("]\n");
-		}
-	}
-
-}

@@ -9,10 +9,10 @@
 /*   Updated: 2022/04/12 02:17:30 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "lexer.h"
-#include "expander.h"
-#include "libft/libft.h"
-#include "includes/includes.h"
+#include "../includes/lexer.h"
+#include "../includes/expander.h"
+#include "../libft/libft.h"
+#include "../includes/includes.h"
 
 
 void __init_cmd(t_cmd *cmd)
@@ -95,12 +95,13 @@ void	close_files(t_cmd *cmd)
 void	append_to_lst(char ***vector, char *elem, size_t *vector_size)
 {
 	char **tmp;
-	if (*vector)
+
+	if (*vector == NULL)
 	{
 		*vector = (char **)malloc(sizeof(char *) * 2);
-		*vector[0] = elem;
+		(*vector)[0] = elem;
 		(*vector)[1] = NULL;
-		vector_size += 1;
+		*vector_size += 1;
 	}
 	else
 	{
@@ -111,14 +112,13 @@ void	append_to_lst(char ***vector, char *elem, size_t *vector_size)
 		(*vector)[*vector_size + 1] = 0;
 		free(tmp);
 		*vector_size += 1;
-	}
 
+	}
 }
 
 t_list	*parser_one(t_token_list *lst, t_list *env)
 {
 	size_t size;
-	int i = 0;
 	int		fd;
 	t_list	*cmd_lst;
 	t_token *t;

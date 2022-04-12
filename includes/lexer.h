@@ -1,4 +1,4 @@
-#include "libft/libft.h"
+#include "../libft/libft.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
@@ -34,3 +34,5 @@ struct s_token_list
 	int	nb_tokens;
 
 };
+
+void get_tokens(t_token_list *lst, char *text, int	size);

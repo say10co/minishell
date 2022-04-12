@@ -9,7 +9,7 @@
 /*   Updated: 2022/04/11 22:58:21 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft/libft.h"
+#include "../libft/libft.h"
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>

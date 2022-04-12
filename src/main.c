@@ -1,67 +1,55 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/30 11:19:28 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/10 15:13:51 by adriouic         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-#include <fcntl.h>
+#include "../includes/lexer.h"
 #include "../includes/includes.h"
+#include "../libft/libft.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-t_list *create_env(char **env)
+
+int main(int ac, char **av, char **env)
 {
-	t_list	*head;
-	t_list	*tmp;
-	int		i;
-
-	head = NULL;
-	i = 0;
-	while (env[i])
-	{
-		tmp = ft_lstnew(env[i]);
-		if (!tmp)
-		{
-			ft_lstclear(&head, free);
-			return (NULL);
-		}	
-		ft_lstadd_front(&head, tmp);
-		i++;
-	}
-	return (head);
-}
-
-int main(int ac, char **argv, char **env)
-{
+	int		tmp_fd;
+	char		*cmd;
+	t_cmd		*x;
+	t_token_list	token_lst;
+	t_token		*t;
 	t_list		*enviorment;
-	t_command	**all_commands;
-	
-	enviorment = create_env(env);
-	argv = NULL;
-	all_commands = NULL;
-	while (1)
-	{
-		ac = get_pipe_fileds(&argv);
-		if (!ac)
-			continue ;
-		get_data_from_subfield(ac, argv, &all_commands);
+	t_list		*command_list;
 
-		for(int i = 0; (argv && argv[i] != NULL); i++)
+	(void)(av);
+	while (ac)
+	{
+		cmd = readline("$ ");
+		get_tokens(&token_lst, cmd, ft_strlen(cmd));
+		if (!token_lst.nb_tokens || n_parser(&token_lst, &enviorment, env))
+			continue;
+		command_list = parser_one(&token_lst, enviorment);
+		add_history(cmd);
+		t  = token_lst.all;
+		while ( 0 && t)
 		{
-			printf("\n_________Field %d ______:\n	::: %s \n", i, argv[i]);
-			printf("command %s\n", all_commands[i]->cmd);
-			printf("input fd : %d\n", (all_commands[i])->in_file);
-			printf("output fd : %d\n", (all_commands[i])->out_file);
-			if (all_commands[i]->in_file)
-				close(all_commands[i]->in_file);
-			if (all_commands[i]->out_file)
-				close(all_commands[i]->out_file);
-			free(argv[i]);
+			printf("--/-: [%s] {%p}\n", t->data, t->next_token);
+			t = t->next_token;
 		}
-		free(argv);
+		for (t_list *curr = command_list; curr != NULL; curr = curr->next)
+		{
+			printf("-----------------------\n");
+			x = curr->content;
+			tmp_fd = x->fd_in;
+			printf("-/--: input fd : %d\n", tmp_fd);
+			if (tmp_fd > 2)
+				close(tmp_fd);
+			x = curr->content;
+			tmp_fd = x->fd_out;
+			printf("-/--: output fd : %d\n", tmp_fd);
+			if (tmp_fd > 2)
+				close(tmp_fd);
+			printf("-/--: Command : ");
+			for (int y = 0; (x->command)[y] != NULL; y++)
+				printf("%s ",(x->command)[y]);
+			printf("\n");
+			printf("-/--: Error Free : %d\n:", x->error_free);
+		}
 	}
-	return (0);
+
 }

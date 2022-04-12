@@ -5,109 +5,81 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 14:59:25 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/06 22:08:59 by adriouic         ###   ########.fr       */
+/*   Created: 2022/04/09 22:03:56 by adriouic          #+#    #+#             */
+/*   Updated: 2022/04/12 01:58:12 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/includes.h"
+#include "../includes/expander.h"
+#include "../includes/lexer.h"
 
-char *expand_variables(char *key)
+t_list *create_env(char **env)
 {
-	return (key);
-}
-
-int	open_file(char *file_name, int mode)
-{
-	int fd;
-
-	if (file_name[0] == '$')
-		expand_variables(file_name + 1);
-	if (mode == O_RDONLY)
-	{
-		if (access(file_name, F_OK) != 0)
-			return (printf("Error : No such file '%s'\n", file_name) * 0);
-		fd = open(file_name, O_RDONLY);
-	}
-	else
-		fd = open(file_name, O_CREAT | O_WRONLY | mode, 0666);
-	if (fd < 0)
-		return (printf("Error : Permission Denied\n") * 0);
-	printf("fd is %d\n", fd);
-	return (fd);
-}
-
-void remove_quotes(char **all)
-{
+	t_list	*head;
+	t_list	*tmp;
 	int		i;
-	char	*tmp;
 
+	head = NULL;
 	i = 0;
-	while (all[i])
+	while (env[i])
 	{
-		tmp = all[i];
-		all[i] = polish(all[i], "\'\"");
-		free(tmp);
-		i++;
-	}
-}
-
-void	open_deocument(char *eof)
-{
-	char *buffer;
-	
-	while (1)
-	{
-		buffer = readline("heredoc> ");
-		if (!ft_strcmp(buffer, eof))
-			break;
-		write(1, buffer,ft_strlen(buffer));
-		free(buffer);
-	}
-}
-char **merge_tow_lists(char **lst1, char **lst2);
-char    **ft_split_(char *str, char *charset, int s);
-
-t_command *parser(char *field)
-{
-	int		i;
-	char	**all;
-	t_command *command;
-
-	i = 0;
-	command = (t_command *)malloc(sizeof(t_command));
-	ft_bzero(command, sizeof(t_command));
-	//all = my_ft_split(field, ' ');
-	all = merge_tow_lists(ft_split_(field, "<>", 1),  ft_split_(field, "<>", 0));
-	command->cmd = NULL; 
-	remove_quotes(all);
-
-	while (all[i])
-	{
-		printf("%s\n", all[i]);
-		if (!ft_strcmp(all[i], ">") || !ft_strcmp(all[i], ">>"))
+		tmp = ft_lstnew(ft_strdup(env[i]));
+		if (!tmp)
 		{
-			command->append = !ft_strcmp(all[i], ">>");
-			if (command->append)
-			{
-				if (command->out_file)
-					close(command->out_file);
-				command->out_file = open_file(all[++i], O_APPEND);
-			}
-			else
-			{
-				if (command->out_file)
-					close(command->out_file);
-				command->out_file = open_file(all[++i], O_WRONLY);
-			}
-		}
-		else if (!ft_strcmp(all[i], "<"))
-			command->in_file = open_file(all[++i], 0);
-		else if (!ft_strcmp(all[i], "<<"))
-			open_deocument(all[++i]);
-		else if (!i)
-			command->cmd = all[i];
-
+			ft_lstclear(&head, free);
+			return (NULL);
+		}	
+		ft_lstadd_front(&head, tmp);
 		i++;
 	}
-	return(command);
+	return (head);
+}
+
+bool n_parser(t_token_list *lst, t_list **env, char **env_vector)
+{
+	t_token *t;
+	t_list	*lst_list;
+	char 	*polished;
+	int		length;
+	int		last;
+
+	length = 0;
+	last = 0;
+	lst_list = NULL;
+	*env = create_env(env_vector);
+	if (!*env)
+		return (1);
+	if (!lst)
+		return 1;
+	t = lst->all; 
+	while (t)
+	{
+		if (t->is_key && (!t->next_token || !t->next_token->data))
+			return (printf("syntax error unexpected token 'newline'\n"));
+		if (t->data == NULL)
+			return (printf("Parse Error, Uncolsed quote\n"));
+		if (lst->all->type == PIPE)
+			return (printf("syntax error unexpected token '%s'\n", t->data));
+		if (t->is_key)
+		{
+			if (t->type == PIPE && t->next_token->type == PIPE)
+				return (printf("syntax error unexpected token '%s'\n", t->next_token->data));
+			if (t->next_token && t->next_token->is_key && t->type != PIPE)
+				return (printf("syntax error unexpected token '%s'\n", t->next_token->data));
+		}
+		if (t->quoted)
+		{
+			polished = ft_strtrim(t->data, &(t->quoted));
+			free(t->data);
+			t->data = polished;
+		}
+		if (last != DL_ARROW && t->quoted != S_QUOTE && ft_strchr(t->data, '$'))
+		{
+			polished = t->data;
+			t->data = get_expanded_values(t->data, &lst_list, *env, &length);
+			free(polished);
+		}
+		last = t->type;
+		t = t->next_token;
+	}
+	return (0);
 }
