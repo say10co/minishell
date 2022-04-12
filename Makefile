@@ -14,7 +14,6 @@ PRINT:
 
 %.o: %.c
 	cc $(FLAGS) -c $< -o  $@
-	clear
 
 $(NAME) : $(OBJECTS) LIB
 	@echo "\n\033[0;33m Linking object files Done" "\033[1;32m"
