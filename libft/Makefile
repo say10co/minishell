@@ -32,6 +32,7 @@ all: $(NAME)
 %.o: %.c
 	cc $(FLAGS) -c $< -o  ${<:.c=.o}
 	ar rcs $(NAME) ${<:.c=.o}
+	clear
 
 $(NAME): $(objs)
 

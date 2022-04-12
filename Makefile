@@ -2,13 +2,7 @@ SRC = src/expander.c src/lexer1.c src/main.c src/parser.c src/parser_one.c
 
 OBJECTS = ${SRC:.c=.o}
 
-FLAGS = -Wall -Werror -Wextra -lreadline
-
-%.o : %.c
-	gcc $(FLAGS) $< -o $@
-
-all: minish
-	echo $(OBJECTS)
+FLAGS = -Wall -Werror -Wextra
 
 NAME = minishell
 
@@ -19,12 +13,12 @@ PRINT:
 	@echo  "\n\033[0;33m Compiling minishell source files" "\n\033[1;32m"
 
 %.o: %.c
-	cc $(FLAGS) -c $< -o  $@}
-
+	cc $(FLAGS) -c $< -o  $@
+	clear
 
 $(NAME) : $(OBJECTS) LIB
 	@echo "\n\033[0;33m Linking object files Done" "\033[1;32m"
-	@cc $(FLAGS) $(OBJECTS) -L./libft -lft -o $(NAME)
+	@cc $(FLAGS) $(OBJECTS) -lreadline -L./libft -lft -o $(NAME)
 
 LIB :
 	@echo  "\n\033[0;33m Compiling Libft..."
