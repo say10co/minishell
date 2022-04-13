@@ -13,6 +13,9 @@
 #define DR_ARROW 142
 #define PIPE	'|'
 #define SPACE	' '
+#define SYNTAX_ERR "syntax error unexpected token"
+#define PARSE_ERR "Parse Error, Uncolsed quote\n"
+
 
 typedef struct s_token t_token;
 typedef struct s_token_list t_token_list;
@@ -52,4 +55,5 @@ int		get_type(char c, int p);
 bool	merge(char c1, char c2, t_token *t);
 void	fill_token(t_token *t, char *buffer);
 void	get_data(char *buffer, int i, t_token **t, int *start);
+void	__init_list(t_token_list *lst);
 

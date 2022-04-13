@@ -36,6 +36,7 @@ int main(int ac, char **av, char **env)
 	{
 		cmd = readline("\e\033[0;33m$ \e\033[0;37m");
 		get_tokens(&token_lst, cmd, ft_strlen(cmd));
+
 		if (!token_lst.nb_tokens || n_parser(&token_lst, &enviorment, env))
 			continue;
 		command_list = parser_one(&token_lst, enviorment);

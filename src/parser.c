@@ -6,13 +6,13 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:03:56 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/12 01:58:12 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 01:57:10 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/expander.h"
 #include "../includes/lexer.h"
 
-t_list *create_env(char **env)
+t_list	*create_env(char **env)
 {
 	t_list	*head;
 	t_list	*tmp;
@@ -34,52 +34,70 @@ t_list *create_env(char **env)
 	return (head);
 }
 
-bool n_parser(t_token_list *lst, t_list **env, char **env_vector)
+bool	check_syntax(t_token *t, t_token_list *lst)
 {
-	t_token *t;
+	if (t->is_key && (!t->next_token || !t->next_token->data))
+		return (printf("%s '%s'\n", SYNTAX_ERR, "newline"));
+	if (t->data == NULL)
+		return (printf(PARSE_ERR));
+	if (lst->all->type == PIPE)
+		return (printf("%s '%s'\n", SYNTAX_ERR, t->data));
+	if (t->is_key)
+	{
+		if (t->type == PIPE && t->next_token->type == PIPE)
+			return (printf("%s '%s'\n", SYNTAX_ERR, t->next_token->data));
+		if (t->next_token && t->next_token->is_key && t->type != PIPE)
+			return (printf("%s '%s'\n", SYNTAX_ERR, t->next_token->data));
+	}
+	return (0);
+}
+
+struct s_pvars
+{
+	t_token	*t;
 	t_list	*lst_list;
-	char 	*polished;
 	int		length;
 	int		last;
+};
 
-	length = 0;
-	last = 0;
-	lst_list = NULL;
-	*env = create_env(env_vector);
-	if (!*env)
-		return (1);
-	if (!lst)
-		return 1;
-	t = lst->all; 
-	while (t)
+void	trim_expand_token(struct s_pvars *vars, t_list **env)
+{
+	char	*polished;
+
+	if (vars->t->quoted)
 	{
-		if (t->is_key && (!t->next_token || !t->next_token->data))
-			return (printf("syntax error unexpected token 'newline'\n"));
-		if (t->data == NULL)
-			return (printf("Parse Error, Uncolsed quote\n"));
-		if (lst->all->type == PIPE)
-			return (printf("syntax error unexpected token '%s'\n", t->data));
-		if (t->is_key)
-		{
-			if (t->type == PIPE && t->next_token->type == PIPE)
-				return (printf("syntax error unexpected token '%s'\n", t->next_token->data));
-			if (t->next_token && t->next_token->is_key && t->type != PIPE)
-				return (printf("syntax error unexpected token '%s'\n", t->next_token->data));
-		}
-		if (t->quoted)
-		{
-			polished = ft_strtrim(t->data, &(t->quoted));
-			free(t->data);
-			t->data = polished;
-		}
-		if (last != DL_ARROW && t->quoted != S_QUOTE && ft_strchr(t->data, '$'))
-		{
-			polished = t->data;
-			t->data = get_expanded_values(t->data, &lst_list, *env, &length);
-			free(polished);
-		}
-		last = t->type;
-		t = t->next_token;
+		polished = ft_strtrim(vars->t->data, &(vars->t->quoted));
+		free(vars->t->data);
+		vars->t->data = polished;
+	}
+	if (vars->last != DL_ARROW && vars->t->quoted != S_QUOTE
+		&& ft_strchr(vars->t->data, '$'))
+	{
+		polished = vars->t->data;
+		vars->t->data = get_expanded_values(vars->t->data,
+				&(vars->lst_list), *env, &(vars->length));
+		free(polished);
+	}
+}
+
+bool	n_parser(t_token_list *lst, t_list **env, char **env_vector)
+{
+	struct s_pvars	vars;
+
+	vars.length = 0;
+	vars.last = 0;
+	vars.lst_list = NULL;
+	*env = create_env(env_vector);
+	if (!*env || !lst)
+		return (1);
+	vars.t = lst->all;
+	while (vars.t)
+	{
+		if (check_syntax(vars.t, lst))
+			return (1);
+		trim_expand_token(&vars, env);
+		vars.last = vars.t->type;
+		vars.t = vars.t->next_token;
 	}
 	return (0);
 }
