@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 04:38:43 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 21:26:07 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -57,7 +57,7 @@ t_list	*parser_one(t_token_list *lst, t_list *env)
 			heredoc(t->next_token->data, env);
 			t = t->next_token;
 		}
-		if (t->is_key)
+		else if (t->is_key)
 		{
 			open_file(cmd, t, t->next_token->data);
 			t = t->next_token;
