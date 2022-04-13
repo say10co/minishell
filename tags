@@ -1,0 +1,25 @@
+Mmain	src/main.c	/^int main(int ac, char **av, char **env)$/
+__init_cmd	src/parser_one.c	/^void __init_cmd(t_cmd *cmd)$/
+__init_lexer_vars	src/lexer1.c	/^void __init_lexer_vars(t_lexer *vars, t_token_list/
+__init_list	src/lexer1.c	/^void __init_list(t_token_list *lst)$/
+append_to_lst	src/parser_one.c	/^void	append_to_lst(char ***vector, char *elem, siz/
+close_files	src/parser_one.c	/^void	close_files(t_cmd *cmd)$/
+close_old_open_new	src/parser_one.c	/^int	close_old_open_new(t_cmd *cmd, char *file_name/
+create_env	src/parser.c	/^t_list *create_env(char **env)$/
+display_logo	src/main.c	/^void display_logo(void)$/
+fill_token	src/lexer1.c	/^void fill_token(t_token *t, char *buffer)$/
+get_between_quots	src/lexer1.c	/^void get_between_quots(t_token_list *lst, t_lexer /
+get_data	src/lexer1.c	/^void get_data(char *buffer, int i, t_token **t, in/
+get_expanded_values	src/expander.c	/^char *get_expanded_values(char *token, t_list **st/
+get_nonquoted	src/lexer1.c	/^void get_nonquoted(t_token_list *lst, t_lexer *var/
+get_tokens	src/lexer1.c	/^void get_tokens(t_token_list *lst, char *text, int/
+get_type	src/lexer1.c	/^int	get_type(char c, int p)$/
+get_value_of_key	src/expander.c	/^char	*get_value_of_key(char *key, t_list *env, int/
+heredoc	src/parser_one.c	/^void heredoc(char *eof, t_list *env, int quote)$/
+is_keyword	src/lexer1.c	/^int	is_keyword(char c)$/
+merge	src/lexer1.c	/^bool merge(char c1, char c2, t_token *t)$/
+n_parser	src/parser.c	/^bool n_parser(t_token_list *lst, t_list **env, cha/
+open_file	src/parser_one.c	/^void open_file(t_cmd *cmd, t_token *t, char *file_/
+parser_one	src/parser_one.c	/^t_list	*parser_one(t_token_list *lst, t_list *env)/
+t_lexer	src/lexer1.c	/^}t_lexer;$/
+wrappup_exapnded_token	src/expander.c	/^char	*wrappup_exapnded_token(t_list *str_lst, int /

@@ -35,4 +35,10 @@ struct s_token_list
 
 };
 
-void get_tokens(t_token_list *lst, char *text, int	size);
+void	get_tokens(t_token_list *lst, char *text, int	size);
+int		is_keyword(char c);
+int		get_type(char c, int p);
+bool	merge(char c1, char c2, t_token *t);
+void	fill_token(t_token *t, char *buffer);
+void	get_data(char *buffer, int i, t_token **t, int *start);
+

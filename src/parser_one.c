@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/12 02:17:30 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 00:28:34 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/lexer.h"
@@ -35,7 +35,7 @@ void heredoc(char *eof, t_list *env, int quote)
 	while (1)
 	{
 		length = 0;
-		buffer = readline("heredoc> ");
+		buffer = readline("\033[0;31mheredoc> ");
 		if (!ft_strcmp(buffer, eof))
 			break;
 		if (quote != S_QUOTE && ft_strchr(buffer, '$'))
@@ -45,6 +45,7 @@ void heredoc(char *eof, t_list *env, int quote)
 		write(fd, "\n", 1);
 		free(buffer);
 	}
+	printf("\e\033[0;37m");
 	free(buffer);
 	close(fd);
 	//unlink("/tmp/minishell-dumy_file-0ew3d");
@@ -92,6 +93,7 @@ void	close_files(t_cmd *cmd)
 	if (cmd->fd_out > 3)
 		close(cmd->fd_out);
 }
+
 void	append_to_lst(char ***vector, char *elem, size_t *vector_size)
 {
 	char **tmp;
@@ -100,20 +102,19 @@ void	append_to_lst(char ***vector, char *elem, size_t *vector_size)
 	{
 		*vector = (char **)malloc(sizeof(char *) * 2);
 		(*vector)[0] = elem;
-		(*vector)[1] = NULL;
 		*vector_size += 1;
 	}
 	else
 	{
 		tmp = *vector;
-		*vector = (char **)malloc(sizeof(char *) * *vector_size + 2);
+		*vector = (char **)malloc(sizeof(char *) * (*vector_size + 2));
 		ft_memmove(*vector, tmp, sizeof(char *) * *vector_size);
 		(*vector)[*vector_size] = elem;
-		(*vector)[*vector_size + 1] = 0;
 		free(tmp);
 		*vector_size += 1;
 
 	}
+	(*vector)[*vector_size] = NULL;
 }
 
 t_list	*parser_one(t_token_list *lst, t_list *env)
@@ -152,7 +153,7 @@ t_list	*parser_one(t_token_list *lst, t_list *env)
 			t = t->next_token;
 		}
 		else
-			append_to_lst(&cmd->command, t->data, &size);
+			append_to_lst(&(cmd->command), t->data, &size);
 		if (!cmd->error_free)
 			close_files(cmd);
 		t = t->next_token;
