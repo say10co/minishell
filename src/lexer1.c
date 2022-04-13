@@ -6,37 +6,13 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:31:44 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 00:43:02 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 01:08:43 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lexer.h"
 #include "../includes/includes.h"
 #include "../libft/libft.h"
-
-void	__init_list(t_token_list *lst)
-{
-	lst->all = (t_token *)malloc(sizeof(t_token));
-	lst->all->next_token = NULL;
-	lst->all->data = NULL;
-	lst->all->is_key = 0;
-	lst->all->type = 0;
-	lst->all->quoted = 0;
-	lst->all->length = 0;
-	lst->all->found_space = 0;
-	lst->nb_tokens = 0;
-}
-
-typedef struct s_lexer
-{
-	t_token	*token;
-	char	*buffer;
-	char	quote;
-	int		i;
-	int		j;
-	int		start;
-
-}t_lexer;
 
 void	__init_lexer_vars(t_lexer *vars, t_token_list *lst, int size)
 {
@@ -46,6 +22,23 @@ void	__init_lexer_vars(t_lexer *vars, t_token_list *lst, int size)
 	vars->j = 0;
 	vars->start = 1;
 	vars->token = lst->all;
+}
+
+void	get_keyword_and_filename(t_token_list *lst, t_lexer *var, char *text)
+{
+	if (var->i)
+	{
+		get_data(var->buffer, var->i, &(var->token), &(var->start));
+		lst->nb_tokens += 1;
+	}
+	if (*text)
+	{
+		var->buffer[0] = *text;
+		get_data(var->buffer, -1, &(var->token), &(var->start));
+		if (!var->token->type)
+			var->token->type = get_type(*text, 0);
+	}
+	var->i = 0;
 }
 
 void	get_nonquoted(t_token_list *lst, t_lexer *var, char *text)
@@ -67,21 +60,7 @@ void	get_nonquoted(t_token_list *lst, t_lexer *var, char *text)
 			var->token->found_space = 1;
 	}
 	else if (is_keyword(*text) || !*text)
-	{
-		if (var->i)
-		{
-			get_data(var->buffer, var->i, &(var->token), &(var->start));
-			lst->nb_tokens += 1;
-		}
-		if (*text)
-		{
-			var->buffer[0] = *text;
-			get_data(var->buffer, -1, &(var->token), &(var->start));
-			if (!var->token->type)
-				var->token->type = get_type(*text, 0);
-		}
-		var->i = 0;
-	}
+		get_keyword_and_filename(lst, var, text);
 	else if (!is_keyword(*text) && *text != ' ')
 		var->buffer[var->i++] = *text;
 }

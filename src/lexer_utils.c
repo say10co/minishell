@@ -6,18 +6,23 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:37:53 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 00:44:12 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 01:09:12 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/lexer.h"
 
-int	is_keyword(char c)
+void	__init_list(t_token_list *lst)
 {
-	if (c == L_ARROW || c == R_ARROW || c == PIPE)
-		return (1);
-	return (0);
+	lst->all = (t_token *)malloc(sizeof(t_token));
+	lst->all->next_token = NULL;
+	lst->all->data = NULL;
+	lst->all->is_key = 0;
+	lst->all->type = 0;
+	lst->all->quoted = 0;
+	lst->all->length = 0;
+	lst->all->found_space = 0;
+	lst->nb_tokens = 0;
 }
-
 
 int	get_type(char c, int p)
 {

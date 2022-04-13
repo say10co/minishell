@@ -35,6 +35,17 @@ struct s_token_list
 
 };
 
+typedef struct s_lexer
+{
+	t_token	*token;
+	char	*buffer;
+	char	quote;
+	int		i;
+	int		j;
+	int		start;
+
+}t_lexer;
+
 void	get_tokens(t_token_list *lst, char *text, int	size);
 int		is_keyword(char c);
 int		get_type(char c, int p);
