@@ -18,6 +18,7 @@ void display_logo(void)
 	printf("\e\033[0;37m");
 	close(fd);
 	free(logo);
+
 }
 
 int main(int ac, char **av, char **env)
