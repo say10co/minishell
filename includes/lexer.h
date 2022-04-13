@@ -1,21 +1,29 @@
-#include "../libft/libft.h"
-#include <stdio.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/13 03:07:59 by adriouic          #+#    #+#             */
+/*   Updated: 2022/04/13 03:12:02 by adriouic         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#define D_QUOTE '"'
-#define S_QUOTE '\''
-#define L_ARROW '<'
-#define DL_ARROW 120
-#define R_ARROW '>'
-#define DR_ARROW 142
-#define PIPE	'|'
-#define SPACE	' '
-#define SYNTAX_ERR "syntax error unexpected token"
-#define PARSE_ERR "Parse Error, Uncolsed quote\n"
+#ifndef LEXER_H
+# define LEXER_H
+# define D_QUOTE '"'
+# define S_QUOTE '\''
+# define L_ARROW '<'
+# define DL_ARROW 120
+# define R_ARROW '>'
+# define DR_ARROW 142
+# define PIPE	'|'
+# define SPACE	' '
+# define SYNTAX_ERR "syntax error unexpected token"
+# define PARSE_ERR "Parse Error, Uncolsed quote\n"
 
+# include <stdbool.h>
 
 typedef struct s_token t_token;
 typedef struct s_token_list t_token_list;
@@ -57,3 +65,4 @@ void	fill_token(t_token *t, char *buffer);
 void	get_data(char *buffer, int i, t_token **t, int *start);
 void	__init_list(t_token_list *lst);
 
+#endif

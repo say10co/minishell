@@ -6,10 +6,10 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:37:53 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 01:10:04 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 03:13:32 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/lexer.h"
+#include "../includes/includes.h"
 
 void	__init_list(t_token_list *lst)
 {

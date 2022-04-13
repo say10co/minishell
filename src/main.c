@@ -36,12 +36,17 @@ int main(int ac, char **av, char **env)
 	{
 		cmd = readline("\e\033[0;33m$ \e\033[0;37m");
 		get_tokens(&token_lst, cmd, ft_strlen(cmd));
-
 		if (!token_lst.nb_tokens || n_parser(&token_lst, &enviorment, env))
 			continue;
+		
 		command_list = parser_one(&token_lst, enviorment);
 		add_history(cmd);
 		t  = token_lst.all;
+		while (t)
+		{
+			printf("--/-: [%s] {%p}\n", t->data, t->next_token);
+			t = t->next_token;
+		}
 		for (t_list *curr = command_list; curr != NULL; curr = curr->next)
 		{
 			x = (t_cmd *)curr->content;

@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 22:08:02 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/11 22:58:21 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 03:59:16 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../libft/libft.h"
@@ -65,6 +65,7 @@ char	*wrappup_exapnded_token(t_list *str_lst, int total_length)
 			result[i++] = ((char *)curr->content)[j++];
 		curr = curr->next;
 	}
+	result[i] = 0;
 	return (result);
 }
 
@@ -102,9 +103,12 @@ char *get_expanded_values(char *token, t_list **str_lst, t_list *env, int *lengt
 		else
 			buffer[j++] = token[i++];
 	}
-	buffer[j] = 0;
-	ft_lstadd_back(str_lst, ft_lstnew(ft_strdup(buffer)));
-	*length += j;
+	if (j)
+	{
+		buffer[j] = 0;
+		ft_lstadd_back(str_lst, ft_lstnew(ft_strdup(buffer)));
+		*length += j;
+	}
 	free(buffer);
 	return (wrappup_exapnded_token(*str_lst, *length));
 }

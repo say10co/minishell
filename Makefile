@@ -1,4 +1,4 @@
-SRC = src/expander.c src/utils.c src/lexer_utils.c src/lexer1.c src/main.c src/parser.c src/parser_one.c
+SRC = src/expander.c src/parser_utils.c  src/utils.c src/lexer_utils.c src/lexer1.c src/main.c src/parser.c src/parser_one.c
 
 OBJECTS = ${SRC:.c=.o}
 
