@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 04:08:53 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 22:13:01 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**my_ft_split(const char *str, char c);
 char	*polish(const char *s, char *charset);
 
 //*******************Expander************ 
-char *get_expanded_values(char *token, t_list **str_lst, t_list *env, int *length);
+char *get_values(char *token, t_list **str_lst, t_list *env, int *length);
 
 
 

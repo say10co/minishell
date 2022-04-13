@@ -6,11 +6,20 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 22:08:02 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 04:32:03 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 22:12:35 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../libft/libft.h"
 #include <stdio.h>
+
+typedef struct s_variables
+{
+	int		i;
+	int		j;
+	int		len_token;
+	char	*buffer;
+	char	*token;
+}t_variables;
 
 char	*get_value_of_key(char *key, t_list *env, int *len)
 {
@@ -67,49 +76,58 @@ char	*wrappup_exapnded_token(t_list *str_lst, int total_length)
 	return (result);
 }
 
-char *get_expanded_values(char *token, t_list **str_lst, t_list *env, int *length)
+void	expand(t_variables *v, t_list **str_lst, t_list *env, int *length)
 {
 	int		i;
 	int		j;
-	int		len_token;
 	char	*buffer;
 
-	i = 0;
-	j = 0;
-	*str_lst = NULL;
-	len_token = ft_strlen(token);
-	buffer = (char *) malloc(sizeof(char) * len_token);
-	while (token[i])
-	{
-		if (token[i] == '$')
-		{
-			if (j)
-			{
-				buffer[j] = 0;
-				ft_lstadd_back(str_lst, ft_lstnew(ft_strdup(buffer)));
-				*length += j;
-				j = 0;
-			}
-			i++;
-			while (token[i] == token[i + 1] && (token[i] == '\'' || token[i] == '"'))
-				i++;
-			while (token[i] && token[i] != ' ' && token[i] != '$'
-				&& token[i] != '\'' && token[i] != '\"')
-				buffer[j++] = token[i++];
-			buffer[j] = 0;
-			ft_lstadd_back(str_lst, ft_lstnew(get_value_of_key(buffer, env, length)));
-			j = 0;
-		}
-		else 
-			buffer[j++] = token[i++];
-	}
+	i = v->i;
+	j = v->j;
+	buffer = v->buffer;
 	if (j)
 	{
 		buffer[j] = 0;
 		ft_lstadd_back(str_lst, ft_lstnew(ft_strdup(buffer)));
-		*length += j;
+		*length += (j);
+		j = 0;
 	}
-	free(buffer);
-	return (wrappup_exapnded_token(*str_lst, *length));
+	i += 1;
+	while ((v->token)[i] == (v->token[i + 1])
+			&& ((v->token[i]) == '\'' || (v->token[i]) == '"'))
+		i++;
+	while ((v->token[i]) && (v->token[i]) != ' ' && (v->token[i] != '$')
+		&& (v->token[i]) != '\'' && (v->token[i]) != '\"')
+		(v->buffer)[j++] = (v->token[i++]);
+	buffer[j] = 0;
+	ft_lstadd_back(str_lst, ft_lstnew(get_value_of_key(buffer, env, length)));
+	v->j = 0;
+	v->i = i;
 }
 
+char	*get_values(char *token, t_list **str_lst, t_list *env, int *length)
+{
+	t_variables	v;
+
+	v.i = 0;
+	v.j = 0;
+	*str_lst = NULL;
+	v.token = token;
+	v.len_token = ft_strlen(token);
+	v.buffer = (char *) malloc(sizeof(char) * v.len_token);
+	while (v.token[v.i])
+	{
+		if (token[v.i] == '$')
+			expand(&v, str_lst, env, length);
+		else
+			(v.buffer)[(v.j)++] = (v.token)[(v.i)++];
+	}
+	if (v.j)
+	{
+		(v.buffer)[v.j] = 0;
+		ft_lstadd_back(str_lst, ft_lstnew(ft_strdup(v.buffer)));
+		*length += v.j;
+	}
+	free(v.buffer);
+	return (wrappup_exapnded_token(*str_lst, *length));
+}

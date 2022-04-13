@@ -61,7 +61,7 @@ int main(int ac, char **av, char **env)
 			if (tmp_fd > 2)
 				close(tmp_fd);
 			printf("-/--: Command : ");
-			for (int y = 0; (x->command)[y] != NULL; y++)
+			for (int y = 0; x->command && (x->command)[y] != NULL; y++)
 			{
 				printf("%s ",(x->command)[y]);
 			}

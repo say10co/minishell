@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 02:33:48 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 04:40:53 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 22:13:45 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 # include "../includes/includes.h"
@@ -28,7 +28,7 @@ void	heredoc(char *eof, t_list *env)
 		if (!ft_strcmp(buffer, eof))
 			break ;
 		if (ft_strchr(buffer, '$'))
-			write(fd, get_expanded_values(buffer, &str_lst, env, &length), length);
+			write(fd, get_values(buffer, &str_lst, env, &length), length);
 		else
 			write(fd, buffer, ft_strlen(buffer));
 		write(fd, "\n", 1);
