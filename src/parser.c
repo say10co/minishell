@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:03:56 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 03:35:54 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 05:01:46 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -73,7 +73,6 @@ void	trim_expand_token(struct s_pvars *vars, t_list **env)
 		&& ft_strchr(vars->t->data, '$'))
 	{
 		polished = vars->t->data;
-		printf("---> %s\n", polished);
 		vars->t->data = get_expanded_values(vars->t->data,
 				&(vars->lst_list), *env, &(vars->length));
 		free(polished);

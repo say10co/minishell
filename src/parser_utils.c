@@ -6,12 +6,12 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 02:33:48 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 03:08:46 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 04:40:53 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 # include "../includes/includes.h"
 
-void	heredoc(char *eof, t_list *env, int quote)
+void	heredoc(char *eof, t_list *env)
 {
 	t_list	*str_lst;
 	char	*buffer;
@@ -27,7 +27,7 @@ void	heredoc(char *eof, t_list *env, int quote)
 		buffer = readline("\033[0;31mheredoc> ");
 		if (!ft_strcmp(buffer, eof))
 			break ;
-		if (quote != S_QUOTE && ft_strchr(buffer, '$'))
+		if (ft_strchr(buffer, '$'))
 			write(fd, get_expanded_values(buffer, &str_lst, env, &length), length);
 		else
 			write(fd, buffer, ft_strlen(buffer));
@@ -87,6 +87,8 @@ void	append_to_lst(char ***vector, char *elem, size_t *vector_size)
 {
 	char	**tmp;
 
+	if (!elem || !elem[0])
+		return ;
 	if (*vector == NULL)
 	{
 		*vector = (char **)malloc(sizeof(char *) * 2);

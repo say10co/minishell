@@ -6,12 +6,10 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 22:08:02 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 03:59:16 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 04:32:03 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../libft/libft.h"
-#include <stdlib.h>
-#include <unistd.h>
 #include <stdio.h>
 
 char	*get_value_of_key(char *key, t_list *env, int *len)
@@ -93,6 +91,8 @@ char *get_expanded_values(char *token, t_list **str_lst, t_list *env, int *lengt
 				j = 0;
 			}
 			i++;
+			while (token[i] == token[i + 1] && (token[i] == '\'' || token[i] == '"'))
+				i++;
 			while (token[i] && token[i] != ' ' && token[i] != '$'
 				&& token[i] != '\'' && token[i] != '\"')
 				buffer[j++] = token[i++];
@@ -100,7 +100,7 @@ char *get_expanded_values(char *token, t_list **str_lst, t_list *env, int *lengt
 			ft_lstadd_back(str_lst, ft_lstnew(get_value_of_key(buffer, env, length)));
 			j = 0;
 		}
-		else
+		else 
 			buffer[j++] = token[i++];
 	}
 	if (j)
@@ -113,24 +113,3 @@ char *get_expanded_values(char *token, t_list **str_lst, t_list *env, int *lengt
 	return (wrappup_exapnded_token(*str_lst, *length));
 }
 
-
-/*
-int	main(int ac, char **av, char **enviorment)
-{
-	int	  len = 0;
-	(void)av;
-
-	ac--;
-	t_list *lst;
-	t_list *env;
-	char *zitona;
-
-	env = create_env(enviorment); 
-	get_expanded_values(av[1], &lst, env, &len);
-	zitona = wrappup_exapnded_token(lst, len);
-	printf("%s\n", zitona);
-	ft_lstclear(&lst, free);
-	sleep(3);
-	return (0);
-}
-*/

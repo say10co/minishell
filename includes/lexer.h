@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 03:07:59 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 03:12:02 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 04:07:24 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ typedef struct s_token_list t_token_list;
 
 struct s_token
 {
-	char *data;
-	int	type;
-	int	length;
-	bool is_key;
-	bool found_space;
+	char	*data;
+	int		type;
+	int		length;
+	bool	is_key;
+	bool	found_space;
 	char	quoted;
 	t_token	*next_token;
 };

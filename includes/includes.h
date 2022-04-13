@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 03:12:09 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/13 04:08:53 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char *get_expanded_values(char *token, t_list **str_lst, t_list *env, int *lengt
 t_list *parser_one(t_token_list *lst, t_list *env);
 bool	n_parser(t_token_list *lst, t_list **env, char **env_vector);
 int		close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd);
-void	heredoc(char *eof, t_list *env, int quote);
+void	heredoc(char *eof, t_list *env);
 void	open_file(t_cmd *cmd, t_token *t, char *file_name);
 void	append_to_lst(char ***vector, char *elem, size_t *vector_size);
 void	close_files(t_cmd *cmd);
