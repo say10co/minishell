@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 22:13:01 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/15 17:59:00 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include "lexer.h"
+# include <strings.h>
 
 
 typedef struct s_cmd

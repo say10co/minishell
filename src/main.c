@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 void display_logo(void)
 {
@@ -20,6 +21,7 @@ void display_logo(void)
 	free(logo);
 
 }
+
 
 int main(int ac, char **av, char **env)
 {
@@ -39,7 +41,6 @@ int main(int ac, char **av, char **env)
 		get_tokens(&token_lst, cmd, ft_strlen(cmd));
 		if (!token_lst.nb_tokens || n_parser(&token_lst, &enviorment, env))
 			continue;
-		
 		command_list = parser_one(&token_lst, enviorment);
 		add_history(cmd);
 		t  = token_lst.all;
@@ -51,6 +52,7 @@ int main(int ac, char **av, char **env)
 		for (t_list *curr = command_list; curr != NULL; curr = curr->next)
 		{
 			x = (t_cmd *)curr->content;
+
 			printf("-----------------------\n");
 			tmp_fd = x->fd_in;
 			printf("-/--: input fd : %d\n", tmp_fd);

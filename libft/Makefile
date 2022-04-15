@@ -6,7 +6,7 @@
 #    By: adriouic <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/11 23:09:51 by adriouic          #+#    #+#              #
-#    Updated: 2021/11/11 23:19:40 by adriouic         ###   ########.fr        #
+#    Updated: 2022/04/15 15:17:05 by adriouic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 FILES	=	ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
@@ -30,8 +30,8 @@ FLAGS		=	-Wall -Werror -Wextra
 all: $(NAME)
 
 %.o: %.c
-	cc $(FLAGS) -c $< -o  ${<:.c=.o}
-	ar rcs $(NAME) ${<:.c=.o}
+	@cc $(FLAGS) -c $< -o  ${<:.c=.o}
+	@ar rcs $(NAME) ${<:.c=.o}
 
 $(NAME): $(objs)
 
@@ -39,10 +39,10 @@ $(NAME): $(objs)
 bonus: $(bobjs)
 
 clean:
-	rm -f $(objs) $(bobjs)
+	@rm -f $(objs) $(bobjs)
 
 fclean: clean
-	rm -f libft.a
+	@rm -f libft.a
 
 re: fclean all
 

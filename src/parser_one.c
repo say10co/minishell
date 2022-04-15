@@ -6,10 +6,52 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 21:26:07 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/15 18:12:48 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
+
+char *add_prefix(const char *prefix, const char *file)
+{
+	int		len;
+	int		len_prefix;
+	char	*buffer;
+
+	len = ft_strlen(file);
+	len_prefix = ft_strlen(prefix);
+	buffer = malloc(sizeof(char) * (len_prefix + len));
+	strcpy(buffer, prefix);
+	strcpy((buffer + len_prefix), file);
+	return (buffer);
+}
+
+bool	check_file(t_token *token, t_cmd *cmd)
+{
+	char	*buffer;
+
+	if (cmd->command)
+	{
+		if (access(token->data, F_OK))
+		{
+			printf("--%s--\n", token->data);
+			return (0);
+		}
+		cmd->error_free = 0;
+		return (1);
+	}
+	if (access(token->data, F_OK))
+		return (0);
+	buffer =  add_prefix("/bin/", token->data);
+	if (access(buffer, F_OK))
+	{
+		free(token->data);
+		token->data = buffer;
+		return (0);
+	}
+	free(buffer);
+	cmd->error_free = 0;
+	return (1);
+}
 
 void	__init_cmd(t_cmd *cmd)
 {
@@ -62,7 +104,7 @@ t_list	*parser_one(t_token_list *lst, t_list *env)
 			open_file(cmd, t, t->next_token->data);
 			t = t->next_token;
 		}
-		else
+		else if (!check_file(t, cmd))
 			append_to_lst(&(cmd->command), t->data, &vector_size);
 		if (!cmd->error_free)
 			close_files(cmd);
