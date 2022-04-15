@@ -44,7 +44,7 @@ int main(int ac, char **av, char **env)
 		command_list = parser_one(&token_lst, enviorment);
 		add_history(cmd);
 		t  = token_lst.all;
-		while (t)
+		while ( 0 && t)
 		{
 			printf("--/-: [%s] {%p}\n", t->data, t->next_token);
 			t = t->next_token;
@@ -52,6 +52,8 @@ int main(int ac, char **av, char **env)
 		for (t_list *curr = command_list; curr != NULL; curr = curr->next)
 		{
 			x = (t_cmd *)curr->content;
+			if (!x->error_free)
+				continue;
 
 			printf("-----------------------\n");
 			tmp_fd = x->fd_in;

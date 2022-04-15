@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
-
 char *add_prefix(const char *prefix, const char *file)
 {
 	int		len;
@@ -25,32 +24,48 @@ char *add_prefix(const char *prefix, const char *file)
 	return (buffer);
 }
 
+bool	check_argument_file(t_token *token, t_cmd *cmd)
+{
+	const char	*error;
+
+	error = FILENTFOUND;
+	if (!access(token->data, F_OK))
+	{
+		if (!access(token->data, R_OK))
+			return (0);
+		else
+			error = PERMISSION;
+	}
+	cmd->error_free = 0;
+	return (printf("%s: %s\n", token->data, error));
+}
+
 bool	check_file(t_token *token, t_cmd *cmd)
 {
 	char	*buffer;
+	const char	*error;
 
+	error = FILENTFOUND;
 	if (cmd->command)
-	{
-		if (access(token->data, F_OK))
-		{
-			printf("--%s--\n", token->data);
-			return (0);
-		}
-		cmd->error_free = 0;
-		return (1);
-	}
-	if (access(token->data, F_OK))
+		return (check_argument_file(token, cmd));
+	error = CMDNOTFOUND;
+	if (!access(token->data, F_OK))
 		return (0);
 	buffer =  add_prefix("/bin/", token->data);
-	if (access(buffer, F_OK))
+	if (!access(buffer, F_OK))
 	{
-		free(token->data);
-		token->data = buffer;
-		return (0);
+		if (!access(buffer, R_OK))
+		{
+			free(token->data);
+			token->data = buffer;
+			return (0);
+		}
+		else
+			error = PERMISSION;
 	}
 	free(buffer);
 	cmd->error_free = 0;
-	return (1);
+	return (printf("msh: %s: %s\n", token->data, error));
 }
 
 void	__init_cmd(t_cmd *cmd)

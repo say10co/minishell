@@ -20,6 +20,10 @@
 # include "lexer.h"
 # include <strings.h>
 
+# define PERMISSION "Permission denied"
+# define FILENTFOUND "No such file or directory"
+# define CMDNOTFOUND "command not found"
+
 
 typedef struct s_cmd
 {

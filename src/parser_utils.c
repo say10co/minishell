@@ -51,7 +51,7 @@ int	close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd)
 		if (access(file_name, F_OK) != 0)
 		{
 			cmd->error_free = 0;
-			return (printf("Error : No such file '%s'\n", file_name) * 0);
+			return (printf("%s: %s\n", file_name, FILENTFOUND) * 0);
 		}
 		fd = open(file_name, O_RDONLY);
 	}
@@ -60,18 +60,18 @@ int	close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd)
 	if (fd < 0)
 	{
 		cmd->error_free = 0;
-		return (printf("Permission Denied. %s \n", file_name) * 0);
+		return (printf("msh: %s: %s\n", file_name, PERMISSION) * 0);
 	}
 	return (fd);
 }
 
 void	open_file(t_cmd *cmd, t_token *t, char *file_name)
 {
-	if (t->type == R_ARROW)
+	if (t->type == R_ARROW && cmd->error_free)
 		cmd->fd_out = close_old_open_new(cmd, file_name, O_WRONLY, cmd->fd_out);
-	else if (t->type == DR_ARROW)
+	else if (t->type == DR_ARROW && cmd->error_free)
 		cmd->fd_out = close_old_open_new(cmd, file_name, O_APPEND, cmd->fd_out);
-	else if (t->type == L_ARROW)
+	else if (t->type == L_ARROW && cmd->error_free)
 		cmd->fd_in = close_old_open_new(cmd, file_name, O_RDONLY, cmd->fd_in);
 }
 
