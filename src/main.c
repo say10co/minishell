@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+
 void display_logo(void)
 {
 	char *logo;
