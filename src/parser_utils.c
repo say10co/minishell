@@ -6,13 +6,13 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 02:33:48 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/14 23:57:41 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/16 03:05:46 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
-void	heredoc(char *eof, t_list *env)
+void	heredoc(char *eof, t_list *env, t_cmd *cmd)
 {
 	t_list	*str_lst;
 	char	*buffer;
@@ -35,9 +35,11 @@ void	heredoc(char *eof, t_list *env)
 		write(fd, "\n", 1);
 		free(buffer);
 	}
+	close(fd);
+	fd = open("/tmp/minishell-dumy_file-0ew3d", O_RDONLY);
+	cmd->fd_in = fd;
 	printf("\e\033[0;37m");
 	free(buffer);
-	close(fd);
 }
 
 int	close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd)

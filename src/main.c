@@ -16,15 +16,73 @@ void display_logo(void)
 	logo = (char *)malloc(sizeof(char) * 330);
 	fd = open("logo.txt", O_RDONLY);
 	read(fd, logo, 329);
-	//printf("\e\033[0;33m %s\n", logo);
-	printf("\e[0;92m %s\n", logo);
+	printf("\e\033[0;33m %s\n", logo);
+	//printf("\e[0;92m %s\n", logo);
 	printf("\e\033[0;37m");
 	close(fd);
 	free(logo);
 
 }
 
+int main(int ac, char **av, char **env)
+{
+	int		ofd;
+	int		ifd;
+	int		tmp_fd;
+	char		*cmd;
+	t_cmd		*x;
+	t_token_list	token_lst;
+	t_token		*t;
+	t_list		*enviorment;
+	t_list		*command_list;
+	int	pid;
 
+	(void)(av);
+	display_logo();
+	while (ac)
+	{
+		cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
+		get_tokens(&token_lst, cmd, ft_strlen(cmd));
+		if (!token_lst.nb_tokens || n_parser(&token_lst, &enviorment, env))
+			continue;
+		command_list = parser_one(&token_lst, enviorment);
+		add_history(cmd);
+		t  = token_lst.all;
+		for (t_list *curr = command_list; curr != NULL; curr = curr->next)
+		{
+			x = (t_cmd *)curr->content;
+			if (!x->error_free)
+				continue;
+			
+			ifd = dup(0);
+			ofd = dup(1);
+			pid = fork();
+			if (pid == 0)
+			{
+				dup2(x->fd_in, 0);
+				dup2(x->fd_out, 1);
+				execv(x->command[0], x->command);
+			}
+			else
+				wait(NULL);
+			dup2(0, ifd);
+			dup2(1, ofd);
+			tmp_fd = x->fd_in;
+			if (tmp_fd > 2)
+				close(tmp_fd);
+			tmp_fd = x->fd_out;
+			if (tmp_fd > 2)
+				close(tmp_fd);
+			if (!access("/tmp/minishell-dumy_file-0ew3d", F_OK))
+				unlink("/tmp/minishell-dumy_file-0ew3d");
+		}
+		ft_lstclear(&command_list, free);
+	}
+
+}
+
+
+/*
 int main(int ac, char **av, char **env)
 {
 	int		tmp_fd;
@@ -34,6 +92,7 @@ int main(int ac, char **av, char **env)
 	t_token		*t;
 	t_list		*enviorment;
 	t_list		*command_list;
+	int	pid;
 
 	(void)(av);
 	display_logo();
@@ -56,25 +115,30 @@ int main(int ac, char **av, char **env)
 			x = (t_cmd *)curr->content;
 			if (!x->error_free)
 				continue;
-
-			printf("-----------------------\n");
+	
+			pid = fork();
+			if (pid == 0)
+				execv(x->command[0], x->command);
+			else
+				wait(NULL);
+			//printf("-----------------------\n");
 			tmp_fd = x->fd_in;
-			printf("-/--: input fd : %d\n", tmp_fd);
+			//printf("-/--: input fd : %d\n", tmp_fd);
 			if (tmp_fd > 2)
 				close(tmp_fd);
 			tmp_fd = x->fd_out;
-			printf("-/--: output fd : %d\n", tmp_fd);
+			//printf("-/--: output fd : %d\n", tmp_fd);
 			if (tmp_fd > 2)
 				close(tmp_fd);
-			printf("-/--: Command : ");
-			for (int y = 0; x->command && (x->command)[y] != NULL; y++)
+			//printf("-/--: Command : ");
+			for (int y = 0;  0 && x->command && (x->command)[y] != NULL; y++)
 			{
 				printf("%s ",(x->command)[y]);
 			}
-			printf("\n");
-			printf("-/--: Error Free : %d\n", x->error_free);
+			//printf("\n");
+			//printf("-/--: Error Free : %d\n", x->error_free);
 		}
 		ft_lstclear(&command_list, free);
 	}
 
-}
+}*/

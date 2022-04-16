@@ -6,10 +6,11 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/15 18:12:48 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/16 03:30:45 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
+
 char *add_prefix(const char *prefix, const char *file)
 {
 	int		len;
@@ -18,52 +19,47 @@ char *add_prefix(const char *prefix, const char *file)
 
 	len = ft_strlen(file);
 	len_prefix = ft_strlen(prefix);
-	buffer = malloc(sizeof(char) * (len_prefix + len));
+	buffer = malloc(sizeof(char) * (len_prefix + len + 1));
 	strcpy(buffer, prefix);
-	strcpy((buffer + len_prefix), file);
+	strcpy(buffer + len_prefix, "/");
+	strcpy((buffer + len_prefix + 1), file);
 	return (buffer);
-}
-
-bool	check_argument_file(t_token *token, t_cmd *cmd)
-{
-	const char	*error;
-
-	error = FILENTFOUND;
-	if (!access(token->data, F_OK))
-	{
-		if (!access(token->data, R_OK))
-			return (0);
-		else
-			error = PERMISSION;
-	}
-	cmd->error_free = 0;
-	return (printf("%s: %s\n", token->data, error));
 }
 
 bool	check_file(t_token *token, t_cmd *cmd)
 {
 	char	*buffer;
+	int		i;
+	char 	**paths;
 	const char	*error;
 
+	i = 0;
 	error = FILENTFOUND;
 	if (cmd->command)
-		return (check_argument_file(token, cmd));
+		return (0);
+		//return (check_argument_file(token, cmd));
 	error = CMDNOTFOUND;
 	if (!access(token->data, F_OK))
 		return (0);
-	buffer =  add_prefix("/bin/", token->data);
-	if (!access(buffer, F_OK))
+	paths = ft_split(getenv("PATH"), ':');
+	while (paths[i]) 
 	{
-		if (!access(buffer, R_OK))
+		buffer =  add_prefix(paths[i], token->data);
+		if (!access(buffer, F_OK))
 		{
-			free(token->data);
-			token->data = buffer;
-			return (0);
+			if (!access(buffer, R_OK))
+			{
+				free(token->data);
+				token->data = buffer;
+				return (0);
+			}
+			else
+				error = PERMISSION;
 		}
-		else
-			error = PERMISSION;
+		free(buffer);
+		free(paths[i++]);
 	}
-	free(buffer);
+	free(paths);
 	cmd->error_free = 0;
 	return (printf("msh: %s: %s\n", token->data, error));
 }
@@ -111,7 +107,7 @@ t_list	*parser_one(t_token_list *lst, t_list *env)
 			wrape_command(&cmd_lst, &cmd, &vector_size);
 		else if ((t->is_key && t->type == DL_ARROW))
 		{
-			heredoc(t->next_token->data, env);
+			heredoc(t->next_token->data, env, cmd);
 			t = t->next_token;
 		}
 		else if (t->is_key)
