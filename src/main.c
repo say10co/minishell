@@ -24,6 +24,21 @@ void display_logo(void)
 
 }
 
+void destroy_token_list(t_token_list *tokens)
+{
+	t_token *curr;
+	t_token *tmp;
+
+	curr = tokens->all;
+	while (curr)
+	{
+		free(curr->data);
+		tmp = curr;
+		curr = curr->next_token;
+		free(tmp);
+	}
+}
+
 int main(int ac, char **av, char **env)
 {
 	int		ofd;
@@ -33,20 +48,27 @@ int main(int ac, char **av, char **env)
 	t_cmd		*x;
 	t_token_list	token_lst;
 	t_token		*t;
-	t_list		*enviorment;
-	t_list		*command_list;
+	t_list		*enviorment = NULL;
+	t_list		*command_list = NULL;
 	int	pid;
 
 	(void)(av);
 	display_logo();
+	enviorment = create_env(env);
 	while (ac)
 	{
+		ft_lstclear(&command_list, free);
 		cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
 		get_tokens(&token_lst, cmd, ft_strlen(cmd));
-		if (!token_lst.nb_tokens || n_parser(&token_lst, &enviorment, env))
+		if (!token_lst.nb_tokens || n_parser(&token_lst, &enviorment))
+		{ 
+			destroy_token_list(&token_lst);
 			continue;
+		}
 		command_list = parser_one(&token_lst, enviorment);
+			destroy_token_list(&token_lst);
 		add_history(cmd);
+		free(cmd);
 		t  = token_lst.all;
 		for (t_list *curr = command_list; curr != NULL; curr = curr->next)
 		{
@@ -76,8 +98,8 @@ int main(int ac, char **av, char **env)
 			if (!access("/tmp/minishell-dumy_file-0ew3d", F_OK))
 				unlink("/tmp/minishell-dumy_file-0ew3d");
 		}
-		ft_lstclear(&command_list, free);
 	}
+	ft_lstclear(&enviorment, free);
 
 }
 
