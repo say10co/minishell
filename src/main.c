@@ -135,7 +135,8 @@ int main(int ac, char **av, char **env)
 		//cmd = "ls -la";
 		command_list = parse_command(cmd, enviorment);
 		add_history(cmd);
-		//
+	  exec_cmd(command_list);
+    //
 		//	execute commands in command list
 		//		destroy each command after being executed
 		//		destroy_command();
