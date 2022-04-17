@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/17 00:54:48 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/17 01:23:03 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "../libft/libft.h"
 # include "lexer.h"
 # include <strings.h>
+# include <stdlib.h>
 
 # define PERMISSION "Permission denied"
 # define FILENTFOUND "No such file or directory"
