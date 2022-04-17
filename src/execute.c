@@ -34,7 +34,7 @@ void exec_cmd(t_list *icmd)
   {
     cmd = (t_cmd *)icmd->content;  
     printf("------------\n");
-    printf("cmd => %s \n", cmd->command[1]);
+    printf("cmd => %s \n", cmd->command[0]);
     printf("fdi => %d \n", cmd->fd_in);
     printf("fdo => %d \n", cmd->fd_out);
     printf("------------\n");

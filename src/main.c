@@ -111,10 +111,10 @@ t_list *parse_command(char *cmd, t_list *enviorment)
 		destroy_token_list(tokens);
 		return (NULL);
 	}
-	print_tokens(tokens);
+	//print_tokens(tokens);
 	command_list = parser_one(tokens, enviorment);
 
-	print_command_data(command_list);
+	//print_command_data(command_list);
 
 	destroy_token_list(tokens);
 	return (command_list);
