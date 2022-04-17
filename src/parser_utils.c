@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 02:33:48 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/16 03:05:46 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/17 00:18:08 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	append_to_lst(char ***vector, char *elem, size_t *vector_size)
 	if (*vector == NULL)
 	{
 		*vector = (char **)malloc(sizeof(char *) * 2);
-		(*vector)[0] = elem;
+		(*vector)[0] = ft_strdup(elem);
 		*vector_size += 1;
 	}
 	else
@@ -102,7 +102,7 @@ void	append_to_lst(char ***vector, char *elem, size_t *vector_size)
 		tmp = *vector;
 		*vector = (char **)malloc(sizeof(char *) * (*vector_size + 2));
 		ft_memmove(*vector, tmp, sizeof(char *) * *vector_size);
-		(*vector)[*vector_size] = elem;
+		(*vector)[*vector_size] = ft_strdup(elem);
 		free(tmp);
 		*vector_size += 1;
 	}

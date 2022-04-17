@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/16 04:35:46 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/17 00:54:48 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char *get_values(char *token, t_list **str_lst, t_list *env, int *length);
 //*******************PARSER***************
 
 t_list *parser_one(t_token_list *lst, t_list *env);
-bool	n_parser(t_token_list *lst, t_list **env);
+bool	n_parser(t_token_list *lst, t_list *env);
 int		close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd);
 void	heredoc(char *eof, t_list *env, t_cmd *cmd);
 void	open_file(t_cmd *cmd, t_token *t, char *file_name);

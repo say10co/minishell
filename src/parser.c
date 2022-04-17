@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:03:56 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/16 04:37:18 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/16 22:21:22 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -59,7 +59,7 @@ struct s_pvars
 	int		last;
 };
 
-void	trim_expand_token(struct s_pvars *vars, t_list **env)
+void	trim_expand_token(struct s_pvars *vars, t_list *env)
 {
 	char	*polished;
 
@@ -74,19 +74,19 @@ void	trim_expand_token(struct s_pvars *vars, t_list **env)
 	{
 		polished = vars->t->data;
 		vars->t->data = get_values(vars->t->data,
-				&(vars->lst_list), *env, &(vars->length));
+				&(vars->lst_list), env, &(vars->length));
 		free(polished);
 	}
 }
 
-bool	n_parser(t_token_list *lst, t_list **env)
+bool	n_parser(t_token_list *lst, t_list *env)
 {
 	struct s_pvars	vars;
 
 	vars.length = 0;
 	vars.last = 0;
 	vars.lst_list = NULL;
-	if (!*env || !lst)
+	if (!env || !lst)
 		return (1);
 	vars.t = lst->all;
 	while (vars.t)

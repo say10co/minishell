@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:37:53 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/14 20:57:29 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/17 00:54:50 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -84,20 +84,20 @@ int	is_key_(int *i)
 	return (0);
 }
 
-void	get_data(char *buffer, int i, t_token **t, int *start)
+bool get_data(char *buffer, int i, t_token **t, int *start)
 {
 	int		is_key;
 	char	*tmp;
 
 	is_key = is_key_(&i);
 	if ((*t)->is_key && is_key && merge(buffer[0], (*t)->data[0], *t))
-		return ;
+		return (1);
 	buffer[i] = 0;
 	tmp = ft_strtrim(buffer, "\'\"");
 	if (tmp[0] == '\0')
 	{
 		free(tmp);
-		return ;
+		return (0);
 	}
 	if (*start == 0)
 	{
@@ -112,4 +112,5 @@ void	get_data(char *buffer, int i, t_token **t, int *start)
 	fill_token(*t, buffer);
 	*start = 0;
 	free(tmp);
+	return  (1);
 }

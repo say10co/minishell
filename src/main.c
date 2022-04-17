@@ -1,3 +1,4 @@
+
 #include "../includes/lexer.h"
 #include "../includes/includes.h"
 #include "../libft/libft.h"
@@ -5,8 +6,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-
-
 
 void display_logo(void)
 {
@@ -16,12 +15,11 @@ void display_logo(void)
 	logo = (char *)malloc(sizeof(char) * 330);
 	fd = open("logo.txt", O_RDONLY);
 	read(fd, logo, 329);
-	printf("\e\033[0;33m %s\n", logo);
-	//printf("\e[0;92m %s\n", logo);
+	//printf("\e\033[0;33m %s\n", logo);
+	printf("\e[0;92m %s\n", logo);
 	printf("\e\033[0;37m");
 	close(fd);
 	free(logo);
-
 }
 
 void destroy_token_list(t_token_list *tokens)
@@ -39,128 +37,111 @@ void destroy_token_list(t_token_list *tokens)
 	}
 }
 
+void	print_tokens(t_token_list *lst)
+{
+	t_token		*t;
+
+	t = lst->all;
+	while (t)
+	{
+		printf("--/-: [%s] {%p}\n", t->data, t->next_token);
+		t = t->next_token;
+	}
+}
+
+void	destroy_command(t_cmd * cmd)
+{
+	int	i;
+
+	i = 0;
+	if (cmd->fd_in > 2)
+		close(cmd->fd_in);
+	if (cmd->fd_out > 2)
+		close(cmd->fd_out);
+	while (cmd->command && (cmd->command)[i])
+		free((cmd->command)[i++]);
+}
+
+void	print_command_data(t_list *lst)
+{
+	t_list *curr;
+	t_cmd 	*cmd;
+
+	curr = lst;
+	while (curr)
+	{
+		cmd = (t_cmd *)curr->content;
+
+		if (!cmd->error_free)
+		{
+			destroy_command(cmd);		
+			curr = curr->next;
+			continue;
+		}
+
+		printf("-----------------------\n");
+		printf("-/--: input fd : %d\n", cmd->fd_in);
+		printf("-/--: output fd : %d\n", cmd->fd_out);
+		printf("-/--: Command : ");
+		for (int y = 0;  cmd->command && (cmd->command)[y] != NULL; y++)
+			printf("%s ",(cmd->command)[y]);
+		printf("\n");
+		printf("-/--: Error Free : %d\n", cmd->error_free);
+		curr = curr->next;
+		
+		//deallocating commands (debuging purpuses)
+		destroy_command(cmd);		
+	}
+
+}
+
+
+
+t_list *parse_command(char *cmd, t_list *enviorment)
+{
+	t_token_list *tokens;
+	t_list		*command_list;
+
+	command_list = NULL;
+	tokens = get_tokens(cmd);
+	if (!tokens->nb_tokens)
+		return (NULL);
+	if (n_parser(tokens, enviorment))
+	{
+		destroy_token_list(tokens);
+		return (NULL);
+	}
+	print_tokens(tokens);
+	command_list = parser_one(tokens, enviorment);
+
+	print_command_data(command_list);
+
+	destroy_token_list(tokens);
+	return (command_list);
+}
+
 int main(int ac, char **av, char **env)
 {
-	int		ofd;
-	int		ifd;
-	int		tmp_fd;
+	t_list		*enviorment;
+	t_list		*command_list;
 	char		*cmd;
-	t_cmd		*x;
-	t_token_list	token_lst;
-	t_token		*t;
-	t_list		*enviorment = NULL;
-	t_list		*command_list = NULL;
-	int	pid;
 
 	(void)(av);
 	display_logo();
 	enviorment = create_env(env);
 	while (ac)
 	{
-		ft_lstclear(&command_list, free);
 		cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
-		get_tokens(&token_lst, cmd, ft_strlen(cmd));
-		if (!token_lst.nb_tokens || n_parser(&token_lst, &enviorment))
-		{ 
-			destroy_token_list(&token_lst);
-			continue;
-		}
-		command_list = parser_one(&token_lst, enviorment);
-			destroy_token_list(&token_lst);
+		//cmd = "ls -la";
+		command_list = parse_command(cmd, enviorment);
 		add_history(cmd);
+		//
+		//	execute commands in command list
+		//		destroy each command after being executed
+		//		destroy_command();
+		//
+		ft_lstclear(&command_list, free);
 		free(cmd);
-		t  = token_lst.all;
-		for (t_list *curr = command_list; curr != NULL; curr = curr->next)
-		{
-			x = (t_cmd *)curr->content;
-			if (!x->error_free)
-				continue;
-			
-			ifd = dup(0);
-			ofd = dup(1);
-			pid = fork();
-			if (pid == 0)
-			{
-				dup2(x->fd_in, 0);
-				dup2(x->fd_out, 1);
-				execv(x->command[0], x->command);
-			}
-			else
-				wait(NULL);
-			dup2(0, ifd);
-			dup2(1, ofd);
-			tmp_fd = x->fd_in;
-			if (tmp_fd > 2)
-				close(tmp_fd);
-			tmp_fd = x->fd_out;
-			if (tmp_fd > 2)
-				close(tmp_fd);
-			if (!access("/tmp/minishell-dumy_file-0ew3d", F_OK))
-				unlink("/tmp/minishell-dumy_file-0ew3d");
-		}
 	}
 	ft_lstclear(&enviorment, free);
-
 }
-
-
-/*
-int main(int ac, char **av, char **env)
-{
-	int		tmp_fd;
-	char		*cmd;
-	t_cmd		*x;
-	t_token_list	token_lst;
-	t_token		*t;
-	t_list		*enviorment;
-	t_list		*command_list;
-	int	pid;
-
-	(void)(av);
-	display_logo();
-	while (ac)
-	{
-		cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
-		get_tokens(&token_lst, cmd, ft_strlen(cmd));
-		if (!token_lst.nb_tokens || n_parser(&token_lst, &enviorment, env))
-			continue;
-		command_list = parser_one(&token_lst, enviorment);
-		add_history(cmd);
-		t  = token_lst.all;
-		while ( 0 && t)
-		{
-			printf("--/-: [%s] {%p}\n", t->data, t->next_token);
-			t = t->next_token;
-		}
-		for (t_list *curr = command_list; curr != NULL; curr = curr->next)
-		{
-			x = (t_cmd *)curr->content;
-			if (!x->error_free)
-				continue;
-	
-			pid = fork();
-			if (pid == 0)
-				execv(x->command[0], x->command);
-			else
-				wait(NULL);
-			//printf("-----------------------\n");
-			tmp_fd = x->fd_in;
-			//printf("-/--: input fd : %d\n", tmp_fd);
-			if (tmp_fd > 2)
-				close(tmp_fd);
-			tmp_fd = x->fd_out;
-			//printf("-/--: output fd : %d\n", tmp_fd);
-			if (tmp_fd > 2)
-				close(tmp_fd);
-			//printf("-/--: Command : ");
-			for (int y = 0;  0 && x->command && (x->command)[y] != NULL; y++)
-			{
-				printf("%s ",(x->command)[y]);
-			}
-			//printf("\n");
-			//printf("-/--: Error Free : %d\n", x->error_free);
-		}
-		ft_lstclear(&command_list, free);
-	}
-
-}*/

@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 03:07:59 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/13 04:07:24 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/17 00:55:42 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ typedef struct s_lexer
 
 }t_lexer;
 
-void	get_tokens(t_token_list *lst, char *text, int	size);
-int		is_keyword(char c);
-int		get_type(char c, int p);
-bool	merge(char c1, char c2, t_token *t);
-void	fill_token(t_token *t, char *buffer);
-void	get_data(char *buffer, int i, t_token **t, int *start);
-void	__init_list(t_token_list *lst);
+t_token_list	*get_tokens(char *text);
+int				is_keyword(char c);
+int				get_type(char c, int p);
+bool			merge(char c1, char c2, t_token *t);
+void			fill_token(t_token *t, char *buffer);
+bool			get_data(char *buffer, int i, t_token **t, int *start);
+void			__init_list(t_token_list *lst);
 
 #endif
