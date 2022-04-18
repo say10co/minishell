@@ -49,6 +49,16 @@ void exec_cmd(t_list *icmd)
   while(i < size && icmd)
   {
     cmd = (t_cmd *)icmd->content;
+    //printf("=================\n");
+    //printf("cmd : %s \n", cmd->command[0]);
+    //printf("=================\n");
+   
+
+    // TODO :
+    // -> check why some commands hang after executing like grep 
+    // -> handle out to file instead of stdout 
+
+    printf("fd out -> %d\n", cmd->fd_out);
     pid = fork();
     if(pid == -1)
       perror("fork faild ");
@@ -59,7 +69,10 @@ void exec_cmd(t_list *icmd)
       {
         // this is not the first command ! 
         // child gets the previous process output by duplicating read fd to stdin  
-        status = dup2(fd[(i - 1) * 2], 0);
+        if(cmd->fd_in > 2)
+          status = dup2(cmd->fd_in, 0);
+        else
+          status = dup2(fd[(i - 1) * 2], 0);
         if(status < 0)
           perror("dup2 faild");
       }
@@ -67,7 +80,10 @@ void exec_cmd(t_list *icmd)
       {
         // this is not the last command !
         // child output to the next command bu dup write fd to std out
-        status = dup2(fd[i * 2 + 1], 1);
+        if(cmd->fd_out > 2)
+          status = dup2(cmd->fd_out, 1);
+        else
+          status = dup2(fd[i * 2 + 1], 1);
         if(status < 0)
           perror("dup2 faild");
       }
@@ -85,6 +101,7 @@ void exec_cmd(t_list *icmd)
     icmd = icmd->next;
   }
 }
+
 /*
 // fd [0] -> read 
 // fd [1] -> write
