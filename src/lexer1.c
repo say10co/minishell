@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:31:44 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/17 00:51:46 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/17 02:25:39 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ void	get_keyword_and_filename(t_token_list *lst, t_lexer *var, char *text)
 {
 	if (var->i)
 	{
-		get_data(var->buffer, var->i, &(var->token), &(var->start));
-		lst->nb_tokens += 1;
+		if (get_data(var->buffer, var->i, &(var->token), &(var->start)))
+			lst->nb_tokens += 1;
 	}
 	if (*text)
 	{
 		var->buffer[0] = *text;
-		get_data(var->buffer, -1, &(var->token), &(var->start));
+		if (get_data(var->buffer, -1, &(var->token), &(var->start)))
+			lst->nb_tokens += 1;
 		if (!var->token->type)
 			var->token->type = get_type(*text, 0);
 	}
@@ -53,7 +54,7 @@ void	get_nonquoted(t_token_list *lst, t_lexer *var, char *text)
 		if (var->i)
 		{
 			if (get_data(var->buffer, var->i, &(var->token), &(var->start)))
-			lst->nb_tokens += 1;
+				lst->nb_tokens += 1;
 			var->i = 0;
 		}
 		else
@@ -84,6 +85,8 @@ t_token_list *get_tokens(char *text)
 	t_token_list	*lst;
 	int				size;
 
+	if (!text || !text[0])
+		return (NULL);
 	size = ft_strlen(text);
 	lst  = (t_token_list *)(malloc(sizeof(t_token_list)));
 	__init_list(lst);

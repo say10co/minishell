@@ -35,6 +35,7 @@ void destroy_token_list(t_token_list *tokens)
 		curr = curr->next_token;
 		free(tmp);
 	}
+	free(tokens);
 }
 
 void	print_tokens(t_token_list *lst)
@@ -60,6 +61,7 @@ void	destroy_command(t_cmd * cmd)
 		close(cmd->fd_out);
 	while (cmd->command && (cmd->command)[i])
 		free((cmd->command)[i++]);
+	free(cmd->command);
 }
 
 void	print_command_data(t_list *lst)
@@ -72,7 +74,7 @@ void	print_command_data(t_list *lst)
 	{
 		cmd = (t_cmd *)curr->content;
 
-		if (!cmd->error_free)
+		if (0  && !cmd->error_free)
 		{
 			destroy_command(cmd);		
 			curr = curr->next;
@@ -104,7 +106,7 @@ t_list *parse_command(char *cmd, t_list *enviorment)
 
 	command_list = NULL;
 	tokens = get_tokens(cmd);
-	if (!tokens->nb_tokens)
+	if (!tokens)
 		return (NULL);
 	if (n_parser(tokens, enviorment))
 	{
@@ -132,16 +134,17 @@ int main(int ac, char **av, char **env)
 	while (ac)
 	{
 		cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
-		//cmd = "ls -la";
 		command_list = parse_command(cmd, enviorment);
 		add_history(cmd);
-	  exec_cmd(command_list);
+	  
+    exec_cmd(command_list);
     //
 		//	execute commands in command list
 		//		destroy each command after being executed
 		//		destroy_command();
 		//
 		ft_lstclear(&command_list, free);
+		free(command_list); 
 		free(cmd);
 	}
 	ft_lstclear(&enviorment, free);

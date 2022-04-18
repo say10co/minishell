@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/16 04:14:38 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/17 02:34:12 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -47,7 +47,6 @@ bool	check_file(t_token *token, t_cmd *cmd)
 	error = FILENTFOUND;
 	if (cmd->command)
 		return (0);
-		//return (check_argument_file(token, cmd));
 	error = CMDNOTFOUND;
 	if (!access(token->data, F_OK))
 		return (0);
