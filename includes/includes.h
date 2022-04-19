@@ -34,7 +34,6 @@ typedef struct s_cmd
 	int		fd_out;
 	char	**command;
 	bool	error_free;
-
 }t_cmd;
 
 

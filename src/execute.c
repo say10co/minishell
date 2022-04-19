@@ -74,6 +74,19 @@ static void	close_iofd(t_cmd *cmd)
 		close(cmd->fd_out);
 }
 
+void merge_input(int fdpipe, int fdfile)
+{
+  int readed;
+  char buff[1];
+
+  readed = read(fdfile, buff, 1);
+  while(readed >= 1)
+  {
+    write(fdpipe, buff, 1);
+    readed = read(fdfile, buff, 1);
+  }
+}
+
 void	exec_cmd(t_list *icmd)
 {
 	t_cmd	*cmd;
@@ -102,13 +115,16 @@ void	exec_cmd(t_list *icmd)
 			else if (pid == 0)
 			{
 				// child process 
-				if (cmd->fd_in > 2)
+				if (cmd->fd_in > 2 && i == 0)
 					dup2(cmd->fd_in, 0);
-				if (i != 0)
+        if(cmd->fd_in > 2 && i > 0)
+          merge_input(fd[(i - 1) * 2 + 1], cmd->fd_in);
+        if (i != 0)
 				{
 					// this is not the first command ! 
 					// child gets the previous process output by duplicating read fd to stdin  
-					status = dup2(fd[(i - 1) * 2], 0);
+					//write(fd[(i - 1) * 2 + 1], "kanye_west_is_now_ye", 20);
+          status = dup2(fd[(i - 1) * 2], 0);
 					if (status < 0)
 						perror("dup2 faild");
 				}
