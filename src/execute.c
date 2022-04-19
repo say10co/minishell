@@ -1,7 +1,7 @@
 
 #include "../includes/includes.h"
 
-int *init_pipes(int size)
+static int *init_pipes(int size)
 {
   int *fd;
   int i;
@@ -21,7 +21,7 @@ int *init_pipes(int size)
   return (fd);
 }
 
-void close_pipes(int *fd, int size)
+static void close_pipes(int *fd, int size)
 {
   int i;
 
@@ -33,7 +33,7 @@ void close_pipes(int *fd, int size)
   }
 }
 
-void output_tofile(t_cmd *cmd)
+static void output_tofile(t_cmd *cmd)
 {
   pid_t pid;
   int status;
@@ -54,6 +54,14 @@ void output_tofile(t_cmd *cmd)
   }
 }
 
+static void close_iofd(t_cmd *cmd)
+{
+  if(cmd->fd_in > 2)
+    close(cmd->fd_in);
+  if(cmd->fd_out > 2)
+    close(cmd->fd_out);
+}
+
 void exec_cmd(t_list *icmd)
 {
   t_cmd *cmd;
@@ -70,47 +78,50 @@ void exec_cmd(t_list *icmd)
   while(i < size && icmd)
   {
     cmd = (t_cmd *)icmd->content;
-
+    
     // TODO :
     // -> check why some commands hang after executing like grep 
     // -> handle out to file instead of stdout 
-
-    pid = fork();
-    if(pid == -1)
-      perror("fork faild ");
-    else if(pid == 0)
+    if(cmd->error_free)
     {
-      // child process 
-      if(cmd->fd_in > 2)
-        dup2(cmd->fd_in, 0);
-      if(i != 0)
+      pid = fork();
+      if(pid == -1)
+        perror("fork faild ");
+      else if(pid == 0)
       {
-        // this is not the first command ! 
-        // child gets the previous process output by duplicating read fd to stdin  
-        status = dup2(fd[(i - 1) * 2], 0);
-        if(status < 0)
-          perror("dup2 faild");
+        // child process 
+        if(cmd->fd_in > 2)
+          dup2(cmd->fd_in, 0);
+        if(i != 0)
+        {
+          // this is not the first command ! 
+          // child gets the previous process output by duplicating read fd to stdin  
+          status = dup2(fd[(i - 1) * 2], 0);
+          if(status < 0)
+            perror("dup2 faild");
+        }
+        // check if file output to another fd beside stdout !
+        // execute command in another proccess redirect result to the given fd if cmd size > 1
+        // otherwise redirect command output to the given fd and display nada on stdout !
+        if(cmd->fd_out > 2 && size > 1)
+          output_tofile(cmd);
+        else if (cmd->fd_out > 2 && size == 1)
+          dup2(cmd->fd_out, 1);
+        if(i < size - 1)
+        {
+          // this is not the last command !
+          // child output to the next command bu dup write fd to std out
+          status = dup2(fd[i * 2 + 1], 1);
+          if(status < 0)
+            perror("dup2 faild");
+        }
+        // close pipe's fd to have EOF so the next proccess can read from it 
+        close_pipes(fd, size);
+        execve(cmd->command[0], cmd->command, NULL);
+        perror("exec faild");
       }
-      // check if file output to another fd beside stdout !
-      // execute command in another proccess redirect result to the given fd if cmd size > 1
-      // otherwise redirect command output to the given fd and display nada on stdout !
-      if(cmd->fd_out > 2 && size > 1)
-        output_tofile(cmd);
-      else if (cmd->fd_out > 2 && size == 1)
-        dup2(cmd->fd_out, 1);
-      if(i < size - 1)
-      {
-        // this is not the last command !
-        // child output to the next command bu dup write fd to std out
-        status = dup2(fd[i * 2 + 1], 1);
-        if(status < 0)
-          perror("dup2 faild");
-      }
-      // close pipe's fd to have EOF so the next proccess can read from it 
-      close_pipes(fd, size);
-      execve(cmd->command[0], cmd->command, NULL);
-      perror("exec faild");
     }
+    close_iofd(cmd);
     i++;
     icmd = icmd->next;
   }
