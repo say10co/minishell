@@ -33,6 +33,27 @@ void close_pipes(int *fd, int size)
   }
 }
 
+void output_tofile(t_cmd *cmd)
+{
+  pid_t pid;
+  int status;
+
+  pid = fork();
+  if(pid == 0)
+  {
+    status = dup2(cmd->fd_out, 1);
+    if(status < 0)
+      perror("dup2 faild");
+    execve(cmd->command[0], cmd->command, NULL);
+    perror("exec faild");
+  }
+  else if (pid > 0)
+  {
+    wait(&status);
+    kill(pid, 9);
+  }
+}
+
 void exec_cmd(t_list *icmd)
 {
   t_cmd *cmd;
@@ -71,21 +92,20 @@ void exec_cmd(t_list *icmd)
       {
         // this is not the first command ! 
         // child gets the previous process output by duplicating read fd to stdin  
-        if(cmd->fd_in > 2)
-          status = dup2(fd[(i - 1) * 2], cmd->fd_in);
-        else
-          status = dup2(fd[(i - 1) * 2], 0);
+        //if(cmd->fd_in > 2)
+          //status = dup2(fd[(i - 1) * 2], cmd->fd_in); 
+        status = dup2(fd[(i - 1) * 2], 0);
         if(status < 0)
           perror("dup2 faild");
       }
+      // check if file output to another fd beside stdout !
+      if(cmd->fd_out > 2)
+        output_tofile(cmd);      
       if(i < size - 1)
       {
         // this is not the last command !
         // child output to the next command bu dup write fd to std out
-        if(cmd->fd_out > 2)
-          status = dup2(fd[i * 2 + 1], cmd->fd_out);
-        else
-          status = dup2(fd[i * 2 + 1], 1);
+        status = dup2(fd[i * 2 + 1], 1);
         if(status < 0)
           perror("dup2 faild");
       }
