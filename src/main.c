@@ -113,10 +113,10 @@ t_list *parse_command(char *cmd, t_list *enviorment)
 		destroy_token_list(tokens);
 		return (NULL);
 	}
-	print_tokens(tokens);
+	//print_tokens(tokens);
 	command_list = parser_one(tokens, enviorment);
 
-	print_command_data(command_list);
+	//print_command_data(command_list);
 
 	destroy_token_list(tokens);
 	return (command_list);
@@ -136,7 +136,9 @@ int main(int ac, char **av, char **env)
 		cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
 		command_list = parse_command(cmd, enviorment);
 		add_history(cmd);
-		//
+	  
+    exec_cmd(command_list);
+    //
 		//	execute commands in command list
 		//		destroy each command after being executed
 		//		destroy_command();
