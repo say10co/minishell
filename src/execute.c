@@ -70,13 +70,6 @@ void exec_cmd(t_list *icmd)
   while(i < size && icmd)
   {
     cmd = (t_cmd *)icmd->content;
-    /*
-    printf("=================\n");
-    printf("cmd : %s \n", cmd->command[0]);
-    printf("fd in: %d \n", cmd->fd_in);
-    printf("fd out: %d \n", cmd->fd_out);
-    printf("=================\n");
-    */
 
     // TODO :
     // -> check why some commands hang after executing like grep 
@@ -113,19 +106,11 @@ void exec_cmd(t_list *icmd)
         if(status < 0)
           perror("dup2 faild");
       }
+      // close pipe's fd to have EOF so the next proccess can read from it 
       close_pipes(fd, size);
       execve(cmd->command[0], cmd->command, NULL);
       perror("exec faild");
     }
-    /*
-    else if(pid > 0)
-    {
-      // parent process 
-      waitpid(pid, NULL, 0);
-      kill(pid, 9);
-      printf("command killed : %s \n", cmd->command[0]);
-    }
-    */
     i++;
     icmd = icmd->next;
   }
