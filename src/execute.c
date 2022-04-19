@@ -99,8 +99,10 @@ void exec_cmd(t_list *icmd)
           perror("dup2 faild");
       }
       // check if file output to another fd beside stdout !
-      if(cmd->fd_out > 2)
-        output_tofile(cmd);      
+      if(cmd->fd_out > 2 && size > 1)
+        output_tofile(cmd);
+      else if (cmd->fd_out > 2 && size == 1)
+        dup2(cmd->fd_out, 1);
       if(i < size - 1)
       {
         // this is not the last command !

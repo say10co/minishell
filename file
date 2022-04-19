@@ -16,3 +16,12 @@ minishell
 src
 test_leaks.sh
 tests
+Makefile
+file
+includes
+libft
+logo.txt
+minishell
+src
+test_leaks.sh
+tests
