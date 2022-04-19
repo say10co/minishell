@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 02:33:48 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/17 02:08:47 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/19 22:47:34 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd)
 void	open_file(t_cmd *cmd, t_token *t, char *file_name)
 {
 	if (t->type == R_ARROW && cmd->error_free)
-		cmd->fd_out = close_old_open_new(cmd, file_name, O_WRONLY, cmd->fd_out);
+		cmd->fd_out = close_old_open_new(cmd, file_name, O_TRUNC, cmd->fd_out);
 	else if (t->type == DR_ARROW && cmd->error_free)
 		cmd->fd_out = close_old_open_new(cmd, file_name, O_APPEND, cmd->fd_out);
 	else if (t->type == L_ARROW && cmd->error_free)
