@@ -25,3 +25,4 @@ minishell
 src
 test_leaks.sh
 tests
+something

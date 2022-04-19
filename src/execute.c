@@ -88,17 +88,19 @@ void exec_cmd(t_list *icmd)
     else if(pid == 0)
     {
       // child process 
+      if(cmd->fd_in > 2)
+        dup2(cmd->fd_in, 0);
       if(i != 0)
       {
         // this is not the first command ! 
         // child gets the previous process output by duplicating read fd to stdin  
-        //if(cmd->fd_in > 2)
-          //status = dup2(fd[(i - 1) * 2], cmd->fd_in); 
         status = dup2(fd[(i - 1) * 2], 0);
         if(status < 0)
           perror("dup2 faild");
       }
       // check if file output to another fd beside stdout !
+      // execute command in another proccess redirect result to the given fd if cmd size > 1
+      // otherwise redirect command output to the given fd and display nada on stdout !
       if(cmd->fd_out > 2 && size > 1)
         output_tofile(cmd);
       else if (cmd->fd_out > 2 && size == 1)
