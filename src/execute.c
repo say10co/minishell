@@ -87,7 +87,7 @@ void merge_input(int fdpipe, int fdfile)
   }
 }
 
-void	exec_cmd(t_list *icmd)
+void	exec_cmd(t_list *icmd, char **env)
 {
 	t_cmd	*cmd;
 	pid_t	pid;
@@ -95,6 +95,7 @@ void	exec_cmd(t_list *icmd)
 	int		status;
 	int		size;
 	int		i;
+  
 
 	// init pipes with in memory file descriptors so we can share data betweem processes 
 	size = ft_lstsize(icmd);
@@ -104,10 +105,12 @@ void	exec_cmd(t_list *icmd)
 	{
 		cmd = (t_cmd *)icmd->content;
 
-		// TODO :
+    if(is_builtin(cmd->command[0]))
+		  exec_builtin(is_builtin(cmd->command[0]), cmd); 
+    // TODO :
 		// -> check why some commands hang after executing like grep 
 		// -> handle out to file instead of stdout 
-		if (cmd->error_free)
+		else if (cmd->error_free)
 		{
 			pid = fork();
 			if (pid == -1)
@@ -147,7 +150,7 @@ void	exec_cmd(t_list *icmd)
 				}
 				// close pipe's fd to have EOF so the next proccess can read from it 
 				close_pipes(fd, size);
-				execve(cmd->command[0], cmd->command, NULL);
+				execve(cmd->command[0], cmd->command, env);
 				perror("exec faild");
 			}
 		}
