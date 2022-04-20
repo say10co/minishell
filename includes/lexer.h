@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 03:07:59 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/17 00:55:42 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/20 02:38:03 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ struct s_token
 	bool	is_key;
 	bool	found_space;
 	char	quoted;
+	bool	quote_err;
 	t_token	*next_token;
 };
 

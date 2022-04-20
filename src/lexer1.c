@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:31:44 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/17 02:25:39 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/20 02:43:25 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ void	get_between_quots(t_token_list *lst, t_lexer *var, char *text)
 	var->buffer[var->i++] = *text;
 	if (*text == var->quote)
 	{
-		get_data(var->buffer, var->i, &(var->token), &(var->start));
-		var->token->quoted = var->quote;
-		lst->nb_tokens += 1;
+		if (get_data(var->buffer, var->i, &(var->token), &(var->start)))
+		{
+			var->token->quoted = var->quote;
+			lst->nb_tokens += 1;
+		}
 		var->i = 0;
 		var->quote = 0;
 	}
@@ -106,7 +108,9 @@ t_token_list *get_tokens(char *text)
 		vars.j++;
 	}
 	if (vars.quote)
-		get_data(vars.buffer, 0, &(vars.token), &(vars.start));
+		(vars.token)->quote_err = 1;
+	else if (lst->nb_tokens == 0)
+		lst->all->data = ft_strdup("");
 	free(vars.buffer);
 	return (lst);
 }
