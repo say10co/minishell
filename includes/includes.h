@@ -22,14 +22,6 @@
 # include <stdlib.h>
 # include <signal.h>
 
-# define B_CD 501
-# define B_ECHO 502
-# define B_PWD 503
-# define B_EXPORT 504
-# define B_UNSET 505
-# define B_ENV 506
-# define B_EXIT 507
-
 # define PERMISSION "Permission denied"
 # define FILENTFOUND "No such file or directory"
 # define CMDNOTFOUND "command not found"
@@ -71,9 +63,4 @@ void	close_files(t_cmd *cmd);
 t_list	*create_env(char **env);
 
 //*****************EXECUTION***************
-void exec_cmd(t_list *icmd, char **env);
-
-// -----------------BUILTIN----------------
-int is_builtin(char *cmd);
-void exec_builtin(int ncmd, t_cmd *cmd);
-void cd(char **arg);
+void exec_cmd(t_list *icmd);
