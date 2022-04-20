@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:03:56 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/16 22:21:22 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/20 02:17:49 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -35,10 +35,10 @@ t_list	*create_env(char **env)
 
 bool	check_syntax(t_token *t, t_token_list *lst)
 {
+	if (t->quot_err)
+		return (printf(PARSE_ERR));
 	if (t->is_key && (!t->next_token || !t->next_token->data))
 		return (printf("%s '%s'\n", SYNTAX_ERR, "newline"));
-	if (t->data == NULL)
-		return (printf(PARSE_ERR));
 	if (lst->all->type == PIPE)
 		return (printf("%s '%s'\n", SYNTAX_ERR, t->data));
 	if (t->is_key)

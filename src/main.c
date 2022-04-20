@@ -30,7 +30,8 @@ void destroy_token_list(t_token_list *tokens)
 	curr = tokens->all;
 	while (curr)
 	{
-		free(curr->data);
+		if (!curr->quot_err)
+			free(curr->data);
 		tmp = curr;
 		curr = curr->next_token;
 		free(tmp);
@@ -96,8 +97,6 @@ void	print_command_data(t_list *lst)
 	}
 
 }
-
-
 
 t_list *parse_command(char *cmd, t_list *enviorment)
 {

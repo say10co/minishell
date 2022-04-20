@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:37:53 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/17 00:54:50 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/20 01:14:59 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -18,7 +18,7 @@ void	__init_list(t_token_list *lst)
 	lst->all->data = NULL;
 	lst->all->is_key = 0;
 	lst->all->type = 0;
-	lst->all->quoted = 0;
+	lst->all->quot_err = 0;
 	lst->all->length = 0;
 	lst->all->found_space = 0;
 	lst->nb_tokens = 0;
@@ -107,6 +107,7 @@ bool get_data(char *buffer, int i, t_token **t, int *start)
 		(*t)->next_token = NULL;
 		(*t)->quoted = 0;
 		(*t)->type = 0;
+		(*t)->quot_err = 0;
 	}
 	(*t)->is_key = is_key;
 	fill_token(*t, buffer);

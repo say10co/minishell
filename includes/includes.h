@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/17 01:23:03 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/20 01:42:25 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,6 @@ t_list	*create_env(char **env);
 
 //*****************EXECUTION***************
 void exec_cmd(t_list *icmd);
+
+
+void destroy_token_list(t_token_list *tokens);

@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/19 18:08:09 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/04/20 02:20:44 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	*init_pipes(int size)
 	int	i;
 	int	status;
 
+	if (!size)
+		return (0);
 	fd = (int *)malloc(sizeof(int) * (size - 1) * 2);
 	if (!fd)
 		perror("could't allocate memory !");
