@@ -24,6 +24,7 @@ void cd(char **arg)
   int size;
   char oldpath[4096];
   int status;
+  char *oldpwd;
 
   size = arg_size(arg);
   getcwd(oldpath, 4096);
@@ -38,6 +39,8 @@ void cd(char **arg)
   else if(size == 2 && arg[1][0] == '-')
   {
     // print current directory !!!
+    oldpwd = getenv("OLDPWD");
+    printf("old pwd : %s \n", oldpwd);
     status = chdir(".."); 
     if(status == -1)
       perror("cd faild");
