@@ -148,7 +148,7 @@ int main(int ac, char **av, char **env)
 		command_list = parse_command(cmd, &local_env);
 		add_history(cmd);
 	  
-    exec_cmd(command_list);
+    exec_cmd(command_list, env);
     //
 		//	execute commands in command list
 		//		destroy each command after being executed

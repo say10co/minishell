@@ -87,7 +87,7 @@ void merge_input(int fdpipe, int fdfile)
   }
 }
 
-void	exec_cmd(t_list *icmd)
+void	exec_cmd(t_list *icmd, char **env)
 {
 	t_cmd	*cmd;
 	pid_t	pid;
@@ -105,8 +105,7 @@ void	exec_cmd(t_list *icmd)
 		cmd = (t_cmd *)icmd->content;
 
 		if(is_builtin(cmd->command[0]))
-      printf("This is builtin : %d \n", is_builtin(cmd->command[0]));
-      
+      exec_builtin(is_builtin(cmd->command[0]), cmd);
     else if (cmd->error_free)
 		{
 			pid = fork();
@@ -147,7 +146,7 @@ void	exec_cmd(t_list *icmd)
 				}
 				// close pipe's fd to have EOF so the next proccess can read from it 
 				close_pipes(fd, size);
-				execve(cmd->command[0], cmd->command, NULL);
+				execve(cmd->command[0], cmd->command, env);
 				perror("exec faild");
 			}
 		}

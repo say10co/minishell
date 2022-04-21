@@ -6,7 +6,7 @@
 // TODO:
 // -> change PWD and OLDPWD in env 
 // -> print path when passing "-"
-// -> 
+// -> handle cd with 2 args (replace the 1st arg with the second) ! 
 
 static int arg_size(char **arg)
 {
