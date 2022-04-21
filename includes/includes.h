@@ -73,7 +73,7 @@ void	append_to_lst(char ***vector, char *elem, size_t *vector_size);
 void	close_files(t_cmd *cmd);
 t_list	*create_env(char **env);
 
-//*****************EXECUTION***************
+//***************** EXECUTION ***************
 void exec_cmd(t_list *icmd);
 int is_builtin(char *cmd);
 void exec_builtin(int ncmd, t_cmd *cmd);

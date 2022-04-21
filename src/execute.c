@@ -104,10 +104,10 @@ void	exec_cmd(t_list *icmd)
 	{
 		cmd = (t_cmd *)icmd->content;
 
-		// TODO :
-		// -> check why some commands hang after executing like grep 
-		// -> handle out to file instead of stdout 
-		if (cmd->error_free)
+		if(is_builtin(cmd->command[0]))
+      printf("This is builtin : %d \n", is_builtin(cmd->command[0]));
+      
+    else if (cmd->error_free)
 		{
 			pid = fork();
 			if (pid == -1)
