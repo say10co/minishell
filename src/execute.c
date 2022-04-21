@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/19 18:08:09 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:41:31 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,14 +117,14 @@ void	exec_cmd(t_list *icmd)
 				// child process 
 				if (cmd->fd_in > 2 && i == 0)
 					dup2(cmd->fd_in, 0);
-        if(cmd->fd_in > 2 && i > 0)
-          merge_input(fd[(i - 1) * 2 + 1], cmd->fd_in);
-        if (i != 0)
+		        if(cmd->fd_in > 2 && i > 0)
+					merge_input(fd[(i - 1) * 2 + 1], cmd->fd_in);
+        		if (i != 0)
 				{
 					// this is not the first command ! 
 					// child gets the previous process output by duplicating read fd to stdin  
 					//write(fd[(i - 1) * 2 + 1], "kanye_west_is_now_ye", 20);
-          status = dup2(fd[(i - 1) * 2], 0);
+					status = dup2(fd[(i - 1) * 2], 0);
 					if (status < 0)
 						perror("dup2 faild");
 				}
