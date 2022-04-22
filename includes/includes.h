@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/21 03:24:23 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/21 22:14:26 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ char	*polish(const char *s, char *charset);
 //*******************Expander************ 
 char *get_values(char *token, t_list **str_lst, int *length, t_list *local_env);
 char    *get_value_of_key(char *key, t_list *local_env);
+
+//******************** PARSER ONE ********
+bool	 is_assignment(char *str, char **name);
+
 
 
 

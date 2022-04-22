@@ -6,9 +6,10 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/21 03:26:06 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/21 22:15:15 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../includes/includes.h"
 
 char *add_prefix(const char *prefix, const char *file)
@@ -57,9 +58,8 @@ void	 add_to_env(char *str, t_list **env, int len_name)
 		curr->content = ft_strdup(str);
 }
 
-int	assignment(char *str, t_list **local_env)
+bool	 is_assignment(char *str, char **name)
 {
-
 	char	*tmp_str;
 	char	*equale;
 	int		i;
@@ -73,16 +73,26 @@ int	assignment(char *str, t_list **local_env)
 	}
 	i = 0;
 	*equale = 0;
-	while (equale[i])
+	while (tmp_str[i])
 	{
-		if (!ft_isalpha(equale[i++]))
+		if (!ft_isalpha(tmp_str[i++]))
 		{
 			free(tmp_str);
 			return (0);
 		}
 	}
-	add_to_env(str, local_env, ft_strlen(tmp_str));
-	free(tmp_str);
+	*name = tmp_str;
+	return (1);
+}
+
+int	assignment(char *str, t_list **local_env)
+{
+	char *name;
+
+	name = NULL;
+	if (!is_assignment(str, &name))
+		return (0);
+	add_to_env(str, local_env, ft_strlen(name));
 	return (1);
 }
 
