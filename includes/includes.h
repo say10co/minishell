@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/21 22:14:26 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:08:04 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ typedef struct s_cmd
 	bool	error_free;
 }t_cmd;
 
+typedef struct s_env
+{
+	char *key;
+	char *val;
+}	t_env;
+
+t_list *genv;
+
 
 char	*append(char *prefix, const char *sufix);
 void	free_befor_end(char **lst, int end);
@@ -82,3 +90,8 @@ void exec_cmd(t_list *icmd, char **env);
 int is_builtin(char *cmd);
 void exec_builtin(int ncmd, t_cmd *cmd);
 void cd(char **arg);
+
+//***************** ENV **********************
+void	ft_initenv(char **env);
+char	*ft_getenv(char *key);
+void	ft_updateenv(char *key, char *new_val);
