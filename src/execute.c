@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/19 18:08:09 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/04/21 19:41:31 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void merge_input(int fdpipe, int fdfile)
   }
 }
 
-void	exec_cmd(t_list *icmd)
+void	exec_cmd(t_list *icmd, char **env)
 {
 	t_cmd	*cmd;
 	pid_t	pid;
@@ -104,10 +104,9 @@ void	exec_cmd(t_list *icmd)
 	{
 		cmd = (t_cmd *)icmd->content;
 
-		// TODO :
-		// -> check why some commands hang after executing like grep 
-		// -> handle out to file instead of stdout 
-		if (cmd->error_free)
+		if(is_builtin(cmd->command[0]))
+      exec_builtin(is_builtin(cmd->command[0]), cmd);
+    else if (cmd->error_free)
 		{
 			pid = fork();
 			if (pid == -1)
@@ -117,14 +116,14 @@ void	exec_cmd(t_list *icmd)
 				// child process 
 				if (cmd->fd_in > 2 && i == 0)
 					dup2(cmd->fd_in, 0);
-        if(cmd->fd_in > 2 && i > 0)
-          merge_input(fd[(i - 1) * 2 + 1], cmd->fd_in);
-        if (i != 0)
+		        if(cmd->fd_in > 2 && i > 0)
+					merge_input(fd[(i - 1) * 2 + 1], cmd->fd_in);
+        		if (i != 0)
 				{
 					// this is not the first command ! 
 					// child gets the previous process output by duplicating read fd to stdin  
 					//write(fd[(i - 1) * 2 + 1], "kanye_west_is_now_ye", 20);
-          status = dup2(fd[(i - 1) * 2], 0);
+					status = dup2(fd[(i - 1) * 2], 0);
 					if (status < 0)
 						perror("dup2 faild");
 				}
@@ -147,7 +146,7 @@ void	exec_cmd(t_list *icmd)
 				}
 				// close pipe's fd to have EOF so the next proccess can read from it 
 				close_pipes(fd, size);
-				execve(cmd->command[0], cmd->command, NULL);
+				execve(cmd->command[0], cmd->command, env);
 				perror("exec faild");
 			}
 		}

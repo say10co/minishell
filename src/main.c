@@ -147,8 +147,8 @@ int main(int ac, char **av, char **env)
 		cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
 		command_list = parse_command(cmd, &local_env);
 		add_history(cmd);
-	  
-    exec_cmd(command_list);
+    print_env(local_env);	  
+    exec_cmd(command_list, env);
     //
 		//	execute commands in command list
 		//		destroy each command after being executed
