@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/21 22:14:26 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/22 18:24:03 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@ typedef struct s_cmd
 	char	**command;
 	bool	error_free;
 }t_cmd;
+
+typedef struct s_env
+{
+	char *key;
+	char *val;
+}	t_env;
+
+t_list *genv;
 
 
 char	*append(char *prefix, const char *sufix);
