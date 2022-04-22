@@ -1,4 +1,4 @@
-SRC = src/builtin/utils.c src/expander.c src/parser_utils.c  src/utils.c src/lexer_utils.c src/lexer1.c src/main.c src/parser.c src/parser_one.c src/execute.c src/builtin/b_cd.c src/builtin/exec_builtin.c src/builtin/utils.c
+SRC = src/builtin/utils.c src/expander.c src/parser_utils.c  src/utils.c src/lexer_utils.c src/lexer1.c src/main.c src/parser.c src/parser_one.c src/execute.c src/builtin/b_cd.c src/builtin/exec_builtin.c src/builtin/utils.c src/env.c
 
 OBJECTS = ${SRC:.c=.o}
 

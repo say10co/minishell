@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/22 18:24:03 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/04/22 18:59:19 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,3 +90,7 @@ void exec_cmd(t_list *icmd, char **env);
 int is_builtin(char *cmd);
 void exec_builtin(int ncmd, t_cmd *cmd);
 void cd(char **arg);
+
+//***************** ENV **********************
+void	ft_initenv(char **env);
+char	*ft_getenv(char *key);

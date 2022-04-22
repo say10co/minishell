@@ -135,11 +135,9 @@ t_list *parse_command(char *cmd, t_list	**local_env)
 
 void	print_env_g()
 {
-	t_env *content;
 	while (genv)
 	{
-		content = (t_env *)genv->content;
-		printf("[%s]->%s\n", content->key, content->val);
+		printf("[%s]->%s\n", (t_env *)genv->content->key, (t_env *)genv->content->val);
 		genv = genv->next;
 	}
 	printf("Done printing env\n");
@@ -155,16 +153,14 @@ int main(int ac, char **av, char **env)
 	(void)(env);
 	display_logo();
 	local_env = NULL;
-    ft_initenv(env);
-    printf("PWD : %s \n", ft_getenv("PWD"));
-	//print_env_g();
-	//print_env(local_env);	  
 	while (ac)
 	{
 		cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
 		command_list = parse_command(cmd, &local_env);
 		add_history(cmd);
-		//print_env_g();
+    	print_env(local_env);	  
+    	ft_initenv(env);
+		print_env_g()
 		exec_cmd(command_list, env);
     	//
 		//	execute commands in command list
