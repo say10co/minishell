@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/22 18:59:19 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:08:04 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,3 +94,4 @@ void cd(char **arg);
 //***************** ENV **********************
 void	ft_initenv(char **env);
 char	*ft_getenv(char *key);
+void	ft_updateenv(char *key, char *new_val);

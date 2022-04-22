@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:26:22 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/22 18:58:47 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:08:47 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_initenv(char **env)
 	}
 }
 
-char *ft_getenv(char *key)
+char	*ft_getenv(char *key)
 {
 	t_env	*env;
 	t_list	*curr;
@@ -46,4 +46,26 @@ char *ft_getenv(char *key)
 	}
 	
 	return NULL;
+}
+
+void	ft_updateenv(char *key, char *new_val)
+{
+	t_env	*env;
+	t_list	*curr;
+	char	*val;
+
+	curr = genv;
+	while(curr)
+	{
+		env = (t_env *)curr->content;
+		if(!ft_strcmp(key, env->key))
+		{
+			val = ft_strdup(new_val);
+			free(env->val);
+			env->val = val;
+			return;
+		}
+		curr = curr->next;
+	}
+	return;
 }
