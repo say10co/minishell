@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:03:56 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/21 21:27:12 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/22 20:45:51 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -59,7 +59,7 @@ struct s_pvars
 	int		last;
 };
 
-void	trim_expand_token(struct s_pvars *vars, t_list *local_env)
+void	trim_expand_token(struct s_pvars *vars)
 {
 	char	*polished;
 
@@ -73,12 +73,12 @@ void	trim_expand_token(struct s_pvars *vars, t_list *local_env)
 		&& ft_strchr(vars->t->data, '$'))
 	{
 		polished = vars->t->data;
-		vars->t->data = get_values(vars->t->data, &(vars->lst_list), &(vars->length), local_env);
+		vars->t->data = get_values(vars->t->data, &(vars->lst_list), &(vars->length));
 		free(polished);
 	}
 }
 
-bool	n_parser(t_token_list *lst, t_list *local_env)
+bool	n_parser(t_token_list *lst)
 {
 	struct s_pvars	vars;
 
@@ -92,7 +92,7 @@ bool	n_parser(t_token_list *lst, t_list *local_env)
 	{
 		if (check_syntax(vars.t, lst))
 			return (1);
-		trim_expand_token(&vars, local_env);
+		trim_expand_token(&vars);
 		vars.last = vars.t->type;
 		vars.t = vars.t->next_token;
 	}

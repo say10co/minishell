@@ -1,4 +1,4 @@
-SRC = src/builtin/utils.c src/expander.c src/parser_utils.c  src/utils.c src/lexer_utils.c src/lexer1.c src/main.c src/parser.c src/parser_one.c src/execute.c src/builtin/b_cd.c src/builtin/exec_builtin.c src/builtin/utils.c src/env.c
+SRC = src/print.c src/destructors.c  src/builtin/export.c src/builtin/utils.c src/expander.c src/parser_utils.c  src/utils.c src/lexer_utils.c src/lexer1.c src/main.c src/parser.c src/parser_one.c src/execute.c src/builtin/b_cd.c src/builtin/exec_builtin.c src/builtin/utils.c src/env.c
 
 OBJECTS = ${SRC:.c=.o}
 
@@ -17,7 +17,7 @@ PRINT:
 
 $(NAME) : $(OBJECTS) LIB
 	@echo "\n\033[0;33m Linking object files Done" "\033[1;32m"
-	@cc $(FLAGS) $(OBJECTS) -lreadline -L./libft -lft -o $(NAME)
+	@cc $(FLAGS) $(OBJECTS) -lreadline -L./libft -lft -fsanitize=address -o $(NAME)
 
 LIB :
 	@echo  "\n\033[0;33m Compiling Libft..."

@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/22 21:16:23 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/22 21:31:19 by adriouic         ###   ########.fr       */
+/*   Created: 2022/04/22 21:16:14 by adriouic          #+#    #+#             */
+/*   Updated: 2022/04/22 21:16:16 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/includes.h"
-
-void	export(char **command)
+void	del_node(t_list **lst, int index)
 {
-	char	*name;
+	t_list *prev;
+	t_list *next;
 	int		i;
+	
 
-	i = 1;
-	name = NULL;
-	if (!*command)
-		return ;
-	while (command[i])
+	i = 0;
+	if (!index)
 	{
-		if (is_assignment(command[i], &name))
-		{
-			ft_updateenv(name, ft_strchr(command[i], '=') + 1);
-			free(name);
-		}
-		i++;
+		next = (*lst)->next;
+		free((*lst)->content);
+		if (next)
+			*lst = next;
+		else
+			*lst = NULL;
+		free(*lst);
+		return ;
 	}
-
+	while (i < index - 1)
+		lst = lst->next;
+	next = lst->next;
+	lst->next = next->next;
+	free(next->data);
+	free(next);
 }

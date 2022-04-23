@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/22 19:08:04 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/04/23 00:29:32 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	**my_ft_split(const char *str, char c);
 char	*polish(const char *s, char *charset);
 
 //*******************Expander************ 
-char *get_values(char *token, t_list **str_lst, int *length, t_list *local_env);
+char *get_values(char *token, t_list **str_lst, int *length);
 char    *get_value_of_key(char *key, t_list *local_env);
 
 //******************** PARSER ONE ********
@@ -76,10 +76,10 @@ bool	 is_assignment(char *str, char **name);
 
 //*******************PARSER***************
 
-t_list *parser_one(t_token_list *lst, t_list **local_env);
-bool	n_parser(t_token_list *lst, t_list *local_env);
+t_list *parser_one(t_token_list *lst);
+bool	n_parser(t_token_list *lst);
 int		close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd);
-void	heredoc(char *eof, t_list *env, t_cmd *cmd);
+void	heredoc(char *eof, t_cmd *cmd);
 void	open_file(t_cmd *cmd, t_token *t, char *file_name);
 void	append_to_lst(char ***vector, char *elem, size_t *vector_size);
 void	close_files(t_cmd *cmd);
@@ -95,3 +95,18 @@ void cd(char **arg);
 void	ft_initenv(char **env);
 char	*ft_getenv(char *key);
 void	ft_updateenv(char *key, char *new_val);
+
+
+//******************* tmp ***************
+void export(char **command);
+
+
+
+//****************** Distructor.c ************
+
+void	destroy_command(t_cmd * cmd);
+void	destroy_command(t_cmd * cmd);
+void destroy_token_list(t_token_list *tokens);
+
+
+
