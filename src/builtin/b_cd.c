@@ -25,7 +25,7 @@ void cd(char **arg)
   int status;
   char *oldpwd;
   char *pwd;
-  char holder;
+  char *holder;
 
   size = arg_size(arg);
   getcwd(path, 4096);
@@ -39,6 +39,7 @@ void cd(char **arg)
       printf("cd: string not in pwd: %s\n", arg[1]);
     else
     {
+      printf("%s\n", holder);
       chdir(holder);
     }
   }
