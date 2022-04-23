@@ -1,6 +1,7 @@
 #!/bin/bash
 while [ 1 ]
 do
-	leaks minishell | grep 'leaked bytes.'
-	sleep 1
+  res=$(leaks minishell 2> /dev/null | grep '\leaked bytes.$')
+	printf ">>> %s\n" "$res"
+  sleep 1
 done
