@@ -2,6 +2,10 @@
 # Prerequisites
 *.d
 
+# vim's swap files 
+*.swp
+*.swo
+
 # Object files
 *.o
 *.ko

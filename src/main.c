@@ -155,10 +155,7 @@ int main(int ac, char **av, char **env)
 	(void)(env);
 	display_logo();
 	local_env = NULL;
-    ft_initenv(env);
-    printf("PWD : %s \n", ft_getenv("PWD"));
-    ft_updateenv("PWD", "LOL_THIS_A_JOKE");
-	printf("PWD : %s \n", ft_getenv("PWD"));
+  ft_initenv(env);
 	//print_env_g();
 	//print_env(local_env);	  
 	while (ac)

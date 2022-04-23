@@ -47,6 +47,7 @@ char	*ft_strnstr(const char *haysck, const char *needle, size_t n);
 int		ft_atoi(const char *str);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *s1);
+char *ft_strstr(char *container, char *target);
 
 //PART2 
 
@@ -61,6 +62,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
+char *ft_strreplace(char *container, char *target, char *replacement);
 
 //BONUS
 

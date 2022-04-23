@@ -97,7 +97,9 @@ void	exec_cmd(t_list *icmd, char **env)
 	int		i;
 
 	// init pipes with in memory file descriptors so we can share data betweem processes 
-	size = ft_lstsize(icmd);
+	if(!icmd)
+    return;
+  size = ft_lstsize(icmd);
 	fd = init_pipes(size);
 	i = 0;
 	while (i < size && icmd)
