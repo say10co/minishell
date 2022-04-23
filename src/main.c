@@ -51,10 +51,7 @@ int main(int ac, char **av, char **env)
 	(void)(av);
 
 	display_logo();
-    ft_initenv(env);
-    printf("PWD : %s \n", ft_getenv("PWD"));
-    ft_updateenv("PWD", "LOL_THIS_A_JOKE");
-	printf("PWD : %s \n", ft_getenv("PWD"));
+  ft_initenv(env);
 	while (ac)
 	{
 		cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
