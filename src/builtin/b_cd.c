@@ -22,14 +22,18 @@ static int arg_size(char **arg)
 void cd(char **arg)
 {
   int size;
-  char oldpath[4096];
+  char path[4096];
   int status;
   char *oldpwd;
 
   size = arg_size(arg);
-  getcwd(oldpath, 4096);
+  getcwd(path, 4096);
   if(size > 3)
     printf("cd: too many arguments\n");
+  else if(size == 3)
+  {
+    pwd = ft_getenv("PWD");
+  }
   else if(size == 2 && arg[1][0] != '-' && arg[1][0] != '~') 
   {
     status = chdir(arg[1]);
@@ -39,18 +43,25 @@ void cd(char **arg)
   else if(size == 2 && arg[1][0] == '-')
   {
     // print current directory !!!
-    oldpwd = getenv("OLDPWD");
-    printf("old pwd : %s \n", oldpwd);
-    status = chdir(".."); 
+    oldpwd = ft_getenv("OLDPWD");
+    printf("%s\n", oldpwd);
+    status = chdir(oldpwd); 
     if(status == -1)
       perror("cd faild");
   }
-  else if(size == 2 && arg[1][0] == '~')
+  else if((size == 2 && arg[1][0] == '~') || size == 1)
   {
-    status = chdir(getenv("HOME"));
+    status = chdir(ft_getenv("HOME"));
     if(status == -1)
       perror("cd faild !");
   }
   else 
+  {
     printf("Unsupported arguments !");
+    return;
+  }
+  ft_updateenv("OLDPWD", path);
+  getcwd(path, 4096);
+  ft_updateenv("PWD", path);
+  
 }
