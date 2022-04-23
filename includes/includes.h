@@ -90,6 +90,7 @@ void exec_cmd(t_list *icmd, char **env);
 int is_builtin(char *cmd);
 void exec_builtin(int ncmd, t_cmd *cmd);
 void cd(char **arg);
+void pwd();
 
 //***************** ENV **********************
 void	ft_initenv(char **env);
