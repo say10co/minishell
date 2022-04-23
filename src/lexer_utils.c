@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:37:53 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/21 02:00:13 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/23 08:25:12 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -94,7 +94,10 @@ bool get_data(char *buffer, int i, t_token **t, int *start)
 	if ((*t)->is_key && is_key && merge(buffer[0], (*t)->data[0], *t))
 		return (1);
 	buffer[i] = 0;
-	tmp = ft_strtrim(buffer, "\'\"");
+	if (i && (buffer[i-1] == S_QUOTE || buffer[i-1] == D_QUOTE))
+		tmp = ft_strtrim(buffer, &buffer[i-1]);
+	else
+		tmp = ft_strdup(buffer);
 	if (tmp[0] == '\0')
 	{
 		free(tmp);

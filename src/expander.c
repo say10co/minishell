@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 22:08:02 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/23 05:21:16 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/23 09:13:03 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../libft/libft.h"
@@ -23,9 +23,9 @@ typedef struct s_variables
 	char	*token;
 }t_variables;
 
-char	*wrappup_exapnded_token(t_list *str_lst, int total_length)
+char	*wrappup_exapnded_token(t_list *lst, int total_length)
 {
-	t_list	*curr;
+	char 	c;
 	char	*result;
 	int		i;
 	int		j;
@@ -36,14 +36,18 @@ char	*wrappup_exapnded_token(t_list *str_lst, int total_length)
 		printf("Allocation failed in 'wrappup_exapnded_token;'\n");
 		return (NULL);
 	}
-	curr = str_lst;
 	i = 0;
-	while (curr)
+	while (lst)
 	{
 		j = 0;
-		while (curr->content && ((char *)curr->content)[j])
-			result[i++] = ((char *)curr->content)[j++];
-		curr = curr->next;
+		if (lst->content)
+			c = ((char *)lst->content)[j];
+		while (c)
+		{
+			result[i++] = c; 
+			c = ((char *)lst->content)[++j];
+		}
+		lst = lst->next;
 	}
 	result[i] = 0;
 	return (result);
@@ -103,7 +107,7 @@ void	expand(t_variables *v, t_list **str_lst, int *length)
 	buffer[j] = 0;
 	t = ft_getenv(buffer);
 	*length += ft_strlen(t);
-	ft_lstadd_back(str_lst, ft_lstnew(t));
+	ft_lstadd_back(str_lst, ft_lstnew(ft_strdup(t)));
 	v->j = 0;
 	v->i = i;
 }
@@ -111,19 +115,25 @@ void	expand(t_variables *v, t_list **str_lst, int *length)
 char	*get_values(char *token, t_list **str_lst, int *length)
 {
 	t_variables	v;
+	char	q; 
 
+	q = 0;
 	v.i = 0;
 	v.j = 0;
 	*str_lst = NULL;
 	v.token = token;
 	v.len_token = ft_strlen(token);
-	v.buffer = (char *) malloc(sizeof(char) * v.len_token);
+	v.buffer = (char *) malloc(sizeof(char) * (v.len_token + 1));
 	while (v.token[v.i])
 	{
 		if (token[v.i] == '$')
 			expand(&v, str_lst, length);
-		else
+		else if (!q && ((v.token)[(v.i)] == D_QUOTE || (v.token)[(v.i)] == S_QUOTE))
+			q = (v.token)[(v.i)++];
+		else if (q && ((v.token)[(v.i)] != q && (v.token)[(v.i)] != q))
 			(v.buffer)[(v.j)++] = (v.token)[(v.i)++];
+		else
+			v.i++;
 	}
 	if (v.j)
 	{

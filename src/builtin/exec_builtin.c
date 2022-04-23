@@ -4,11 +4,13 @@
 void exec_builtin(int ncmd, t_cmd *cmd)
 {
   if(ncmd == B_CD)
-    cd(cmd->command);
+	  cd(cmd->command);
   else if (ncmd == B_EXPORT)
 	  export(cmd->command);
+  else if (ncmd == B_ENV)
+	  env(cmd->command);
   else if (ncmd == B_PWD)
-    pwd();
+	  pwd();
   else
-    printf("STILL UNSUPORTED ?");
+    printf("STILL UNSUPORTED ?\n");
 }

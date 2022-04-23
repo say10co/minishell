@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/21 19:41:31 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/04/23 05:43:02 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,5 +161,6 @@ void	exec_cmd(t_list *icmd, char **env)
 		wait(NULL);
 		i++;
 	}
+	unlink("/tmp/minishell-dumy_file-0ew3d");
 }
 

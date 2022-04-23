@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 00:32:01 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/23 00:36:13 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/23 08:42:44 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_env(t_list *env)
 {
 	while (env)
 	{
-		printf("->%s\n", (char *)env->content);
+		printf("=%s\n", (char *)env->content);
 		env = env->next;
 	}
 	printf("Done printing env\n");
@@ -75,7 +75,7 @@ void	print_command_data(t_list *lst)
 		printf("\n");
 		printf("-/--: Error Free : %d\n", cmd->error_free);
 		curr = curr->next;
-		destroy_command(cmd);		
+		//destroy_command(cmd);		
 	}
 
 }
@@ -89,8 +89,7 @@ void	print_env_g()
 	while (curr)
 	{
 		content = (t_env *)curr->content;
-		printf("[%s]->%s\n", content->key, content->val);
+		printf("%s=%s\n", content->key, content->val);
 		curr = curr->next;
 	}
-	printf("Done printing env\n");
 }
