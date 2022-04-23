@@ -1,0 +1,9 @@
+M\	\	/^int main(int ac, char **av, char **env)$/
+destroy_command	\	/^void	destroy_command(t_cmd * cmd)$/
+destroy_token_list	\	/^void destroy_token_list(t_token_list *tokens)$/
+display_logo	\	/^void display_logo(void)$/
+parse_command	\	/^t_list *parse_command(char *cmd, t_list	**local_en/
+print_command_data	\	/^void	print_command_data(t_list *lst)$/
+print_env	\	/^void	print_env(t_list *env)$/
+print_env_g	\	/^void	print_env_g()$/
+print_tokens	\	/^void	print_tokens(t_token_list *lst)$/

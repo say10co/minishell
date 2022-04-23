@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:26:22 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/22 19:08:47 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/04/23 00:01:35 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*ft_getenv(char *key)
 void	ft_updateenv(char *key, char *new_val)
 {
 	t_env	*env;
+	t_env	*new;
 	t_list	*curr;
 	char	*val;
 
@@ -67,5 +68,11 @@ void	ft_updateenv(char *key, char *new_val)
 		}
 		curr = curr->next;
 	}
+	new = (t_env*)(malloc(sizeof(t_env)));
+	if (!new)
+		perror("Allocation Failed!\n");
+	new->key = ft_strdup(key);
+	new->val = ft_strdup(new_val);
+	ft_lstadd_back(&genv, ft_lstnew(new));
 	return;
 }

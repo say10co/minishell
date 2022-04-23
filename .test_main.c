@@ -109,7 +109,7 @@ void	print_command_data(t_list *lst)
 
 
 
-t_list *parse_command(char *cmd, t_list	**local_env)
+t_list *parse_command(char *cmd)
 {
 	t_token_list *tokens;
 	t_list		*command_list;
@@ -118,12 +118,12 @@ t_list *parse_command(char *cmd, t_list	**local_env)
 	tokens = get_tokens(cmd);
 	if (!tokens)
 		return (NULL);
-	if (n_parser(tokens, *local_env))
+	if (n_parser(tokens))
 	{
 		destroy_token_list(tokens);
 		return (NULL);
 	}
-	command_list = parser_one(tokens, local_env);
+	command_list = parser_one(tokens);
 	//print_env(*local_env);
 
 	//print_command_data(command_list);
@@ -135,10 +135,15 @@ t_list *parse_command(char *cmd, t_list	**local_env)
 
 void	print_env_g()
 {
-	while (genv)
+	t_env *content;
+	t_list *curr;
+
+	curr = genv;
+	while (curr)
 	{
-		printf("[%s]->%s\n", (t_env *)genv->content->key, (t_env *)genv->content->val);
-		genv = genv->next;
+		content = (t_env *)curr->content;
+		printf("[%s]->%s\n", content->key, content->val);
+		curr = curr->next;
 	}
 	printf("Done printing env\n");
 }
@@ -148,20 +153,34 @@ int main(int ac, char **av, char **env)
 	t_list		*local_env;
 	t_list		*command_list;
 	char		*cmd;
+	t_cmd 		*a;
 
 	(void)(av);
 	(void)(env);
 	display_logo();
 	local_env = NULL;
+    ft_initenv(env);
+    printf("PWD : %s \n", ft_getenv("PWD"));
+    ft_updateenv("PWD", "LOL_THIS_A_JOKE");
+	printf("PWD : %s \n", ft_getenv("PWD"));
+	//print_env_g();
+	//print_env(local_env);	  
 	while (ac)
 	{
 		cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
-		command_list = parse_command(cmd, &local_env);
+		command_list = parse_command(cmd);
 		add_history(cmd);
-    	print_env(local_env);	  
-    	ft_initenv(env);
-		print_env_g()
-		exec_cmd(command_list, env);
+		a = (t_cmd *)(command_list->content);
+		if (a->error_free)
+		{
+			if (!ft_strcmp(a->command[0], "export"))
+			{
+				export(a->command);
+			}
+			else
+				exec_cmd(command_list, env);
+		}
+		//print_env_g();
     	//
 		//	execute commands in command list
 		//		destroy each command after being executed

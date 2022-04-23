@@ -6,13 +6,13 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 02:33:48 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/21 03:18:02 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/22 20:48:39 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
-void	heredoc(char *eof, t_list *env, t_cmd *cmd)
+void	heredoc(char *eof, t_cmd *cmd)
 {
 	t_list	*str_lst;
 	char	*buffer;
@@ -29,7 +29,7 @@ void	heredoc(char *eof, t_list *env, t_cmd *cmd)
 		if (!ft_strcmp(buffer, eof))
 			break ;
 		if (ft_strchr(buffer, '$'))
-			write(fd, get_values(buffer, &str_lst, &length, env), length);
+			write(fd, get_values(buffer, &str_lst, &length), length);
 		else
 			write(fd, buffer, ft_strlen(buffer));
 		write(fd, "\n", 1);

@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/21 22:15:15 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/23 00:40:59 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,6 @@ void 	deallocate(char **s)
 	free(s);
 }
 
-void	 add_to_env(char *str, t_list **env, int len_name)
-{
-	t_list *curr;
-
-	curr = *env;
-	if (!*env)
-	{
-		ft_lstadd_back(env, ft_lstnew(ft_strdup(str)));
-		return ;
-	}
-	while (curr && ft_strncmp(str, (char *)curr->content, len_name))
-		curr = curr->next;
-	if (!curr)
-	{
-		ft_lstadd_back(env, ft_lstnew(ft_strdup(str)));
-		return ;
-	}
-	else
-		curr->content = ft_strdup(str);
-}
-
 bool	 is_assignment(char *str, char **name)
 {
 	char	*tmp_str;
@@ -85,19 +64,8 @@ bool	 is_assignment(char *str, char **name)
 	return (1);
 }
 
-int	assignment(char *str, t_list **local_env)
-{
-	char *name;
 
-	name = NULL;
-	if (!is_assignment(str, &name))
-		return (0);
-	add_to_env(str, local_env, ft_strlen(name));
-	return (1);
-}
-
-
-bool	check_file(t_token *token, t_cmd *cmd, t_list **local_env)
+bool	check_file(t_token *token, t_cmd *cmd)
 {
 	char	*buffer;
 	int		i;
@@ -111,10 +79,8 @@ bool	check_file(t_token *token, t_cmd *cmd, t_list **local_env)
 	error = CMDNOTFOUND;
 	if (!access(token->data, F_OK) ||  is_builtin(token->data))
 		return (0);
-	else if (assignment(token->data, local_env))
-		return (1);
-	paths = ft_split(getenv("PATH"), ':');
-	while (paths[i]) 
+	paths = ft_split(ft_getenv("PATH"), ':');
+	while (paths && paths[i]) 
 	{
 		buffer =  add_prefix(paths[i++], token->data);
 		if (!access(buffer, F_OK))
@@ -164,7 +130,7 @@ void	__init_parser_vars(size_t *size, t_list **cmd_lst, t_cmd **cmd)
 	__init_cmd(*cmd);
 }
 
-t_list	*parser_one(t_token_list *lst, t_list **local_env)
+t_list	*parser_one(t_token_list *lst)
 {
 	size_t	vector_size;
 	t_list	*cmd_lst;
@@ -179,7 +145,7 @@ t_list	*parser_one(t_token_list *lst, t_list **local_env)
 			wrape_command(&cmd_lst, &cmd, &vector_size);
 		else if ((t->is_key && t->type == DL_ARROW))
 		{
-			heredoc(t->next_token->data, *local_env, cmd);
+			heredoc(t->next_token->data, cmd);
 			t = t->next_token;
 		}
 		else if (t->is_key)
@@ -187,7 +153,7 @@ t_list	*parser_one(t_token_list *lst, t_list **local_env)
 			open_file(cmd, t, t->next_token->data);
 			t = t->next_token;
 		}
-		else if (!check_file(t, cmd, local_env))
+		else if (!check_file(t, cmd))
 			append_to_lst(&(cmd->command), t->data, &vector_size);
 		if (!cmd->error_free)
 			close_files(cmd);
