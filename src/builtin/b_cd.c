@@ -2,7 +2,6 @@
 
 #include "../../includes/includes.h"
 
-
 // TODO:
 // -> change PWD and OLDPWD in env 
 // -> print path when passing "-"
@@ -25,6 +24,8 @@ void cd(char **arg)
   char path[4096];
   int status;
   char *oldpwd;
+  char *pwd;
+  char holder;
 
   size = arg_size(arg);
   getcwd(path, 4096);
@@ -33,6 +34,13 @@ void cd(char **arg)
   else if(size == 3)
   {
     pwd = ft_getenv("PWD");
+    holder = ft_strreplace(pwd, arg[1], arg[2]);
+    if(!holder)
+      printf("cd: string not in pwd: %s\n", arg[1]);
+    else
+    {
+      chdir(holder);
+    }
   }
   else if(size == 2 && arg[1][0] != '-' && arg[1][0] != '~') 
   {
