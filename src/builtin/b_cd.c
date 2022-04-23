@@ -3,9 +3,9 @@
 #include "../../includes/includes.h"
 
 // TODO:
-// -> handle '--'
-// -> handle '~-'
-// -> handle '~[USER]'
+// -> [DONE]handle '--'
+// -> [DONE]handle '~-'
+// -> [DONE]handle '~[USER]'
 
 static int arg_size(char **arg)
 {
@@ -16,6 +16,20 @@ static int arg_size(char **arg)
 	while(arg[l])
 		l++;
 	return (l);
+}
+
+static void go_touser(char *dir)
+{
+  char *holder;
+  int status;
+
+  holder = ft_strreplace(dir, "~", "/Users/");
+  if(!holder)
+    printf("msh: no such user or named directory: %s\n", holder);
+  status = chdir(holder);
+  if(status == -1)
+    printf("msh: no such user or named directory: %s\n", holder);
+  free(holder);
 }
 
 static void go_tohome()
@@ -91,9 +105,13 @@ void cd(char **arg)
 	getcwd(path, 4096);
 	if(size > 3)
 		printf("cd: too many arguments\n");
-	else if(size == 2 && arg[1][0] == '-' && ft_strlen(arg[1]) == 1)
+	else if(size == 2 && arg[1][0] == '~' && ft_strlen(arg[1]) > 1 && arg[1][0] != '/')
+    go_touser(arg[1]);
+  else if(size == 2 && arg[1][0] == '-' && ft_strlen(arg[1]) == 1)
     go_oldpwd();		
-	else if((size == 2 && arg[1][0] == '~' && ft_strlen(arg[1]) == 1) || size == 1)
+	else if((size == 2 && arg[1][0] == '~' && ft_strlen(arg[1]) == 1)
+    || size == 1 || ((!ft_strcmp("--", arg[1])
+    || !ft_strcmp("~-", arg[1])) && size == 2))
     go_tohome();
 	else if(size == 3)
     go_replcpwd(arg[1], arg[2]);		
