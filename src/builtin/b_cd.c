@@ -31,6 +31,21 @@ void cd(char **arg)
   getcwd(path, 4096);
   if(size > 3)
     printf("cd: too many arguments\n");
+  else if(size == 2 && arg[1][0] == '-' && ft_strlen(arg[1]) == 1)
+  {
+    // print current directory !!!
+    oldpwd = ft_getenv("OLDPWD");
+    printf("%s\n", oldpwd);
+    status = chdir(oldpwd); 
+    if(status == -1)
+      perror("cd faild");
+  }
+  else if((size == 2 && arg[1][0] == '~' && ft_strlen(arg[1]) == 1) || size == 1)
+  {
+    status = chdir(ft_getenv("HOME"));
+    if(status == -1)
+      perror("cd faild !");
+  }
   else if(size == 3)
   {
     pwd = ft_getenv("PWD");
@@ -43,26 +58,20 @@ void cd(char **arg)
       chdir(holder);
     }
   }
-  else if(size == 2 && arg[1][0] != '-' && arg[1][0] != '~') 
+  else if(size == 2 && (arg[1][0] != '~'))
   {
     status = chdir(arg[1]);
     if(status == -1)
       printf("cd: no such file or directory: %s\n", arg[1]);
   }
-  else if(size == 2 && arg[1][0] == '-')
+  else if(size == 2 && arg[1][0] == '~' && ft_strlen(arg[1]) > 1)
   {
-    // print current directory !!!
-    oldpwd = ft_getenv("OLDPWD");
-    printf("%s\n", oldpwd);
-    status = chdir(oldpwd); 
+    holder = ft_getenv("HOME");
+    pwd = ft_strreplace(arg[1], "~", holder);
+    status = chdir(pwd);
+    free(pwd);
     if(status == -1)
-      perror("cd faild");
-  }
-  else if((size == 2 && arg[1][0] == '~') || size == 1)
-  {
-    status = chdir(ft_getenv("HOME"));
-    if(status == -1)
-      perror("cd faild !");
+      printf("cd: no such file or directory: %s\n", arg[1]);
   }
   else 
   {
