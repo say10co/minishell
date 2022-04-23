@@ -11,6 +11,8 @@ void exec_builtin(int ncmd, t_cmd *cmd)
 	  env(cmd->command);
   else if (ncmd == B_PWD)
 	  pwd();
+  else if (ncmd == B_EXIT)
+    b_exit();
   else
     printf("STILL UNSUPORTED ?\n");
 }

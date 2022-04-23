@@ -31,7 +31,6 @@
 # define B_EXIT 507
 
 
-
 # define PERMISSION "Permission denied"
 # define FILENTFOUND "No such file or directory"
 # define CMDNOTFOUND "command not found"
@@ -92,7 +91,7 @@ void exec_builtin(int ncmd, t_cmd *cmd);
 void cd(char **arg);
 void pwd();
 void	env(char **command);
-
+void b_exit(void);
 //***************** ENV **********************
 void	ft_initenv(char **env);
 char	*ft_getenv(char *key);
