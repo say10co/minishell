@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 15:56:58 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/06 17:15:34 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/23 20:03:42 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef LIBFT_H
@@ -47,7 +47,7 @@ char	*ft_strnstr(const char *haysck, const char *needle, size_t n);
 int		ft_atoi(const char *str);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *s1);
-char *ft_strstr(char *container, char *target);
+char	*ft_strstr(char *container, char *target);
 
 //PART2 
 
@@ -62,7 +62,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
-char *ft_strreplace(char *container, char *target, char *replacement);
+char	*ft_strreplace(char *container, char *target, char *replacement);
 //BONUS
 
 t_list	*ft_lstnew(void *content);

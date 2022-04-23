@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/23 20:00:03 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/04/23 19:44:18 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@ static char	*ft_skiptarget(char *container, char *target)
 
 static void	ft_cpy(char *container, char *target, char *replacement, char *res)
 {
-	int		i;
-	char	*occ;
+	int	i;
 
-	occ = ft_strstr(container, target);
 	i = 0;
 	while (*container && container != occ)
 	{
@@ -35,7 +33,7 @@ static void	ft_cpy(char *container, char *target, char *replacement, char *res)
 		i++;
 		container++;
 	}
-	container = ft_skiptarget(container, target);
+	container = ft_skiptarget(container, target);	
 	while (*replacement)
 	{
 		res[i] = *replacement;
@@ -49,6 +47,7 @@ static void	ft_cpy(char *container, char *target, char *replacement, char *res)
 		container++;
 	}
 	res[i] = '\0';
+	i = 0;
 }
 
 char	*ft_strreplace(char *container, char *target, char *replacement)
@@ -56,6 +55,7 @@ char	*ft_strreplace(char *container, char *target, char *replacement)
 	char	*res;
 	char	*occ;
 	int		size;
+	int		i;
 
 	if (!target || !replacement || !container)
 		return (NULL);
@@ -64,6 +64,7 @@ char	*ft_strreplace(char *container, char *target, char *replacement)
 		return (NULL);
 	size = (ft_strlen(container) - ft_strlen(target)) + ft_strlen(replacement);
 	res = (char *)malloc(sizeof(char) * size + 1);
-	ft_cpy(container, target, replacement, res);
+
+	ft_cpy(container, target, replacement, res);	
 	return (res);
 }
