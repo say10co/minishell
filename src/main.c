@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+t_list *genv;
+
 // Temporary functions 
 //
 void	print_env_g();
@@ -35,8 +37,8 @@ t_list *parse_command(char *cmd)
 	}
 	command_list = parser_one(tokens);
 	//print_env(*local_env);
-	//print_command_data(command_list);
-	destroy_token_list(tokens);
+	print_command_data(command_list);
+	//destroy_token_list(tokens);
 	return (command_list);
 }
 

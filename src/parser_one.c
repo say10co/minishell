@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/23 00:40:59 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/23 05:28:53 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ bool	check_file(t_token *token, t_cmd *cmd)
 			if (!access(buffer, R_OK))
 			{
 				free(token->data);
+				token->data = ft_strdup(buffer);
 				token->data = buffer;
 				deallocate(paths);
 				return (0);

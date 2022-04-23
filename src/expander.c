@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 22:08:02 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/22 20:50:21 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/23 05:21:16 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../libft/libft.h"
@@ -30,7 +30,7 @@ char	*wrappup_exapnded_token(t_list *str_lst, int total_length)
 	int		i;
 	int		j;
 
-	result = (char *)malloc(total_length * sizeof(char));
+	result = (char *)malloc((total_length + 1)  * sizeof(char));
 	if (!result)
 	{
 		printf("Allocation failed in 'wrappup_exapnded_token;'\n");

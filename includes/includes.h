@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/23 00:29:32 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/23 01:44:00 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_env
 	char *val;
 }	t_env;
 
-t_list *genv;
+extern t_list *genv;
 
 
 char	*append(char *prefix, const char *sufix);

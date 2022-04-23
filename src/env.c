@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:26:22 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/23 00:01:35 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/23 05:20:05 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,13 @@ char	*ft_getenv(char *key)
 	t_list	*curr;
 
 	curr = genv;
-	while(genv)
+	while(curr)
 	{
 		env = (t_env *)curr->content;
 		if(!ft_strcmp(env->key, key))
 			return (env->val);
 		curr = curr->next;
 	}
-	
 	return NULL;
 }
 

@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 00:26:37 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/23 00:29:38 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/23 03:01:31 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -38,6 +38,6 @@ void	destroy_command(t_cmd * cmd)
 		close(cmd->fd_out);
 	while (cmd->command && (cmd->command)[i])
 		free((cmd->command)[i++]);
-	free(cmd->command);
+	//free(cmd->command);
 }
 
