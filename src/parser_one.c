@@ -20,7 +20,7 @@ char *add_prefix(const char *prefix, const char *file)
 
 	len = ft_strlen(file);
 	len_prefix = ft_strlen(prefix);
-	buffer = malloc(sizeof(char) * (len_prefix + len + 1));
+	buffer = malloc(sizeof(char) * (len_prefix + len + 2));
 	ft_memmove(buffer, prefix, len_prefix);
 	ft_memmove(buffer + len_prefix, "/", 1);
 	ft_memmove((buffer + len_prefix + 1), file, len+1);
@@ -31,9 +31,9 @@ void 	deallocate(char **s)
 {
 	int	i;
 	
-	i = -1;
-	while (s[++i])
-		free(s[i]);
+	i = 0;
+	while (s[i])
+		free(s[i++]);
 	free(s);
 }
 
