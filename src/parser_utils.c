@@ -6,11 +6,24 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 02:33:48 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/23 05:18:26 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/24 08:03:48 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
+
+char is_qouted(char *s)
+{
+	char *t;
+	
+	t = ft_strchr(s, '\'');
+	if (t)
+		return (*t);
+	t = ft_strchr(s, '\"');
+	if (t)
+		return (*t);
+	return (0);
+}
 
 void	heredoc(char *eof, t_cmd *cmd)
 {
@@ -29,7 +42,7 @@ void	heredoc(char *eof, t_cmd *cmd)
 		if (!ft_strcmp(buffer, eof))
 			break ;
 		if (ft_strchr(buffer, '$'))
-			write(fd, get_values(buffer, &str_lst, &length), length);
+			ft_putstr_fd(get_values(buffer, &str_lst, is_qouted(buffer)), fd);
 		else
 			write(fd, buffer, ft_strlen(buffer));
 		write(fd, "\n", 1);

@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:37:53 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/23 08:25:12 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/24 07:37:05 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -85,11 +85,13 @@ int	is_key_(int *i)
 	return (0);
 }
 
-bool get_data(char *buffer, int i, t_token **t, int *start)
+bool get_data(char *buffer, t_lexer *v, t_token **t, int *start)
 {
 	int		is_key;
 	char	*tmp;
+	int		i;
 
+	i = v->i;
 	is_key = is_key_(&i);
 	if ((*t)->is_key && is_key && merge(buffer[0], (*t)->data[0], *t))
 		return (1);
@@ -114,6 +116,7 @@ bool get_data(char *buffer, int i, t_token **t, int *start)
 		(*t)->type = 0;
 	}
 	(*t)->is_key = is_key;
+	(*t)->quoted = v->quote_type;
 	fill_token(*t, tmp);
 	*start = 0;
 	free(tmp);

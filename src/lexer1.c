@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:31:44 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/21 02:56:19 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/24 07:34:15 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ void	get_keyword_and_filename(t_token_list *lst, t_lexer *var, char *text)
 {
 	if (var->i)
 	{
-		if (get_data(var->buffer, var->i, &(var->token), &(var->start)))
+		if (get_data(var->buffer, var, &(var->token), &(var->start)))
 			lst->nb_tokens += 1;
 	}
 	if (*text)
 	{
 		var->buffer[0] = *text;
-		if (get_data(var->buffer, -1, &(var->token), &(var->start)))
+		var->i = -1;
+		if (get_data(var->buffer, var, &(var->token), &(var->start)))
 			lst->nb_tokens += 1;
 		if (!var->token->type)
 			var->token->type = get_type(*text, 0);
@@ -53,7 +54,7 @@ void	get_nonquoted(t_token_list *lst, t_lexer *var, char *text)
 	{
 		if (var->i)
 		{
-			if (get_data(var->buffer, var->i, &(var->token), &(var->start)))
+			if (get_data(var->buffer, var, &(var->token), &(var->start)))
 				lst->nb_tokens += 1;
 			var->i = 0;
 		}
@@ -71,7 +72,7 @@ void	get_between_quots(t_token_list *lst, t_lexer *var, char *text)
 	var->buffer[var->i++] = *text;
 	if (*text == var->quote)
 	{
-		if (get_data(var->buffer, var->i, &(var->token), &(var->start)))
+		if (get_data(var->buffer, var, &(var->token), &(var->start)))
 		{
 			var->token->quoted = var->quote;
 			lst->nb_tokens += 1;

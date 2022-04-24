@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 22:08:02 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/23 09:13:03 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/24 07:49:07 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../libft/libft.h"
@@ -112,14 +112,14 @@ void	expand(t_variables *v, t_list **str_lst, int *length)
 	v->i = i;
 }
 
-char	*get_values(char *token, t_list **str_lst, int *length)
+char	*get_values(char *token, t_list **str_lst, char q)
 {
 	t_variables	v;
-	char	q; 
+	int		length;
 
-	q = 0;
 	v.i = 0;
 	v.j = 0;
+	length = 0;
 	*str_lst = NULL;
 	v.token = token;
 	v.len_token = ft_strlen(token);
@@ -127,9 +127,7 @@ char	*get_values(char *token, t_list **str_lst, int *length)
 	while (v.token[v.i])
 	{
 		if (token[v.i] == '$')
-			expand(&v, str_lst, length);
-		else if (!q && ((v.token)[(v.i)] == D_QUOTE || (v.token)[(v.i)] == S_QUOTE))
-			q = (v.token)[(v.i)++];
+			expand(&v, str_lst, &length);
 		else if (q && ((v.token)[(v.i)] != q && (v.token)[(v.i)] != q))
 			(v.buffer)[(v.j)++] = (v.token)[(v.i)++];
 		else
@@ -139,8 +137,8 @@ char	*get_values(char *token, t_list **str_lst, int *length)
 	{
 		(v.buffer)[v.j] = 0;
 		ft_lstadd_back(str_lst, ft_lstnew(ft_strdup(v.buffer)));
-		*length += v.j;
+		length += v.j;
 	}
 	free(v.buffer);
-	return (wrappup_exapnded_token(*str_lst, *length));
+	return (wrappup_exapnded_token(*str_lst, length));
 }
