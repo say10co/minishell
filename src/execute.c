@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/23 05:43:02 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/24 04:46:34 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	exec_cmd(t_list *icmd, char **env)
 	{
 		cmd = (t_cmd *)icmd->content;
 
-		if(is_builtin(cmd->command[0]))
+		if(cmd->error_free && is_builtin(cmd->command[0]))
       exec_builtin(is_builtin(cmd->command[0]), cmd);
     else if (cmd->error_free)
 		{

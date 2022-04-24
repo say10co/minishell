@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/23 06:13:43 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/24 04:22:17 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void cd(char **arg);
 void pwd();
 void	env(char **command);
 void b_exit(void);
+void	unset(char **command);
 //***************** ENV **********************
 void	ft_initenv(char **env);
 char	*ft_getenv(char *key);

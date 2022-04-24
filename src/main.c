@@ -21,6 +21,19 @@ void	print_env_g();
 
 // End Temporary functions
 
+char *get_foldername()
+{
+	char	str[4096];
+	char	*tmp;
+
+
+	getcwd(str, 4096);
+	tmp = ft_strrchr(str, '/');
+	if (!tmp[1])
+		return (ft_strjoin("➜ \e\033[0;33m", "/"));
+	return (ft_strjoin("➜ \e\033[0;33m", tmp + 1));
+}
+
 t_list *parse_command(char *cmd)
 {
 	t_token_list	*tokens;
@@ -42,11 +55,26 @@ t_list *parse_command(char *cmd)
 	return (command_list);
 }
 
+char *get_cmd()
+{
+	char *cmd;
+	char *dir;
+	char *tmp;
+
+	dir = get_foldername();
+	tmp = dir;
+	dir = ft_strjoin(dir, " \e\033[0;37m");
+	cmd = readline(dir);
+	free(dir);
+	free(tmp);
+	return (cmd);
+}
 
 int main(int ac, char **av, char **env)
 {
 	t_list		*command_list;
 	char		*cmd;
+	char 		*t;
 
 	(void)(av);
 
@@ -54,10 +82,15 @@ int main(int ac, char **av, char **env)
   ft_initenv(env);
 	while (ac)
 	{
-		cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
+		t = get_foldername();
+		//cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
+		cmd = get_cmd();
 		command_list = parse_command(cmd);
-		add_history(cmd);
-		exec_cmd(command_list, env);
+		if (command_list)
+		{
+			exec_cmd(command_list, env);
+			add_history(cmd);
+		}
 		//print_env_g();
 		ft_lstclear(&command_list, free);
 		free(command_list); 

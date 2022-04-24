@@ -9,6 +9,8 @@ void exec_builtin(int ncmd, t_cmd *cmd)
 	  export(cmd->command);
   else if (ncmd == B_ENV)
 	  env(cmd->command);
+  else if (ncmd == B_UNSET)
+	  unset(cmd->command);
   else if (ncmd == B_PWD)
 	  pwd();
   else if (ncmd == B_EXIT)
