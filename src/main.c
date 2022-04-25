@@ -84,7 +84,9 @@ int main(int ac, char **av, char **env)
 	{
 		t = get_foldername();
 		//cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
-		cmd = get_cmd();
+		signal(SIGINT, handler);
+    signal(SIGQUIT, handler);
+    cmd = get_cmd();
 		command_list = parse_command(cmd);
 		if (command_list)
 		{

@@ -4,20 +4,20 @@ OBJECTS = ${SRC:.c=.o}
 
 FLAGS = -Wall -Werror -Wextra
 
+READLINE = -L./modules/readline/lib -I ./modules/readline/include
+
 NAME = minishell
-
-
 all: PRINT $(NAME)
 
 PRINT:
 	@echo  "\n\033[0;33m Compiling minishell source files" "\n\033[1;32m"
 
 %.o: %.c
-	cc $(FLAGS) -c $< -o  $@
+	cc $(FLAGS) -I ./modules/readline/include -c $< -o  $@
 
 $(NAME) : $(OBJECTS) LIB
 	@echo "\n\033[0;33m Linking object files Done" "\033[1;32m"
-	@cc $(FLAGS) $(OBJECTS) -lreadline -L./libft -lft -fsanitize=address -o $(NAME)
+	@cc $(FLAGS) $(OBJECTS) -lreadline  -L./libft -lft -fsanitize=address $(READLINE) -o $(NAME)
 	#@cc $(FLAGS) $(OBJECTS) -lreadline -L./libft -lft  -o $(NAME)
 
 LIB :
