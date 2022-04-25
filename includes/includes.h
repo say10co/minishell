@@ -103,6 +103,8 @@ void	exec_builtin(int ncmd, t_cmd *cmd);
 //******************* tmp ***************
 void export(char **command);
 
+// ****************** SIGNALS ***************
+void handler(int sig);
 
 
 //****************** Distructor.c ************
