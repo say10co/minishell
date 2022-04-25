@@ -1,0 +1,1 @@
+-L /Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/lib -I /Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/include
