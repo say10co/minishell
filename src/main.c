@@ -77,6 +77,9 @@ int main(int ac, char **av, char **env)
 	char 		*t;
 
 	(void)(av);
+  
+  signal(SIGINT, handler);
+  signal(SIGQUIT, handler);
 
 	display_logo();
   ft_initenv(env);
@@ -84,10 +87,10 @@ int main(int ac, char **av, char **env)
 	{
 		t = get_foldername();
 		//cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
-		signal(SIGINT, handler);
-    signal(SIGQUIT, handler);
-    cmd = get_cmd();
-		command_list = parse_command(cmd);
+		cmd = get_cmd();
+		if(!cmd)
+      b_exit();
+    command_list = parse_command(cmd);
 		if (command_list)
 		{
 			exec_cmd(command_list, env);
