@@ -80,6 +80,17 @@ void	print_command_data(t_list *lst)
 
 }
 
+void ft_putenv_fd(char *s, int fd)
+{
+  if(!s)
+    return;
+  while(*s)
+  {
+    write(fd, s, 1);
+    s++;
+  }
+}
+
 void	print_env_g()
 {
 	t_env *content;
@@ -89,7 +100,8 @@ void	print_env_g()
 	while (curr)
 	{
 		content = (t_env *)curr->content;
-		printf("%s=%s\n", content->key, content->val);
+    printf("%s=%s\n", content->key, content->val);
 		curr = curr->next;
 	}
+  return;
 }
