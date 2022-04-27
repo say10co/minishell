@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:26:22 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/23 05:20:05 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/27 22:00:02 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_initenv(char **env)
 		node = ft_lstnew(en_var);
 		ft_lstadd_back(&genv, node);
 		env++;
+		free(var);
 	}
 }
 
@@ -37,7 +38,7 @@ char	*ft_getenv(char *key)
 	t_list	*curr;
 
 	curr = genv;
-	while(curr)
+	while (curr)
 	{
 		env = (t_env *)curr->content;
 		if(!ft_strcmp(env->key, key))

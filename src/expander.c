@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 22:08:02 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/24 07:49:07 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/27 22:26:35 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../libft/libft.h"
@@ -33,7 +33,8 @@ char	*wrappup_exapnded_token(t_list *lst, int total_length)
 	result = (char *)malloc((total_length + 1)  * sizeof(char));
 	if (!result)
 	{
-		printf("Allocation failed in 'wrappup_exapnded_token;'\n");
+		ft_lstclear(&lst, free);
+		perror("Allocation failed in 'wrappup_exapnded_token;'\n");
 		return (NULL);
 	}
 	i = 0;
@@ -50,6 +51,7 @@ char	*wrappup_exapnded_token(t_list *lst, int total_length)
 		lst = lst->next;
 	}
 	result[i] = 0;
+	ft_lstclear(&lst, free);
 	return (result);
 }
 
@@ -106,8 +108,11 @@ void	expand(t_variables *v, t_list **str_lst, int *length)
 		(v->buffer)[j++] = (v->token[i++]);
 	buffer[j] = 0;
 	t = ft_getenv(buffer);
-	*length += ft_strlen(t);
-	ft_lstadd_back(str_lst, ft_lstnew(ft_strdup(t)));
+	if (t)
+	{
+		*length += ft_strlen(t);
+		ft_lstadd_back(str_lst, ft_lstnew(ft_strdup(t)));
+	}
 	v->j = 0;
 	v->i = i;
 }
