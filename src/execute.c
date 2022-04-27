@@ -116,20 +116,26 @@ void	exec_cmd(t_list *icmd, char **env)
 				if (status < 0)
 					perror("dup2 faild");
         close(fd[i * 2 + 1]);
-      }
+      } 
       else if(cmd->fd_out > 2)
       {
         tmp_fdo = dup(1);
-        dup2(cmd->fd_out, 1);
+        status = dup2(cmd->fd_out, 1);
+				if (status < 0)
+					perror("dup2 faild");
       }
       exec_builtin(is_builtin(cmd->command[0]), cmd);      
       if(i < size - 1)
       {
         dup2(tmp_fdo, 1);
-        printf("FINISH COPYING \n");
         if(cmd->fd_out > 2)
           copy_file(fd[i * 2], cmd->fd_out);
         close(tmp_fdo); 
+      }
+      else if(cmd->fd_out > 2)
+      {
+        dup2(tmp_fdo, 1);
+        close(tmp_fdo);
       }
     }
     else if (cmd->error_free)
