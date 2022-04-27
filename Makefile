@@ -17,7 +17,7 @@ PRINT:
 
 $(NAME) : $(OBJECTS) LIB
 	@echo "\n\033[0;33m Linking object files Done" "\033[1;32m"
-	@cc $(FLAGS) $(OBJECTS) -lreadline  -L./libft -lft -fsanitize=address $(READLINE) -o $(NAME)
+	@cc $(FLAGS) $(OBJECTS) -lreadline -L/Users/adriouic/.brew/opt/readline/lib  -L./libft -lft -fsanitize=address $(READLINE) -o $(NAME)
 	#@cc $(FLAGS) $(OBJECTS) -lreadline -L./libft -lft  -o $(NAME)
 
 LIB :

@@ -51,7 +51,7 @@ t_list *parse_command(char *cmd)
 	command_list = parser_one(tokens);
 	//print_env(*local_env);
 	//print_command_data(command_list);
-	//destroy_token_list(tokens);
+	destroy_token_list(tokens);
 	return (command_list);
 }
 
@@ -79,7 +79,7 @@ int main(int ac, char **av, char **env)
 	(void)(av);
   
   signal(SIGINT, handler);
-  signal(SIGQUIT, handler);
+  signal(SIGQUIT, SIG_IGN);
 
 	display_logo();
   ft_initenv(env);
