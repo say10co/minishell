@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/includes.h"
 
 static int	*init_pipes(int size)
@@ -18,7 +17,9 @@ static int	*init_pipes(int size)
 	int	*fd;
 	int	i;
 	int	status;
-
+  
+  if(size <= 0)
+    return (NULL);
 	fd = (int *)malloc(sizeof(int) * (size - 1) * 2);
 	if (!fd)
 		perror("could't allocate memory !");
@@ -95,6 +96,7 @@ void	exec_cmd(t_list *icmd, char **env)
 	int		status;
 	int		size;
 	int		i;
+  int tmp_fdo;
 
 	// init pipes with in memory file descriptors so we can share data betweem processes 
 	size = ft_lstsize(icmd);
@@ -102,10 +104,34 @@ void	exec_cmd(t_list *icmd, char **env)
 	i = 0;
 	while (i < size && icmd)
 	{
-		cmd = (t_cmd *)icmd->content;
-
-		if(cmd->error_free && is_builtin(cmd->command[0]))
-      exec_builtin(is_builtin(cmd->command[0]), cmd);
+    cmd = (t_cmd *)icmd->content;
+    if(cmd->error_free && is_builtin(cmd->command[0]))
+    {
+      // handle pipe and redirection 
+      // check if it'is not the last command before pipe 
+      if(i < size - 1)
+      {
+        tmp_fdo = dup(1);
+        status = dup2(fd[i * 2 + 1], 1);
+				if (status < 0)
+					perror("dup2 faild");
+        close(fd[i * 2 + 1]);
+      }
+      else if(cmd->fd_out > 2)
+      {
+        tmp_fdo = dup(1);
+        dup2(cmd->fd_out, 1);
+      }
+      exec_builtin(is_builtin(cmd->command[0]), cmd);      
+      if(i < size - 1)
+      {
+        dup2(tmp_fdo, 1);
+        printf("FINISH COPYING \n");
+        if(cmd->fd_out > 2)
+          copy_file(fd[i * 2], cmd->fd_out);
+        close(tmp_fdo); 
+      }
+    }
     else if (cmd->error_free)
 		{
 			pid = fork();
@@ -116,14 +142,14 @@ void	exec_cmd(t_list *icmd, char **env)
 				// child process 
 				if (cmd->fd_in > 2 && i == 0)
 					dup2(cmd->fd_in, 0);
-		        if(cmd->fd_in > 2 && i > 0)
+		    if(cmd->fd_in > 2 && i > 0)
 					merge_input(fd[(i - 1) * 2 + 1], cmd->fd_in);
-        		if (i != 0)
+        if (i != 0)
 				{
 					// this is not the first command ! 
 					// child gets the previous process output by duplicating read fd to stdin  
 					//write(fd[(i - 1) * 2 + 1], "kanye_west_is_now_ye", 20);
-					status = dup2(fd[(i - 1) * 2], 0);
+          status = dup2(fd[(i - 1) * 2], 0);
 					if (status < 0)
 						perror("dup2 faild");
 				}
@@ -132,7 +158,7 @@ void	exec_cmd(t_list *icmd, char **env)
 				// otherwise redirect command output to the given fd and display nada on stdout !
 				if (cmd->fd_out > 2 && size > 1 && i < size - 1)
 					output_tofile(cmd);
-				else if (cmd->fd_out > 2 && size > 1 && i == size - 1) // if the last command output to file 
+				else if (cmd->fd_out > 2 && size > 1 && i == size - 1) // if the last command output to fil 
 					dup2(cmd->fd_out, 1); 		
 				else if (cmd->fd_out > 2 && size == 1)
 					dup2(cmd->fd_out, 1);
@@ -163,4 +189,3 @@ void	exec_cmd(t_list *icmd, char **env)
 	}
 	unlink("/tmp/minishell-dumy_file-0ew3d");
 }
-

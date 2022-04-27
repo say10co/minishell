@@ -8,7 +8,7 @@ void exec_builtin(int ncmd, t_cmd *cmd)
   else if (ncmd == B_EXPORT)
 	  export(cmd->command);
   else if (ncmd == B_ENV)
-	  env(cmd->command);
+	  env(cmd);
   else if (ncmd == B_UNSET)
 	  unset(cmd->command);
   else if (ncmd == B_PWD)

@@ -37,3 +37,26 @@ int is_builtin(char *cmd)
     return B_EXIT;
   return 0;
 }
+
+void copy_file(int fdi, int fdo)
+{
+  char *buff;
+  int readed;
+
+  (void)fdo;
+  readed = 0;
+  printf("FD IN : %d\n", fdi); 
+  
+  buff = (char *)malloc(sizeof(char) * 2);
+  readed = read(fdi, buff, 1);
+  printf("START COPY !\nREADED : %d\n", readed);
+  while(readed > 0)
+  {
+    buff[1] = '\0';
+    printf("buff : %s\n", buff);
+    write(fdo, buff, 1);
+    readed = read(fdi, buff, 1);
+  }
+  close(fdo);
+  free(buff);
+}

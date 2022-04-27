@@ -70,9 +70,6 @@ char    *get_value_of_key(char *key, t_list *local_env);
 //******************** PARSER ONE ********
 bool	 is_assignment(char *str, char **name);
 
-
-
-
 //*******************PARSER***************
 
 t_list *parser_one(t_token_list *lst);
@@ -90,9 +87,10 @@ int is_builtin(char *cmd);
 void exec_builtin(int ncmd, t_cmd *cmd);
 void cd(char **arg);
 void pwd();
-void	env(char **command);
+void	env(t_cmd *cmd);
 void b_exit(void);
 void	unset(char **command);
+void copy_file(int fdi, int fdo);
 //***************** ENV **********************
 void	ft_initenv(char **env);
 char	*ft_getenv(char *key);
@@ -112,6 +110,4 @@ void handler(int sig);
 void	destroy_command(t_cmd * cmd);
 void	destroy_command(t_cmd * cmd);
 void destroy_token_list(t_token_list *tokens);
-
-
 

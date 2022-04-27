@@ -1,0 +1,16 @@
+---------------------------------
+
+echo, pwd, env :
+  - can write to pipe
+  - can write to file
+  - can't read from pipe
+  - can't read from file
+
+---------------------------------
+
+cd, export, unset, exit:
+  - no read or write from/to pipe
+  - no read or write from/to file
+
+---------------------------------
+
