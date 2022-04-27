@@ -96,7 +96,7 @@ void	exec_cmd(t_list *icmd, char **env)
 	int		status;
 	int		size;
 	int		i;
-  int tmp_fdo;
+ 	int tmp_fdo;
 
 	// init pipes with in memory file descriptors so we can share data betweem processes 
 	size = ft_lstsize(icmd);
@@ -180,11 +180,13 @@ void	exec_cmd(t_list *icmd, char **env)
 				close_pipes(fd, size);
 				execve(cmd->command[0], cmd->command, env);
 				perror("exec faild");
-			}
+			  return;
+      }
 		}
 		close_iofd(cmd);
 		i++;
-		icmd = icmd->next;
+		destroy_command(cmd);
+    icmd = icmd->next;
 	}
 	close_pipes(fd, size);
 	i = 0;
