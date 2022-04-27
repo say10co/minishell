@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:31:44 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/24 07:34:15 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/27 03:58:39 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	get_keyword_and_filename(t_token_list *lst, t_lexer *var, char *text)
 {
 	if (var->i)
 	{
-		if (get_data(var->buffer, var, &(var->token), &(var->start)))
+		if (get_data(var->buffer, var, &(var->token), &(var->start), 0))
 			lst->nb_tokens += 1;
 	}
 	if (*text)
 	{
 		var->buffer[0] = *text;
 		var->i = -1;
-		if (get_data(var->buffer, var, &(var->token), &(var->start)))
+		if (get_data(var->buffer, var, &(var->token), &(var->start), 0))
 			lst->nb_tokens += 1;
 		if (!var->token->type)
 			var->token->type = get_type(*text, 0);
@@ -45,8 +45,18 @@ void	get_keyword_and_filename(t_token_list *lst, t_lexer *var, char *text)
 
 void	get_nonquoted(t_token_list *lst, t_lexer *var, char *text)
 {
+	bool join;
+
+	join = 0;
 	if (*text == D_QUOTE || *text == S_QUOTE)
 	{
+		if (var->i && !is_keyword(*(text-1)) && *(text-1) != ' ')
+			join = 1;
+		if (var->i && get_data(var->buffer,var,  &(var->token), &(var->start), join))
+		{
+				lst->nb_tokens += 1;
+				var->i = 0;
+		}
 		var->quote = *text;
 		var->buffer[var->i++] = *text;
 	}
@@ -54,7 +64,7 @@ void	get_nonquoted(t_token_list *lst, t_lexer *var, char *text)
 	{
 		if (var->i)
 		{
-			if (get_data(var->buffer, var, &(var->token), &(var->start)))
+			if (get_data(var->buffer, var, &(var->token), &(var->start), 0))
 				lst->nb_tokens += 1;
 			var->i = 0;
 		}
@@ -69,10 +79,16 @@ void	get_nonquoted(t_token_list *lst, t_lexer *var, char *text)
 
 void	get_between_quots(t_token_list *lst, t_lexer *var, char *text)
 {
+	bool	join;
+
+	join = 0;
 	var->buffer[var->i++] = *text;
 	if (*text == var->quote)
 	{
-		if (get_data(var->buffer, var, &(var->token), &(var->start)))
+		//if (*(text+1) == S_QUOTE || *(text+1) == D_QUOTE)
+		if (!is_keyword(*(text+1)) && *(text+1) != ' ')
+			join = 1;
+		if (get_data(var->buffer, var, &(var->token), &(var->start), join))
 		{
 			var->token->quoted = var->quote;
 			lst->nb_tokens += 1;

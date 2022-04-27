@@ -6,11 +6,20 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/23 05:28:53 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/27 05:42:32 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
+
+void	join_next_token(char **old, char *new)
+{
+	char *tmp;
+
+	tmp = *old;
+	*old = ft_strjoin(*old, new);
+	free(tmp);
+}
 
 char *add_prefix(const char *prefix, const char *file)
 {
@@ -131,6 +140,30 @@ void	__init_parser_vars(size_t *size, t_list **cmd_lst, t_cmd **cmd)
 	__init_cmd(*cmd);
 }
 
+void	join_tokens(t_token_list *lst)
+{
+	t_token *t;
+	t_token	*tmp;
+
+	t = lst->all;
+	int	i = 0;
+	while (t)
+	{
+		if (t->join && t->next_token)
+		{
+			join_next_token(&(t->data), t->next_token->data);
+			t->join = t->next_token->join;
+			free(t->next_token->data);
+			tmp = t->next_token->next_token;
+			free(t->next_token);
+			t->next_token = tmp;
+		}
+		else
+			t = t->next_token;
+		}
+		i++;
+}
+
 t_list	*parser_one(t_token_list *lst)
 {
 	size_t	vector_size;
@@ -139,6 +172,7 @@ t_list	*parser_one(t_token_list *lst)
 	t_cmd	*cmd;
 
 	__init_parser_vars(&vector_size, &cmd_lst, &cmd);
+	join_tokens(lst);
 	t = lst->all;
 	while (t)
 	{

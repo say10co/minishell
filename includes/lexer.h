@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 03:07:59 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/24 07:38:40 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/27 03:24:01 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ struct s_token
 	bool	found_space;
 	char	quoted;
 	bool	quote_err;
+	bool	join;
 	t_token	*next_token;
 };
 
@@ -64,7 +65,7 @@ int				is_keyword(char c);
 int				get_type(char c, int p);
 bool			merge(char c1, char c2, t_token *t);
 void			fill_token(t_token *t, char *buffer);
-bool			get_data(char *buffer, t_lexer *v, t_token **t, int *start);
+bool			get_data(char *buffer, t_lexer *v, t_token **t, int *start, bool join);
 void			__init_list(t_token_list *lst);
 
 #endif

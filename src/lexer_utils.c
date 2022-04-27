@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:37:53 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/24 07:37:05 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/27 01:46:51 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -21,6 +21,7 @@ void	__init_list(t_token_list *lst)
 	lst->all->quoted = 0;
 	lst->all->quote_err = 0;
 	lst->all->length = 0;
+	lst->all->join = 0;
 	lst->all->found_space = 0;
 	lst->nb_tokens = 0;
 }
@@ -85,7 +86,7 @@ int	is_key_(int *i)
 	return (0);
 }
 
-bool get_data(char *buffer, t_lexer *v, t_token **t, int *start)
+bool get_data(char *buffer, t_lexer *v, t_token **t, int *start, bool join)
 {
 	int		is_key;
 	char	*tmp;
@@ -116,6 +117,7 @@ bool get_data(char *buffer, t_lexer *v, t_token **t, int *start)
 		(*t)->type = 0;
 	}
 	(*t)->is_key = is_key;
+	(*t)->join = join;
 	(*t)->quoted = v->quote_type;
 	fill_token(*t, tmp);
 	*start = 0;
