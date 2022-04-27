@@ -39,7 +39,9 @@ void	heredoc(char *eof, t_cmd *cmd)
 	{
 		length = 0;
 		buffer = readline("\033[0;31mheredoc> ");
-		if (!ft_strcmp(buffer, eof))
+		if(!buffer)
+      break;
+    if (!ft_strcmp(buffer, eof))
 			break ;
 		if (ft_strchr(buffer, '$'))
 			ft_putstr_fd(get_values(buffer, &str_lst, is_qouted(buffer)), fd);
