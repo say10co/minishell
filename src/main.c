@@ -93,6 +93,7 @@ int main(int ac, char **av, char **env)
 		if (command_list)
 		{
 			exec_cmd(command_list);
+			unlink("/tmp/minishell-dumy_file-0ew3d");
 			add_history(cmd);
 		}
 		// print_env_g();

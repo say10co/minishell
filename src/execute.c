@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/28 00:51:22 by macplus          ###   ########.fr       */
+/*   Updated: 2022/04/28 03:59:44 by macplus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	exec_cmd(t_list *icmd)
 	int		*fd;
 	int		size;
 	int		i;
-  int status;
+	int		status;
 
 	size = ft_lstsize(icmd);
 	fd = init_pipes(size);
@@ -92,5 +92,4 @@ void	exec_cmd(t_list *icmd)
 	while (i++ < size)
 		wait(&status);
 	ft_updateenv("$", ft_itoa(status));
-  unlink("/tmp/minishell-dumy_file-0ew3d");
 }
