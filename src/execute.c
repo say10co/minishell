@@ -71,6 +71,7 @@ void	exec_cmd(t_list *icmd)
 	int		*fd;
 	int		size;
 	int		i;
+  int status;
 
 	size = ft_lstsize(icmd);
 	fd = init_pipes(size);
@@ -89,6 +90,7 @@ void	exec_cmd(t_list *icmd)
 	close_pipes(fd, size);
 	i = 0;
 	while (i++ < size)
-		wait(NULL);
-	unlink("/tmp/minishell-dumy_file-0ew3d");
+		wait(&status);
+	ft_updateenv("$", ft_itoa(status));
+  unlink("/tmp/minishell-dumy_file-0ew3d");
 }

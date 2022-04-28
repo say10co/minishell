@@ -33,14 +33,15 @@ void	heredoc(char *eof, t_cmd *cmd)
 	int		fd;
 
 	str_lst = NULL;
-	ft_updateenv("ISHEREDOC", "1");
+	ft_updateenv("ISHEREDOC", eof);
   fd = open("/tmp/minishell-dumy_file-0ew3d",
 			O_CREAT | O_APPEND | O_WRONLY, 0600);
 	while (1)
 	{
 		length = 0;
 		buffer = readline("\033[0;31mheredoc> ");
-		if(!buffer)
+		printf("PASSED LOOP \n");
+    if(!buffer || !ft_strcmp("2", ft_getenv("ISHEREDOC")))
       break;
     if (!ft_strcmp(buffer, eof))
 			break ;
