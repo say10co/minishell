@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:03:56 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/24 07:51:01 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/27 22:32:38 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -67,6 +67,7 @@ void	trim_expand_token(struct s_pvars *vars)
 	{
 		polished = vars->t->data;
 		vars->t->data = get_values(vars->t->data, &(vars->lst_list), vars->t->quoted);
+		ft_lstclear(&(vars->lst_list), free);
 		free(polished);
 	}
 }

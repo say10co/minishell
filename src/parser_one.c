@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/27 05:42:32 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/27 21:24:26 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void 	deallocate(char **s)
 	int	i;
 	
 	i = 0;
+	if (!s)
+		return ;
 	while (s[i])
 		free(s[i++]);
 	free(s);
@@ -98,7 +100,7 @@ bool	check_file(t_token *token, t_cmd *cmd)
 			{
 				free(token->data);
 				token->data = ft_strdup(buffer);
-				token->data = buffer;
+				free(buffer);
 				deallocate(paths);
 				return (0);
 			}

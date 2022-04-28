@@ -71,11 +71,10 @@ char *get_cmd()
 
 int main(int ac, char **av, char **env)
 {
-	t_list *command_list;
-	char *cmd;
-	char *t;
 
-	(void)(av);
+	t_list		*command_list;
+	char		*cmd;
+	(void)av;
 
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
@@ -84,10 +83,9 @@ int main(int ac, char **av, char **env)
 	ft_initenv(env);
 	while (ac)
 	{
-		t = get_foldername();
-		// cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
+		//cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
 		cmd = get_cmd();
-		if (!cmd)
+		if(!cmd)
 			b_exit();
 		command_list = parse_command(cmd);
 		if (command_list)

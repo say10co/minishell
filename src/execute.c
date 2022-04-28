@@ -84,7 +84,8 @@ void	exec_cmd(t_list *icmd)
 			handle_cmd(cmd, fd, i, size);
 		close_iofd(cmd);
 		i++;
-		icmd = icmd->next;
+		destroy_command(cmd);
+    icmd = icmd->next;
 	}
 	close_pipes(fd, size);
 	i = 0;

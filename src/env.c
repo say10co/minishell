@@ -28,6 +28,7 @@ void	ft_initenv(char **env)
 		node = ft_lstnew(en_var);
 		ft_lstadd_back(&g_env, node);
 		env++;
+		free(var);
 	}
 }
 

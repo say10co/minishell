@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bberksse <macplus@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 00:32:01 by adriouic          #+#    #+#             */
 /*   Updated: 2022/04/28 01:20:23 by macplus          ###   ########.fr       */
@@ -66,6 +66,7 @@ void	print_command_data(t_list *lst)
 			curr = curr->next;
 			continue;
 		}
+		if (0){
 		printf("-----------------------\n");
 		printf("-/--: input fd : %d\n", cmd->fd_in);
 		printf("-/--: output fd : %d\n", cmd->fd_out);
@@ -74,8 +75,9 @@ void	print_command_data(t_list *lst)
 			printf("%s ",(cmd->command)[y]);
 		printf("\n");
 		printf("-/--: Error Free : %d\n", cmd->error_free);
+		}
 		curr = curr->next;
-		//destroy_command(cmd);		
+		destroy_command(cmd);		
 	}
 
 }
