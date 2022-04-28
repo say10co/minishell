@@ -33,7 +33,8 @@ void	heredoc(char *eof, t_cmd *cmd)
 	int		fd;
 
 	str_lst = NULL;
-	fd = open("/tmp/minishell-dumy_file-0ew3d",
+	ft_updateenv("ISHEREDOC", "1");
+  fd = open("/tmp/minishell-dumy_file-0ew3d",
 			O_CREAT | O_APPEND | O_WRONLY, 0600);
 	while (1)
 	{
@@ -54,6 +55,7 @@ void	heredoc(char *eof, t_cmd *cmd)
 	fd = open("/tmp/minishell-dumy_file-0ew3d", O_RDONLY);
 	cmd->fd_in = fd;
 	printf("\e\033[0;37m");
+	ft_updateenv("ISHEREDOC", "0");
 	free(buffer);
 }
 

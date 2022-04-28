@@ -2,9 +2,12 @@
 
 void	handler(int sig)
 {
+  char *heredoc;
+
 	if (sig == SIGINT)
 	{
-		write(1, "\n", 1);
+    heredoc = ft_getenv("ISHEREDOC");
+    write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
