@@ -8,6 +8,6 @@ void	del(void *content)
 
 void	b_exit(void)
 {
-	ft_lstclear(&genv, del);
+	ft_lstclear(&g_env, del);
 	exit(0);
 }

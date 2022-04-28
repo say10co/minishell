@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-t_list *genv;
+t_list *g_env;
 
 // Temporary functions
 //

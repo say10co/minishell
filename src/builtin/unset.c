@@ -7,7 +7,7 @@ void	del_node(char *key)
 	char	*tkey;
 	t_env	*e;
 
-	curr = genv;
+	curr = g_env;
 	prev = curr;
 	while (curr)
 	{
@@ -15,8 +15,8 @@ void	del_node(char *key)
 		tkey = (e)->key;
 		if (!ft_strcmp(key, tkey))
 		{
-			if (curr == genv)
-				genv = curr->next;
+			if (curr == g_env)
+				g_env = curr->next;
 			prev->next = curr->next;
 			free(e->key);
 			free(e->val);

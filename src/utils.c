@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 01:08:17 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/28 00:54:54 by macplus          ###   ########.fr       */
+/*   Updated: 2022/04/28 01:20:23 by macplus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ char	**gen_env(void)
 	char		**env_txt;
 	int			i;
 
-	if (!genv)
+	if (!g_env)
 		return (NULL);
-	curr = genv;
-	i = ft_lstsize(genv);
+	curr = g_env;
+	i = ft_lstsize(g_env);
 	env_txt = (char **)malloc(sizeof(char *) * i + 1);
 	i = 0;
 	while (curr)

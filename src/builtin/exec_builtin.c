@@ -11,7 +11,7 @@ void	exec_builtin(int ncmd, t_cmd *cmd)
 	else if (ncmd == B_UNSET)
 		unset(cmd->command);
 	else if (ncmd == B_PWD)
-		pwd();
+		pwd(cmd->command);
 	else if (ncmd == B_EXIT)
 		b_exit();
 	else

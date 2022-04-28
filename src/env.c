@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:26:22 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/27 22:28:19 by macplus          ###   ########.fr       */
+/*   Updated: 2022/04/28 01:20:23 by macplus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_initenv(char **env)
 		en_var->key = var[0];
 		en_var->val = var[1];
 		node = ft_lstnew(en_var);
-		ft_lstadd_back(&genv, node);
+		ft_lstadd_back(&g_env, node);
 		env++;
 	}
 }
@@ -36,7 +36,7 @@ char	*ft_getenv(char *key)
 	t_env	*env;
 	t_list	*curr;
 
-	curr = genv;
+	curr = g_env;
 	while (curr)
 	{
 		env = (t_env *)curr->content;
@@ -54,7 +54,7 @@ void	ft_updateenv(char *key, char *new_val)
 	t_list	*curr;
 	char	*val;
 
-	curr = genv;
+	curr = g_env;
 	while (curr)
 	{
 		env = (t_env *)curr->content;
@@ -72,6 +72,6 @@ void	ft_updateenv(char *key, char *new_val)
 		perror("Allocation Failed!\n");
 	new->key = ft_strdup(key);
 	new->val = ft_strdup(new_val);
-	ft_lstadd_back(&genv, ft_lstnew(new));
+	ft_lstadd_back(&g_env, ft_lstnew(new));
 	return ;
 }

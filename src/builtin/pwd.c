@@ -1,6 +1,6 @@
 #include "../../includes/includes.h"
 
-void	pwd(char *arg)
+void	pwd(char **arg)
 {
 	char	*pwd;
 
