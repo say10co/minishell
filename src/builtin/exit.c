@@ -1,15 +1,13 @@
-
-
 #include "../../includes/includes.h"
 
-void del(void *content)
+void	del(void *content)
 {
-  if(content)
-    free(content);
+	if (content)
+		free(content);
 }
 
-void b_exit(void)
+void	b_exit(void)
 {
-  ft_lstclear(&genv, del);
-  exit(0);
+	ft_lstclear(&genv, del);
+	exit(0);
 }

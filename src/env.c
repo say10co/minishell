@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:26:22 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/23 05:20:05 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/27 22:28:19 by macplus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_initenv(char **env)
 	t_list	*node;
 	char	**var;
 
-	while(*env)
+	while (*env)
 	{
 		var = ft_split(*env, '=');
 		en_var = (t_env *)malloc(sizeof(t_env));
@@ -37,14 +37,14 @@ char	*ft_getenv(char *key)
 	t_list	*curr;
 
 	curr = genv;
-	while(curr)
+	while (curr)
 	{
 		env = (t_env *)curr->content;
-		if(!ft_strcmp(env->key, key))
+		if (!ft_strcmp(env->key, key))
 			return (env->val);
 		curr = curr->next;
 	}
-	return NULL;
+	return (NULL);
 }
 
 void	ft_updateenv(char *key, char *new_val)
@@ -55,23 +55,23 @@ void	ft_updateenv(char *key, char *new_val)
 	char	*val;
 
 	curr = genv;
-	while(curr)
+	while (curr)
 	{
 		env = (t_env *)curr->content;
-		if(!ft_strcmp(key, env->key))
+		if (!ft_strcmp(key, env->key))
 		{
 			val = ft_strdup(new_val);
 			free(env->val);
 			env->val = val;
-			return;
+			return ;
 		}
 		curr = curr->next;
 	}
-	new = (t_env*)(malloc(sizeof(t_env)));
+	new = (t_env *)(malloc(sizeof(t_env)));
 	if (!new)
 		perror("Allocation Failed!\n");
 	new->key = ft_strdup(key);
 	new->val = ft_strdup(new_val);
 	ft_lstadd_back(&genv, ft_lstnew(new));
-	return;
+	return ;
 }

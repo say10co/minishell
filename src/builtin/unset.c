@@ -2,12 +2,11 @@
 
 void	del_node(char *key)
 {
-	t_list *curr;
-	t_list *prev;
+	t_list	*curr;
+	t_list	*prev;
 	char	*tkey;
 	t_env	*e;
 
-	
 	curr = genv;
 	prev = curr;
 	while (curr)
@@ -22,12 +21,11 @@ void	del_node(char *key)
 			free(e->key);
 			free(e->val);
 			free(e);
-			break;
+			break ;
 		}
 		prev = curr;
 		curr = curr->next;
 	}
-
 }
 
 void	unset(char **command)

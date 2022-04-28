@@ -82,7 +82,7 @@ void	close_files(t_cmd *cmd);
 t_list	*create_env(char **env);
 
 //***************** EXECUTION ***************
-void exec_cmd(t_list *icmd, char **env);
+void exec_cmd(t_list *icmd);
 int is_builtin(char *cmd);
 void exec_builtin(int ncmd, t_cmd *cmd);
 void cd(char **arg);
@@ -96,7 +96,7 @@ void	ft_initenv(char **env);
 char	*ft_getenv(char *key);
 void	ft_updateenv(char *key, char *new_val);
 void	exec_builtin(int ncmd, t_cmd *cmd);
-
+char **gen_env(void);
 
 //******************* tmp ***************
 void export(char **command);
@@ -111,3 +111,19 @@ void	destroy_command(t_cmd * cmd);
 void	destroy_command(t_cmd * cmd);
 void destroy_token_list(t_token_list *tokens);
 
+// ------------------ CD UTILS ----------------
+
+void	go_touser(char *dir);
+void	go_tohome(void);
+void	go_todir(char *dir);
+void	go_tobasedhome(char *dir);
+void	go_replcpwd(char *target, char *replacement);
+void	go_oldpwd(void);
+
+
+// ----------------- EXECUTE UTILS ---------------
+int *init_pipes(int size);
+void	close_pipes(int *fd, int size);
+void	output_tofile(t_cmd *cmd);
+void	close_iofd(t_cmd *cmd);
+void	merge_input(int fdpipe, int fdfile);
