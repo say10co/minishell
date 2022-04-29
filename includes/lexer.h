@@ -65,7 +65,7 @@ int				is_keyword(char c);
 int				get_type(char c, int p);
 bool			merge(char c1, char c2, t_token *t);
 void			fill_token(t_token *t, char *buffer);
-bool			get_data(char *buffer, t_lexer *v, t_token **t, int *start, bool join);
+bool			get_data(char *buffer, t_lexer *v, t_token **t, bool join);
 void			__init_list(t_token_list *lst);
 
 #endif

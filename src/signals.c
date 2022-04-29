@@ -1,8 +1,5 @@
 
-
-
 #include "../includes/includes.h"
-
 
 void handler(int sig)
 {

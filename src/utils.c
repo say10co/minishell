@@ -21,36 +21,36 @@ int	is_keyword(char c)
 
 int is_builtin(char *cmd)
 {
-  if(!ft_strcmp(cmd, "cd"))
-    return B_CD;
-  else if(!ft_strcmp(cmd, "echo") && 0)
-    return B_ECHO;
-  else if(!ft_strcmp(cmd, "pwd") && 0)
-    return B_PWD;
-  else if(!ft_strcmp(cmd, "export"))
-    return B_EXPORT;
-  else if(!ft_strcmp(cmd, "unset"))
-    return B_UNSET;
-  else if(!ft_strcmp(cmd, "env"))
-    return B_ENV;
-  else if(!ft_strcmp(cmd, "exit"))
-    return B_EXIT;
-  return 0;
+	if(!ft_strcmp(cmd, "cd"))
+		return B_CD;
+	else if(!ft_strcmp(cmd, "echo") && 0)
+		return B_ECHO;
+	else if(!ft_strcmp(cmd, "pwd") && 0)
+		return B_PWD;
+	else if(!ft_strcmp(cmd, "export"))
+		return B_EXPORT;
+	else if(!ft_strcmp(cmd, "unset"))
+		return B_UNSET;
+	else if(!ft_strcmp(cmd, "env"))
+		return B_ENV;
+	else if(!ft_strcmp(cmd, "exit"))
+		return B_EXIT;
+	return 0;
 }
 
 void copy_file(int fdi, int fdo)
 {
-  char *buff;
-  int readed;
+	char *buff;
+	int readed;
 
-  buff = (char *)malloc(sizeof(char) * 2);
-  readed = read(fdi, buff, 1);
-  while(readed > 0)
-  {
-    buff[1] = '\0';
-    write(fdo, buff, 1);
-    readed = read(fdi, buff, 1);
-  }
-  close(fdo);
-  free(buff);
+	buff = (char *)malloc(sizeof(char) * 2);
+	readed = read(fdi, buff, 1);
+	while(readed > 0)
+	{
+		buff[1] = '\0';
+		write(fdo, buff, 1);
+		readed = read(fdi, buff, 1);
+	}
+	close(fdo);
+	free(buff);
 }

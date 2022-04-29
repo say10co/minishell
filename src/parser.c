@@ -6,10 +6,23 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:03:56 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/27 22:32:38 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/28 23:00:36 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
+
+char	is_qouted(char *s)
+{
+	char	*t;
+
+	t = ft_strchr(s, '\'');
+	if (t)
+		return (*t);
+	t = ft_strchr(s, '\"');
+	if (t)
+		return (*t);
+	return (0);
+}
 
 t_list	*create_env(char **env)
 {
@@ -66,7 +79,8 @@ void	trim_expand_token(struct s_pvars *vars)
 	if (ft_strchr(vars->t->data, '$'))
 	{
 		polished = vars->t->data;
-		vars->t->data = get_values(vars->t->data, &(vars->lst_list), vars->t->quoted);
+		vars->t->data = get_values(vars->t->data,
+				&(vars->lst_list), vars->t->quoted);
 		ft_lstclear(&(vars->lst_list), free);
 		free(polished);
 	}

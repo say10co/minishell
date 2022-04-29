@@ -1,12 +1,31 @@
+
 #include "../includes/lexer.h"
 #include "../includes/includes.h"
+#include "../libft/libft.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 
 t_list *genv;
+
+// Temporary functions 
+//
+void	print_env_g();
+void	print_env(t_list *env);
+void	display_logo(void);
+void	print_tokens(t_token_list *lst);
+void	print_command_data(t_list *lst);
+void	print_env_g();
+void	print_env_g();
+
+// End Temporary functions
 
 char *get_foldername()
 {
 	char	str[4096];
 	char	*tmp;
+
 
 	getcwd(str, 4096);
 	tmp = ft_strrchr(str, '/');
@@ -30,15 +49,17 @@ t_list *parse_command(char *cmd)
 		return (NULL);
 	}
 	command_list = parser_one(tokens);
+	//print_env(*local_env);
+	//print_command_data(command_list);
 	destroy_token_list(tokens);
 	return (command_list);
 }
 
-char	*get_cmd()
+char *get_cmd()
 {
-	char	*cmd;
-	char	*dir;
-	char	*tmp;
+	char *cmd;
+	char *dir;
+	char *tmp;
 
 	dir = get_foldername();
 	tmp = dir;
@@ -51,16 +72,18 @@ char	*get_cmd()
 
 int main(int ac, char **av, char **env)
 {
-	t_list	*command_list;
-	char	*cmd;
+	t_list		*command_list;
+	char		*cmd;
+	(void)			av;
 
-	(void)av;
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
+
 	display_logo();
 	ft_initenv(env);
 	while (ac)
 	{
+		//cmd = readline("\e\033[0;33mmsh$ \e\033[0;37m");
 		cmd = get_cmd();
 		if(!cmd)
 			b_exit();
@@ -70,6 +93,7 @@ int main(int ac, char **av, char **env)
 			exec_cmd(command_list, env);
 			add_history(cmd);
 		}
+		//print_env_g();
 		ft_lstclear(&command_list, free);
 		free(command_list); 
 		free(cmd);

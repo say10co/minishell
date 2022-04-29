@@ -6,12 +6,11 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:26:22 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/27 22:00:02 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/28 04:22:49 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
-
 
 void	ft_initenv(char **env)
 {
@@ -19,7 +18,7 @@ void	ft_initenv(char **env)
 	t_list	*node;
 	char	**var;
 
-	while(*env)
+	while (*env)
 	{
 		var = ft_split(*env, '=');
 		en_var = (t_env *)malloc(sizeof(t_env));
@@ -41,11 +40,11 @@ char	*ft_getenv(char *key)
 	while (curr)
 	{
 		env = (t_env *)curr->content;
-		if(!ft_strcmp(env->key, key))
+		if (!ft_strcmp(env->key, key))
 			return (env->val);
 		curr = curr->next;
 	}
-	return NULL;
+	return (NULL);
 }
 
 void	ft_updateenv(char *key, char *new_val)
@@ -56,23 +55,23 @@ void	ft_updateenv(char *key, char *new_val)
 	char	*val;
 
 	curr = genv;
-	while(curr)
+	while (curr)
 	{
 		env = (t_env *)curr->content;
-		if(!ft_strcmp(key, env->key))
+		if (!ft_strcmp(key, env->key))
 		{
 			val = ft_strdup(new_val);
 			free(env->val);
 			env->val = val;
-			return;
+			return ;
 		}
 		curr = curr->next;
 	}
-	new = (t_env*)(malloc(sizeof(t_env)));
+	new = (t_env *)(malloc(sizeof(t_env)));
 	if (!new)
 		perror("Allocation Failed!\n");
 	new->key = ft_strdup(key);
 	new->val = ft_strdup(new_val);
 	ft_lstadd_back(&genv, ft_lstnew(new));
-	return;
+	return ;
 }

@@ -6,30 +6,16 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 02:33:48 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/27 03:46:13 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/28 19:28:42 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
-char is_qouted(char *s)
-{
-	char *t;
-	
-	t = ft_strchr(s, '\'');
-	if (t)
-		return (*t);
-	t = ft_strchr(s, '\"');
-	if (t)
-		return (*t);
-	return (0);
-}
-
-void	heredoc(char *eof, t_cmd *cmd)
+bool	heredoc(char *eof, t_cmd *cmd)
 {
 	t_list	*str_lst;
 	char	*buffer;
-	int		length;
 	int		fd;
 
 	str_lst = NULL;
@@ -37,11 +23,8 @@ void	heredoc(char *eof, t_cmd *cmd)
 			O_CREAT | O_APPEND | O_WRONLY, 0600);
 	while (1)
 	{
-		length = 0;
-		buffer = readline("\033[0;31mheredoc> ");
-		if(!buffer)
-      break;
-    if (!ft_strcmp(buffer, eof))
+		buffer = slice_nl(get_next_line(0));
+		if (!buffer || !ft_strcmp(buffer, eof))
 			break ;
 		if (ft_strchr(buffer, '$'))
 			ft_putstr_fd(get_values(buffer, &str_lst, is_qouted(buffer)), fd);
@@ -53,8 +36,8 @@ void	heredoc(char *eof, t_cmd *cmd)
 	close(fd);
 	fd = open("/tmp/minishell-dumy_file-0ew3d", O_RDONLY);
 	cmd->fd_in = fd;
-	printf("\e\033[0;37m");
 	free(buffer);
+	return (1);
 }
 
 int	close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd)
@@ -82,7 +65,7 @@ int	close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd)
 	return (fd);
 }
 
-void	open_file(t_cmd *cmd, t_token *t, char *file_name)
+bool	open_file(t_cmd *cmd, t_token *t, char *file_name)
 {
 	if (t->type == R_ARROW && cmd->error_free)
 		cmd->fd_out = close_old_open_new(cmd, file_name, O_TRUNC, cmd->fd_out);
@@ -90,6 +73,7 @@ void	open_file(t_cmd *cmd, t_token *t, char *file_name)
 		cmd->fd_out = close_old_open_new(cmd, file_name, O_APPEND, cmd->fd_out);
 	else if (t->type == L_ARROW && cmd->error_free)
 		cmd->fd_in = close_old_open_new(cmd, file_name, O_RDONLY, cmd->fd_in);
+	return (1);
 }
 
 void	close_files(t_cmd *cmd)
