@@ -2,7 +2,7 @@
 while [ 1 ]
 do
   res=$(leaks minishell 2> /dev/null | grep '\leaked bytes.$')
-  if [ $res ]
+  if [[ $res ]];
 	then
 		printf " %s\n" "$res"
 	else
