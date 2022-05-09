@@ -1,7 +1,7 @@
 #include "../includes/lexer.h"
 #include "../includes/includes.h"
 
-t_list *genv;
+t_list *g_env;
 
 char *get_foldername()
 {
@@ -17,8 +17,8 @@ char *get_foldername()
 
 t_list *parse_command(char *cmd)
 {
-	t_token_list	*tokens;
-	t_list			*command_list;
+	t_token_list *tokens;
+	t_list *command_list;
 
 	command_list = NULL;
 	tokens = get_tokens(cmd);
@@ -67,12 +67,12 @@ int main(int ac, char **av, char **env)
 		command_list = parse_command(cmd);
 		if (command_list)
 		{
-			exec_cmd(command_list, env);
+			exec_cmd(command_list);
+			unlink("/tmp/minishell-dumy_file-0ew3d");
 			add_history(cmd);
 		}
 		ft_lstclear(&command_list, free);
-		free(command_list); 
+		free(command_list);
 		free(cmd);
 	}
 }
-

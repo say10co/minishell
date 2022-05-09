@@ -3,12 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   includes.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
 /*   Updated: 2022/04/29 01:01:22 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef INCLUDES_H
+
+# define INCLUDES_H
 
 # include <stdio.h>
 # include <stdio.h>
@@ -31,12 +35,9 @@
 # define B_ENV 506
 # define B_EXIT 507
 
-
 # define PERMISSION "Permission denied"
 # define FILENTFOUND "No such file or directory"
 # define CMDNOTFOUND "command not found"
-
-
 
 typedef struct s_cmd
 {
@@ -48,8 +49,8 @@ typedef struct s_cmd
 
 typedef struct s_env
 {
-	char *key;
-	char *val;
+	char	*key;
+	char	*val;
 }	t_env;
 
 typedef struct s_variables
@@ -62,8 +63,7 @@ typedef struct s_variables
 
 }t_variables;
 
-extern t_list *genv;
-
+extern t_list *g_env;
 
 char	*append(char *prefix, const char *sufix);
 char	**my_ft_split(const char *str, char c);
@@ -96,12 +96,14 @@ int		close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd);
 
 //***************** EXECUTION ***************
 
-void exec_cmd(t_list *icmd, char **env);
-void exec_builtin(int ncmd, t_cmd *cmd);
-void cd(char **arg);
-void pwd();
+void	exec_cmd(t_list *icmd);
+int		is_builtin(char *cmd);
+void	exec_builtin(int ncmd, t_cmd *cmd);
+void	cd(char **arg);
+void	pwd(char **arg);
+
 void	env(t_cmd *cmd);
-void b_exit(void);
+void	b_exit(void);
 void	unset(char **command);
 void copy_file(int fdi, int fdo);
 int is_builtin(char *cmd);
@@ -111,17 +113,32 @@ int is_builtin(char *cmd);
 void	ft_initenv(char **env);
 void	ft_updateenv(char *key, char *new_val);
 void	exec_builtin(int ncmd, t_cmd *cmd);
+char	**gen_env(void);
 char	*ft_getenv(char *key);
 
-
-//******************* tmp ********************
-
-void export(char **command);
+//******************* tmp ***************
+void	export(char **command);
 
 // ****************** SIGNALS ****************
 
 void handler(int sig);
 void display_logo(void);
+
+// ------------------ CD UTILS ----------------
+
+void	go_touser(char *dir);
+void	go_tohome(void);
+void	go_todir(char *dir);
+void	go_tobasedhome(char *dir);
+void	go_replcpwd(char *target, char *replacement);
+void	go_oldpwd(void);
+
+// ----------------- EXECUTE UTILS ---------------
+int		*init_pipes(int size);
+void	close_pipes(int *fd, int size);
+void	output_tofile(t_cmd *cmd);
+void	close_iofd(t_cmd *cmd);
+void	merge_input(int fdpipe, int fdfile);
 
 //****************** Distructor **************
 

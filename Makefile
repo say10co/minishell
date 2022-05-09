@@ -1,7 +1,5 @@
 SRC = src/initers.c src/string_operators.c src/expander_utils.c src/lex_utils.c src/builtin/unset.c src/builtin/b_env.c  src/print.c src/destructors.c  src/builtin/export.c src/builtin/utils.c src/expander.c src/parser_utils.c  src/utils.c src/lexer_utils.c src/lexer1.c src/main.c src/parser.c src/parser_one.c src/execute.c src/builtin/b_cd.c src/builtin/exec_builtin.c src/builtin/utils.c src/env.c src/builtin/pwd.c src/builtin/exit.c src/signals.c
 
-
-
 #@cc $(FLAGS) $(OBJECTS) -lreadline -L/Users/adriouic/.brew/opt/readline/lib  -L./libft -lft $(READLINE) -fsanitize=address -o $(NAME)
 
 GNL = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c

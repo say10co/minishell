@@ -3,108 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/24 04:46:34 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/28 03:59:44 by macplus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
-static int	*init_pipes(int size)
+static void	handle_builtin(t_cmd *cmd, int *fd, int size, int i)
 {
-	int	*fd;
-	int	i;
-	int	status;
-  
-  if(size <= 0)
-    return (NULL);
-	fd = (int *)malloc(sizeof(int) * (size - 1) * 2);
-	if (!fd)
-		perror("could't allocate memory !");
-	i = 0;
-	while (i < size - 1)
+	int	tmp_fdo;
+
+	if (i < size - 1)
 	{
-		status = pipe(&fd[i * 2]);
-		if (status < 0)
-			perror("init pipes faild !");
-		i++;
+		tmp_fdo = dup(1);
+		dup2(fd[i * 2 + 1], 1);
+		close(fd[i * 2 + 1]);
 	}
-	return (fd);
-}
-
-static void	close_pipes(int *fd, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < (size - 1) * 2)
+	else if (cmd->fd_out > 2)
 	{
-		close(fd[i]);
-		i++;
+		tmp_fdo = dup(1);
+		dup2(cmd->fd_out, 1);
+	}
+	exec_builtin(is_builtin(cmd->command[0]), cmd);
+	if (i < size - 1 || cmd->fd_out > 2)
+	{
+		dup2(tmp_fdo, 1);
+		if (cmd->fd_out > 2 && i < size - 1)
+			copy_file(fd[i * 2], cmd->fd_out);
+		close(tmp_fdo);
 	}
 }
 
-static void	output_tofile(t_cmd *cmd)
+static void	handle_cmd(t_cmd *cmd, int *fd, int i, int size)
 {
-	pid_t pid;
-	int status;
+	pid_t	pid;
 
 	pid = fork();
-	if (pid == 0)
+	if (pid == -1)
+		perror("fork faild ");
+	else if (pid == 0)
 	{
-		status = dup2(cmd->fd_out, 1);
-		if (status < 0)
-			perror("dup2 faild");
-		execve(cmd->command[0], cmd->command, NULL);
+		if (cmd->fd_in > 2 && i == 0)
+			dup2(cmd->fd_in, 0);
+		if (cmd->fd_in > 2 && i > 0)
+			merge_input(fd[(i - 1) * 2 + 1], cmd->fd_in);
+		if (i != 0)
+			dup2(fd[(i - 1) * 2], 0);
+		if (cmd->fd_out > 2 && size > 1 && i < size - 1)
+			output_tofile(cmd);
+		else if ((cmd->fd_out > 2 && size == 1)
+			|| (cmd->fd_out > 2 && size > 1 && i == size - 1))
+			dup2(cmd->fd_out, 1);
+		if (i < size - 1)
+			dup2(fd[i * 2 + 1], 1);
+		close_pipes(fd, size);
+		execve(cmd->command[0], cmd->command, gen_env());
 		perror("exec faild");
 	}
-	else if (pid > 0)
-	{
-		wait(&status);
-		kill(pid, 9);
-	}
 }
 
-static void	close_iofd(t_cmd *cmd)
-{
-	if (cmd->fd_in > 2)
-		close(cmd->fd_in);
-	if (cmd->fd_out > 2)
-		close(cmd->fd_out);
-}
-
-void merge_input(int fdpipe, int fdfile)
-{
-  int readed;
-  char buff[1];
-
-  readed = read(fdfile, buff, 1);
-  while(readed >= 1)
-  {
-    write(fdpipe, buff, 1);
-    readed = read(fdfile, buff, 1);
-  }
-}
-
-void	exec_cmd(t_list *icmd, char **env)
+void	exec_cmd(t_list *icmd)
 {
 	t_cmd	*cmd;
-	pid_t	pid;
 	int		*fd;
-	int		status;
 	int		size;
 	int		i;
- 	int tmp_fdo;
+	int		status;
 
-	// init pipes with in memory file descriptors so we can share data betweem processes 
 	size = ft_lstsize(icmd);
 	fd = init_pipes(size);
 	i = 0;
 	while (i < size && icmd)
 	{
-    cmd = (t_cmd *)icmd->content;
+		cmd = (t_cmd *)icmd->content;
+		if (cmd->error_free && is_builtin(cmd->command[0]))
+			handle_builtin(cmd, fd, size, i);
+		else if (cmd->error_free)
+			handle_cmd(cmd, fd, i, size);
     if(cmd->error_free && is_builtin(cmd->command[0]))
     {
       // handle pipe and redirection 
@@ -190,10 +168,7 @@ void	exec_cmd(t_list *icmd, char **env)
 	}
 	close_pipes(fd, size);
 	i = 0;
-	while (i < size)
-	{
-		wait(NULL);
-		i++;
-	}
-	unlink("/tmp/minishell-dumy_file-0ew3d");
+	while (i++ < size)
+		wait(&status);
+	ft_updateenv("$", ft_itoa(status));
 }

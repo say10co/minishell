@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 21:16:23 by adriouic          #+#    #+#             */
 /*   Updated: 2022/04/28 00:37:10 by adriouic         ###   ########.fr       */
@@ -30,5 +30,4 @@ void	export(char **command)
 		}
 		i++;
 	}
-
 }
