@@ -67,7 +67,7 @@ int main(int ac, char **av, char **env)
 		command_list = parse_command(cmd);
 		if (command_list)
 		{
-			exec_cmd(command_list);
+			exec_cmd(command_list, env);
 			unlink("/tmp/minishell-dumy_file-0ew3d");
 			add_history(cmd);
 		}

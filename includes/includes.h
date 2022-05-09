@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/29 01:01:22 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/09 13:13:54 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int		close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd);
 
 //***************** EXECUTION ***************
 
-void	exec_cmd(t_list *icmd);
+void    exec_cmd(t_list *icmd, char **env);
 int		is_builtin(char *cmd);
 void	exec_builtin(int ncmd, t_cmd *cmd);
 void	cd(char **arg);
@@ -173,3 +173,5 @@ void	__init_cmd(t_cmd *cmd);
 void	__init_list(t_token_list *lst);
 void	__init_new_command(t_lexer *v, t_token **t, bool join, bool is_key);
 char	*slice_nl(char *line);
+
+#endif

@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/28 03:59:44 by macplus          ###   ########.fr       */
+/*   Updated: 2022/05/09 13:12:39 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,15 @@ static void	handle_cmd(t_cmd *cmd, int *fd, int i, int size)
 	}
 }
 
-void	exec_cmd(t_list *icmd)
+void	exec_cmd(t_list *icmd, char **env)
 {
 	t_cmd	*cmd;
 	int		*fd;
 	int		size;
 	int		i;
 	int		status;
+	int		tmp_fdo;
+	pid_t	pid;
 
 	size = ft_lstsize(icmd);
 	fd = init_pipes(size);
