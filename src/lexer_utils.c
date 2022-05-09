@@ -6,25 +6,10 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:37:53 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/27 01:46:51 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/04/28 22:37:31 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
-
-void	__init_list(t_token_list *lst)
-{
-	lst->all = (t_token *)malloc(sizeof(t_token));
-	lst->all->next_token = NULL;
-	lst->all->data = NULL;
-	lst->all->is_key = 0;
-	lst->all->type = 0;
-	lst->all->quoted = 0;
-	lst->all->quote_err = 0;
-	lst->all->length = 0;
-	lst->all->join = 0;
-	lst->all->found_space = 0;
-	lst->nb_tokens = 0;
-}
 
 int	get_type(char c, int p)
 {
@@ -76,7 +61,7 @@ void	fill_token(t_token *t, char *buffer)
 	t->length = ft_strlen(tmp);
 }
 
-int	is_key_(int *i)
+bool	is_key_(int *i)
 {
 	if (*i == -1)
 	{
@@ -86,9 +71,9 @@ int	is_key_(int *i)
 	return (0);
 }
 
-bool get_data(char *buffer, t_lexer *v, t_token **t, int *start, bool join)
+bool	get_data(char *buffer, t_lexer *v, t_token **t, bool join)
 {
-	int		is_key;
+	bool	is_key;
 	char	*tmp;
 	int		i;
 
@@ -97,8 +82,8 @@ bool get_data(char *buffer, t_lexer *v, t_token **t, int *start, bool join)
 	if ((*t)->is_key && is_key && merge(buffer[0], (*t)->data[0], *t))
 		return (1);
 	buffer[i] = 0;
-	if (i && (buffer[i-1] == S_QUOTE || buffer[i-1] == D_QUOTE))
-		tmp = ft_strtrim(buffer, &buffer[i-1]);
+	if (i && (buffer[i -1] == S_QUOTE || buffer[i -1] == D_QUOTE))
+		tmp = ft_strtrim(buffer, &buffer[i -1]);
 	else
 		tmp = ft_strdup(buffer);
 	if (tmp[0] == '\0')
@@ -106,21 +91,9 @@ bool get_data(char *buffer, t_lexer *v, t_token **t, int *start, bool join)
 		free(tmp);
 		return (0);
 	}
-	if (*start == 0)
-	{
-		(*t)->next_token = (t_token *)malloc(sizeof(t_token));
-		(*t) = (*t)->next_token;
-		(*t)->found_space = 0;
-		(*t)->next_token = NULL;
-		(*t)->quoted = 0;
-		(*t)->quote_err = 0;
-		(*t)->type = 0;
-	}
-	(*t)->is_key = is_key;
-	(*t)->join = join;
-	(*t)->quoted = v->quote_type;
+	__init_new_command(v, t, join, is_key);
 	fill_token(*t, tmp);
-	*start = 0;
+	v->start = 0;
 	free(tmp);
-	return  (1);
+	return (1);
 }

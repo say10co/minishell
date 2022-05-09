@@ -6,12 +6,11 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:26:22 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/28 01:20:23 by macplus          ###   ########.fr       */
+/*   Updated: 2022/04/28 04:22:49 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
-
 
 void	ft_initenv(char **env)
 {
@@ -28,6 +27,7 @@ void	ft_initenv(char **env)
 		node = ft_lstnew(en_var);
 		ft_lstadd_back(&g_env, node);
 		env++;
+		free(var);
 	}
 }
 
