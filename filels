@@ -1,7 +1,9 @@
 Makefile
 bnotes
 compile_rl.txt
+fileenv
 filels
+get_next_line
 includes
 libft
 logo.txt
