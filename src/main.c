@@ -1,9 +1,10 @@
 #include "../includes/lexer.h"
 #include "../includes/includes.h"
 
-t_list *g_env;
+t_list	*g_env;
 
-char *get_foldername()
+char	*get_foldername(void)
+
 {
 	char	str[4096];
 	char	*tmp;
@@ -15,10 +16,10 @@ char *get_foldername()
 	return (ft_strjoin("➜ \e\033[0;33m", tmp + 1));
 }
 
-t_list *parse_command(char *cmd)
+t_list	*parse_command(char *cmd)
 {
-	t_token_list *tokens;
-	t_list *command_list;
+	t_token_list	*tokens;
+	t_list			*command_list;
 
 	command_list = NULL;
 	tokens = get_tokens(cmd);
@@ -34,7 +35,8 @@ t_list *parse_command(char *cmd)
 	return (command_list);
 }
 
-char	*get_cmd()
+char	*get_cmd(void)
+
 {
 	char	*cmd;
 	char	*dir;
@@ -49,7 +51,7 @@ char	*get_cmd()
 	return (cmd);
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	t_list	*command_list;
 	char	*cmd;

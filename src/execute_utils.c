@@ -1,6 +1,6 @@
 #include "../includes/includes.h"
 
-int *init_pipes(int size)
+int	*init_pipes(int size)
 {
 	int	*fd;
 	int	i;

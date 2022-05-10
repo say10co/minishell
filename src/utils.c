@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 01:08:17 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/28 01:20:23 by macplus          ###   ########.fr       */
+/*   Updated: 2022/05/10 16:55:43 by macplus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-void	copy_file(int fdi, int fdo)
+void	copy_file(int fdi, int pipe_fdo, int file_fdo)
 {
 	char	*buff;
 	int		readed;
@@ -48,10 +48,13 @@ void	copy_file(int fdi, int fdo)
 	while (readed > 0)
 	{
 		buff[1] = '\0';
-		write(fdo, buff, 1);
+		if (pipe_fdo != -1)
+			write(pipe_fdo, buff, 1);
+		if (file_fdo != -1)
+			write(file_fdo, buff, 1);
 		readed = read(fdi, buff, 1);
 	}
-	close(fdo);
+	close(fdi);
 	free(buff);
 }
 
