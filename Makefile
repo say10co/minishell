@@ -1,6 +1,6 @@
 #SRC =   src/print.c src/destructors.c  src/builtin/export.c src/builtin/utils.c src/builtin/unset.c src/builtin/b_env.c src/initers.c src/string_operators.c src/expander_utils.c src/lex_utils.c src/builtin/unset.c src/builtin/b_env.c  src/print.c src/destructors.c  src/builtin/export.c src/builtin/utils.c src/expander.c src/parser_utils.c  src/utils.c src/lexer_utils.c src/lexer1.c src/main.c src/parser.c src/parser_one.c src/execute.c src/builtin/b_cd.c src/builtin/exec_builtin.c src/builtin/utils.c src/env.c src/builtin/pwd.c src/builtin/exit.c src/signals.c
 
-SRC = src/destructors.c src/env.c src/execute.c src/execute_utils.c src/expander.c src/expander_utils.c src/initers.c src/lex_utils.c src/lexer1.c src/lexer_utils.c src/main.c src/parser.c src/parser_one.c src/parser_utils.c src/print.c src/signals.c src/string_operators.c src/utils.c src/builtin/b_cd.c src/builtin/b_cd_utils.c src/builtin/b_env.c src/builtin/exec_builtin.c src/builtin/exit.c src/builtin/export.c src/builtin/pwd.c src/builtin/unset.c src/builtin/utils.c
+SRC = src/destructors.c src/env.c src/execute.c src/execute_utils.c src/expander.c src/expander_utils.c src/initers.c src/lex_utils.c src/lexer1.c src/lexer_utils.c src/main.c src/parser.c src/parser_one.c src/parser_utils.c  src/signals.c src/string_operators.c src/utils.c src/builtin/b_cd.c src/builtin/b_cd_utils.c src/builtin/b_env.c src/builtin/exec_builtin.c src/builtin/exit.c src/builtin/export.c src/builtin/pwd.c src/builtin/unset.c src/builtin/utils.c src/print.c
 
 #@cc $(FLAGS) $(OBJECTS) -lreadline -L/Users/adriouic/.brew/opt/readline/lib  -L./libft -lft $(READLINE) -fsanitize=address -o $(NAME)
 
@@ -28,9 +28,9 @@ PRINT:
 $(NAME) : $(OBJECTS) $(GNL_OBJ) LIB 
 	@echo "\n\033[0;33m Linking object files Done" "\033[1;32m"
 
-	@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/lib -L./libft -lft $(READLINE) -fsanitize=address -o $(NAME)
+	#@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/lib -L./libft -lft $(READLINE) -fsanitize=address -o $(NAME)
 	#@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/Users/adriouic/.brew/opt/readline/lib  -L./libft -lft $(READLINE) -fsanitize=address -o $(NAME)
-
+	@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/opt/homebrew/Cellar/readline/8.1.2/lib -L./libft -lft $(READLINE) -fsanitize=address -o $(NAME)
 	#@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/opt/homebrew/Cellar/readline/8.1.2/lib -L./libft -lft $(READLINE) -fsanitize=address  -o $(NAME)
 	#@cc $(FLAGS) $(OBJECTS) -lreadline -L./libft -lft  -o $(NAME)
 

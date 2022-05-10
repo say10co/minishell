@@ -64,12 +64,12 @@ int	main(int ac, char **av, char **env)
 	while (ac)
 	{
 		cmd = get_cmd();
-		if(!cmd)
+		if (!cmd)
 			b_exit();
 		command_list = parse_command(cmd);
 		if (command_list)
 		{
-			exec_cmd(command_list, env);
+			exec_cmd(command_list);
 			unlink("/tmp/minishell-dumy_file-0ew3d");
 			add_history(cmd);
 		}
