@@ -6,12 +6,11 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:26:22 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/28 01:20:23 by macplus          ###   ########.fr       */
+/*   Updated: 2022/05/10 16:50:14 by macplus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
-
 
 void	ft_initenv(char **env)
 {

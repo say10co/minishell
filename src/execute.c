@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/04/28 03:59:44 by macplus          ###   ########.fr       */
+/*   Updated: 2022/05/10 16:52:43 by macplus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,28 @@
 static void	handle_builtin(t_cmd *cmd, int *fd, int size, int i)
 {
 	int	tmp_fdo;
+	int	fdo;
 
-	if (i < size - 1)
-	{
-		printf("INTRO PIPE TO NEXT COMMAND\n");
-		tmp_fdo = dup(1);
-		dup2(fd[i * 2 + 1], 1);
-		close(fd[i * 2 + 1]);
-	}
-	else if (cmd->fd_out > 2)
+	if (i < size - 1 || cmd->fd_out > 2)
 	{
 		tmp_fdo = dup(1);
-		dup2(cmd->fd_out, 1);
+		fdo = open("/tmp/ms-builtin-tmp", O_CREAT | O_RDWR, 0777);
+		dup2(fdo, 1);
 	}
 	exec_builtin(is_builtin(cmd->command[0]), cmd);
-  if (i < size - 1 || cmd->fd_out > 2)
+	if (i < size - 1 || cmd->fd_out > 2)
 	{
-    dup2(tmp_fdo, 1);
-		if (cmd->fd_out > 2 && i < size - 1)
-		{
-      printf("COPY TO FILE \n");
-      copy_file(fd[i * 2], cmd->fd_out);
-    }
-    close(tmp_fdo);
-		printf("OUTRO PIPE TO NEXT COMMAND\n");
+		close(fdo);
+		fdo = open("/tmp/ms-builtin-tmp", O_RDWR);
+		dup2(tmp_fdo, 1);
+		if (i < size - 1 && cmd->fd_out > 2)
+			copy_file(fdo, fd[i * 2 + 1], cmd->fd_out);
+		else if (cmd->fd_out > 2)
+			copy_file(fdo, -1, cmd->fd_out);
+		else
+			copy_file(fdo, fd[i * 2 + 1], -1);
+		close(tmp_fdo);
+		unlink("/tmp/ms-builtin-tmp");
 	}
 }
 

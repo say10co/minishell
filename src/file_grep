@@ -1,6 +1,0 @@
-execute.c
-execute.o
-lexer1.c
-lexer1.o
-lexer_utils.c
-lexer_utils.o

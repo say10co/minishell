@@ -105,7 +105,7 @@ void	pwd(char **arg);
 void	env(t_cmd *cmd);
 void	b_exit(void);
 void	unset(char **command);
-void copy_file(int fdi, int fdo);
+void copy_file(int fdi, int pipe_fdo, int file_fdo);
 int is_builtin(char *cmd);
 
 //***************** ENV **********************
