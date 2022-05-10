@@ -120,6 +120,8 @@ char	*ft_getenv(char *key);
 
 //******************* tmp ***************
 
+void export(char **cmd);
+
 // ****************** SIGNALS ****************
 
 void handler(int sig);
