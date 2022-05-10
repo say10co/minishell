@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 18:26:22 by bberkass          #+#    #+#             */
 /*   Updated: 2022/05/10 16:50:14 by macplus          ###   ########.fr       */
+
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +28,7 @@ void	ft_initenv(char **env)
 		node = ft_lstnew(en_var);
 		ft_lstadd_back(&g_env, node);
 		env++;
+		free(var);
 	}
 }
 

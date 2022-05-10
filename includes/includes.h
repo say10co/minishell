@@ -97,6 +97,7 @@ int		close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd);
 //***************** EXECUTION ***************
 
 void    exec_cmd(t_list *icmd);
+
 int		is_builtin(char *cmd);
 void	exec_builtin(int ncmd, t_cmd *cmd);
 void	cd(char **arg);
@@ -106,6 +107,7 @@ void	env(t_cmd *cmd);
 void	b_exit(void);
 void	unset(char **command);
 void copy_file(int fdi, int pipe_fdo, int file_fdo);
+
 int is_builtin(char *cmd);
 
 //***************** ENV **********************
@@ -117,8 +119,6 @@ char	**gen_env(void);
 char	*ft_getenv(char *key);
 
 //******************* tmp ***************
-
-void	export(char **command);
 
 // ****************** SIGNALS ****************
 
