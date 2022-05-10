@@ -42,14 +42,16 @@ void	copy_file(int fdi, int fdo)
 {
 	char	*buff;
 	int		readed;
+  int tmp_fdi;
 
 	buff = (char *)malloc(sizeof(char) * 2);
-	readed = read(fdi, buff, 1);
-	while (readed > 0)
+	tmp_fdi = dup(fdi);
+	readed = read(tmp_fdi, buff, 1);
+  while (readed > 0)
 	{
 		buff[1] = '\0';
-		write(fdo, buff, 1);
-		readed = read(fdi, buff, 1);
+    write(fdo, buff, 1);
+		readed = read(tmp_fdi, buff, 1);
 	}
 	close(fdo);
 	free(buff);

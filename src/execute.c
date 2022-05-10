@@ -18,6 +18,7 @@ static void	handle_builtin(t_cmd *cmd, int *fd, int size, int i)
 
 	if (i < size - 1)
 	{
+		printf("INTRO PIPE TO NEXT COMMAND\n");
 		tmp_fdo = dup(1);
 		dup2(fd[i * 2 + 1], 1);
 		close(fd[i * 2 + 1]);
@@ -28,12 +29,16 @@ static void	handle_builtin(t_cmd *cmd, int *fd, int size, int i)
 		dup2(cmd->fd_out, 1);
 	}
 	exec_builtin(is_builtin(cmd->command[0]), cmd);
-	if (i < size - 1 || cmd->fd_out > 2)
+  if (i < size - 1 || cmd->fd_out > 2)
 	{
-		dup2(tmp_fdo, 1);
+    dup2(tmp_fdo, 1);
 		if (cmd->fd_out > 2 && i < size - 1)
-			copy_file(fd[i * 2], cmd->fd_out);
-		close(tmp_fdo);
+		{
+      printf("COPY TO FILE \n");
+      copy_file(fd[i * 2], cmd->fd_out);
+    }
+    close(tmp_fdo);
+		printf("OUTRO PIPE TO NEXT COMMAND\n");
 	}
 }
 
