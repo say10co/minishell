@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 00:32:01 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/10 17:00:33 by macplus          ###   ########.fr       */
+/*   Updated: 2022/05/11 21:54:18 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	print_command_data(t_list *lst)
 			curr = curr->next;
 			continue;
 		}
-		if (0){
+		if (1){
 		printf("-----------------------\n");
 		printf("-/--: input fd : %d\n", cmd->fd_in);
 		printf("-/--: output fd : %d\n", cmd->fd_out);
@@ -77,7 +77,7 @@ void	print_command_data(t_list *lst)
 		printf("-/--: Error Free : %d\n", cmd->error_free);
 		}
 		curr = curr->next;
-		destroy_command(cmd);		
+		//destroy_command(cmd);		
 	}
 
 }

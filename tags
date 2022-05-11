@@ -1,0 +1,73 @@
+Mmain	src/main.c	/^int	main(int ac, char **av, char **env)$/
+__init_cmd	src/initers.c	/^void	__init_cmd(t_cmd *cmd)$/
+__init_lexer_vars	src/lexer1.c	/^void	__init_lexer_vars(t_lexer *vars, t_token_list/
+__init_list	src/initers.c	/^void	__init_list(t_token_list *lst)$/
+__init_new_command	src/initers.c	/^void	__init_new_command(t_lexer *v, t_token **t, b/
+__init_parser_vars	src/initers.c	/^void	__init_parser_vars(size_t *size, t_list **cmd/
+__init_variable	src/expander.c	/^bool	__init_variable(t_variables *v, char *token)$/
+add_prefix	src/string_operators.c	/^char	*add_prefix(const char *prefix, const char *f/
+append_to_lst	src/parser_utils.c	/^void	append_to_lst(char ***vector, char *elem, siz/
+check_arguments	src/lexer1.c	/^bool	check_arguments(char *text, t_token_list *lst/
+check_file	src/parser_one.c	/^bool	check_file(t_token *token, t_cmd *cmd)$/
+check_parameters	src/expander_utils.c	/^void	check_parameters(t_list *lst, char **result, /
+check_syntax	src/parser.c	/^bool	check_syntax(t_token *t, t_token_list *lst)$/
+close_files	src/parser_utils.c	/^void	close_files(t_cmd *cmd)$/
+close_iofd	src/execute_utils.c	/^void	close_iofd(t_cmd *cmd)$/
+close_old_open_new	src/parser_utils.c	/^int	close_old_open_new(t_cmd *cmd, char *file_name/
+close_pipes	src/execute_utils.c	/^void	close_pipes(int *fd, int size)$/
+copy_file	src/utils.c	/^void	copy_file(int fdi, int pipe_fdo, int file_fdo/
+create_env	src/parser.c	/^t_list	*create_env(char **env)$/
+deallocate	src/destructors.c	/^void	deallocate(char **s)$/
+destroy_command	src/destructors.c	/^void	destroy_command(t_cmd *cmd)$/
+destroy_token_list	src/destructors.c	/^void	destroy_token_list(t_token_list *tokens)$/
+display_logo	src/print.c	/^void display_logo(void)$/
+exec_cmd	src/execute.c	/^void	exec_cmd(t_list *icmd)$/
+expand	src/expander.c	/^void	expand(t_variables *v, t_list **str_lst, int /
+file_fr_ok	src/parser_one.c	/^char	*file_fr_ok(char *file_name, char **token)$/
+fill_token	src/lexer_utils.c	/^void	fill_token(t_token *t, char *buffer)$/
+ft_getenv	src/env.c	/^char	*ft_getenv(char *key)$/
+ft_initenv	src/env.c	/^void	ft_initenv(char **env)$/
+ft_putenv_fd	src/print.c	/^void ft_putenv_fd(char *s, int fd)$/
+ft_updateenv	src/env.c	/^void	ft_updateenv(char *key, char *new_val)$/
+gen_env	src/utils.c	/^char	**gen_env(void)$/
+get_befor_quote	src/lex_utils.c	/^void	get_befor_quote(t_token_list *lst, t_lexer *v/
+get_between_quots	src/lex_utils.c	/^void	get_between_quots(t_token_list *lst, t_lexer /
+get_bfore_key	src/expander.c	/^void	get_bfore_key(t_list **str_lst, t_variables */
+get_cmd	src/main.c	/^char	*get_cmd(void)$/
+get_data	src/lexer_utils.c	/^bool	get_data(char *buffer, t_lexer *v, t_token **/
+get_foldername	src/main.c	/^char	*get_foldername(void)$/
+get_keyword_and_filename	src/lex_utils.c	/^void	get_keyword_and_filename(t_token_list *lst, t/
+get_nonquoted	src/lex_utils.c	/^void	get_nonquoted(t_token_list *lst, t_lexer *var/
+get_tokens	src/lexer1.c	/^t_token_list	*get_tokens(char *text)$/
+get_type	src/lexer_utils.c	/^int	get_type(char c, int p)$/
+get_value_of_key	src/expander_utils.c	/^char	*get_value_of_key(char *key, t_list *local_en/
+get_values	src/expander.c	/^char	*get_values(char *token, t_list **str_lst, ch/
+handle_builtin	src/execute.c	/^static void	handle_builtin(t_cmd *cmd, int *fd, in/
+handle_cmd	src/execute.c	/^static void	handle_cmd(t_cmd *cmd, int *fd, int i,/
+handler	src/signals.c	/^void	handler(int sig)$/
+handler_	src/parser_utils.c	/^void handler_(int sig)$/
+heredoc	src/parser_utils.c	/^bool	heredoc(char *eof, t_cmd *cmd)$/
+init_pipes	src/execute_utils.c	/^int	*init_pipes(int size)$/
+is_assignment	src/string_operators.c	/^bool	is_assignment(char *str, char **name)$/
+is_builtin	src/utils.c	/^int	is_builtin(char *cmd)$/
+is_key_	src/lexer_utils.c	/^bool	is_key_(int *i)$/
+is_keyword	src/utils.c	/^int	is_keyword(char c)$/
+is_qouted	src/parser.c	/^char	is_qouted(char *s)$/
+join_env	src/utils.c	/^static char	*join_env(char *key, char *val)$/
+join_next_token	src/string_operators.c	/^void	join_next_token(char **old, char *new)$/
+join_tokens	src/string_operators.c	/^void	join_tokens(t_token_list *lst)$/
+merge	src/lexer_utils.c	/^bool	merge(char c1, char c2, t_token *t)$/
+merge_input	src/execute_utils.c	/^void	merge_input(int fdpipe, int fdfile)$/
+n_parser	src/parser.c	/^bool	n_parser(t_token_list *lst)$/
+open_file	src/parser_utils.c	/^bool	open_file(t_cmd *cmd, t_token *t, char *file_/
+output_tofile	src/execute_utils.c	/^void	output_tofile(t_cmd *cmd)$/
+parse_command	src/main.c	/^t_list	*parse_command(char *cmd)$/
+parser_one	src/parser_one.c	/^t_list	*parser_one(t_token_list *lst)$/
+print_command_data	src/print.c	/^void	print_command_data(t_list *lst)$/
+print_env	src/print.c	/^void	print_env(t_list *env)$/
+print_env_g	src/print.c	/^void	print_env_g()$/
+print_tokens	src/print.c	/^void	print_tokens(t_token_list *lst)$/
+slice_nl	src/initers.c	/^char	*slice_nl(char *line)$/
+trim_expand_token	src/parser.c	/^void	trim_expand_token(struct s_pvars *vars)$/
+wrape_command	src/string_operators.c	/^void	wrape_command(t_list **cmd_lst, t_cmd **cmd, /
+wrappup_exapnded_token	src/expander_utils.c	/^char	*wrappup_exapnded_token(t_list *lst, int tota/
