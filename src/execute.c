@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/10 16:52:43 by macplus          ###   ########.fr       */
+/*   Updated: 2022/05/11 22:21:16 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void	exec_cmd(t_list *icmd)
 	while (i < size && icmd)
 	{
 		cmd = (t_cmd *)icmd->content;
-		if (cmd->error_free && is_builtin(cmd->command[0]))
+		if (cmd->command && cmd->error_free && is_builtin(cmd->command[0]))
 			handle_builtin(cmd, fd, size, i);
-		else if (cmd->error_free)
+		else if (cmd->command && cmd->error_free)
 			handle_cmd(cmd, fd, i, size);
 		close_iofd(cmd);
 		i++;

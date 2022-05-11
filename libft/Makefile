@@ -6,7 +6,7 @@
 #    By: adriouic <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/11 23:09:51 by adriouic          #+#    #+#              #
-#    Updated: 2022/04/15 15:17:05 by adriouic         ###   ########.fr        #
+#    Updated: 2022/05/11 22:25:34 by adriouic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 FILES	=	ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \

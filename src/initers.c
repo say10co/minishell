@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 01:00:04 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/29 01:00:56 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/11 22:15:04 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -53,6 +53,7 @@ void	__init_new_command(t_lexer *v, t_token **t, bool join, bool is_key)
 		(*t)->quoted = 0;
 		(*t)->quote_err = 0;
 		(*t)->type = 0;
+		(*t)->data = NULL;
 	}
 	(*t)->is_key = is_key;
 	(*t)->join = join;
