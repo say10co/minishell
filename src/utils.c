@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 01:08:17 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/10 16:55:43 by macplus          ###   ########.fr       */
+/*   Updated: 2022/05/11 23:43:03 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	is_builtin(char *cmd)
 {
 	if (!ft_strcmp(cmd, "cd"))
 		return (B_CD);
-	else if (!ft_strcmp(cmd, "echo") && 0)
+	else if (!ft_strcmp(cmd, "echo"))
 		return (B_ECHO);
-	else if (!ft_strcmp(cmd, "pwd") && 0)
+	else if (!ft_strcmp(cmd, "pwd"))
 		return (B_PWD);
 	else if (!ft_strcmp(cmd, "export"))
 		return (B_EXPORT);
