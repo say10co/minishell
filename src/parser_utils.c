@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 02:33:48 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/11 22:57:40 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/11 23:26:20 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ bool	heredoc(char *eof, t_cmd *cmd)
 	tmp = cmd->error_free;
 	cmd->fd_in = 0;
 	str_lst = NULL;
-	fd = open("/tmp/minishell-dumy_file-0ew3d",
-			O_CREAT | O_APPEND | O_WRONLY, 0600);
+	fd = open("/tmp/dumy_file-0ew3d", O_CREAT | O_APPEND | O_WRONLY, 0600);
 	cmd->error_free = 0;
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
 		run_child(fd, eof, &str_lst);
@@ -54,10 +54,11 @@ bool	heredoc(char *eof, t_cmd *cmd)
 	if (kill(pid, 0) != -1)
 	{
 		close(fd);
-		fd = open("/tmp/minishell-dumy_file-0ew3d", O_RDONLY);
+		fd = open("/tmp/dumy_file-0ew3d", O_RDONLY);
 		cmd->fd_in = fd;
 		cmd->error_free = tmp;
 	}
+	signal(SIGINT, handler);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:03:56 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/28 23:00:36 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/11 23:38:03 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -100,7 +100,8 @@ bool	n_parser(t_token_list *lst)
 	{
 		if (check_syntax(vars.t, lst))
 			return (1);
-		trim_expand_token(&vars);
+		if (vars.t->quoted == '"')
+			trim_expand_token(&vars);
 		vars.last = vars.t->type;
 		vars.t = vars.t->next_token;
 	}

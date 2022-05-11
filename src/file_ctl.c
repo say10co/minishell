@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:56:16 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/11 22:56:21 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/11 23:24:40 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,3 @@ void	close_files(t_cmd *cmd)
 	if (cmd->fd_out > 3)
 		close(cmd->fd_out);
 }
-

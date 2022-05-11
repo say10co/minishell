@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:48:17 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/11 22:48:45 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/11 23:26:29 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int ac, char **av, char **env)
 		if (command_list)
 		{
 			exec_cmd(command_list);
-			unlink("/tmp/minishell-dumy_file-0ew3d");
+			unlink("/tmp/dumy_file-0ew3d");
 			add_history(cmd);
 		}
 		ft_lstclear(&command_list, free);

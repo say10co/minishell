@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:51:12 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/11 22:51:29 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/11 23:17:12 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	handler_herdoc(int sig)
 {
 	(void)sig;
-	exit(0);
+	exit(1024);
 }
 
 void	handler(int sig)
