@@ -6,37 +6,59 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 02:33:48 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/10 17:00:10 by macplus          ###   ########.fr       */
+/*   Updated: 2022/05/11 18:58:31 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
+void handler_(int sig)
+{
+	(void)sig;
+	exit(0);
+
+}
+
 bool	heredoc(char *eof, t_cmd *cmd)
 {
 	t_list	*str_lst;
-	char	*buffer;
+	char	*buffer = NULL;
 	int		fd;
+	int	 tmp = cmd->error_free;
 
+	cmd->fd_in = 0;
 	str_lst = NULL;
 	fd = open("/tmp/minishell-dumy_file-0ew3d",
 			O_CREAT | O_APPEND | O_WRONLY, 0600);
-	while (1)
+	cmd->error_free = 0;
+	pid_t pid = fork();
+	if (pid == 0)
 	{
-		buffer = slice_nl(get_next_line(0));
-		if (!buffer || !ft_strcmp(buffer, eof))
-			break ;
-		if (ft_strchr(buffer, '$'))
-			ft_putstr_fd(get_values(buffer, &str_lst, is_qouted(buffer)), fd);
-		else
-			write(fd, buffer, ft_strlen(buffer));
-		write(fd, "\n", 1);
-		free(buffer);
+
+		signal(SIGINT, handler_);
+		while (1)
+		{
+			buffer = slice_nl(get_next_line(0));
+			if (!buffer || !ft_strcmp(buffer, eof))
+				break ;
+			if (ft_strchr(buffer, '$'))
+				ft_putstr_fd(get_values(buffer, &str_lst, is_qouted(buffer)), fd);
+			else
+				write(fd, buffer, ft_strlen(buffer));
+			write(fd, "\n", 1);
+			free(buffer);
+		}
 	}
-	close(fd);
-	fd = open("/tmp/minishell-dumy_file-0ew3d", O_RDONLY);
-	cmd->fd_in = fd;
-	free(buffer);
+	else
+		wait(NULL);
+	if (kill(pid, 0) != -1)
+	{
+		close(fd);
+		fd = open("/tmp/minishell-dumy_file-0ew3d", O_RDONLY);
+		cmd->fd_in = fd;
+		//free(buffer);
+		cmd->error_free = tmp;
+	}
 	return (1);
 }
 
