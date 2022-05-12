@@ -96,6 +96,7 @@ int		close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd);
 
 //***************** EXECUTION ***************
 
+void	echo(char **command);
 void    exec_cmd(t_list *icmd);
 
 int		is_builtin(char *cmd);

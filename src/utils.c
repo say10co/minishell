@@ -23,7 +23,7 @@ int	is_builtin(char *cmd)
 {
 	if (!ft_strcmp(cmd, "cd"))
 		return (B_CD);
-	else if (!ft_strcmp(cmd, "echo") && 0)
+	else if (!ft_strcmp(cmd, "echo"))
 		return (B_ECHO);
 	else if (!ft_strcmp(cmd, "pwd"))
 		return (B_PWD);
