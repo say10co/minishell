@@ -70,7 +70,7 @@ t_list	*parser_one(t_token_list *lst)
 	__init_parser_vars(&vector_size, &cmd_lst, &cmd);
 	join_tokens(lst);
 	t = lst->all;
-	while (t)
+	while (t && t->data)
 	{
 		if (t->type == PIPE)
 			wrape_command(&cmd_lst, &cmd, &vector_size);
@@ -79,7 +79,7 @@ t_list	*parser_one(t_token_list *lst)
 			t = t->next_token;
 		else if (t->is_key && open_file(cmd, t, t->next_token->data))
 			t = t->next_token;
-		else if (!check_file(t, cmd))
+		else if (!check_file(t, cmd) || 0)
 			append_to_lst(&(cmd->command), t->data, &vector_size);
 		if (!cmd->error_free)
 			close_files(cmd);

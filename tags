@@ -11,7 +11,7 @@ check_arguments	src/lexer1.c	/^bool	check_arguments(char *text, t_token_list *ls
 check_file	src/parser_one.c	/^bool	check_file(t_token *token, t_cmd *cmd)$/
 check_parameters	src/expander_utils.c	/^void	check_parameters(t_list *lst, char **result, /
 check_syntax	src/parser.c	/^bool	check_syntax(t_token *t, t_token_list *lst)$/
-close_files	src/parser_utils.c	/^void	close_files(t_cmd *cmd)$/
+close_files	src/file_ctl.c	/^void	close_files(t_cmd *cmd)$/
 close_iofd	src/execute_utils.c	/^void	close_iofd(t_cmd *cmd)$/
 close_old_open_new	src/parser_utils.c	/^int	close_old_open_new(t_cmd *cmd, char *file_name/
 close_pipes	src/execute_utils.c	/^void	close_pipes(int *fd, int size)$/
@@ -45,7 +45,7 @@ get_values	src/expander.c	/^char	*get_values(char *token, t_list **str_lst, ch/
 handle_builtin	src/execute.c	/^static void	handle_builtin(t_cmd *cmd, int *fd, in/
 handle_cmd	src/execute.c	/^static void	handle_cmd(t_cmd *cmd, int *fd, int i,/
 handler	src/signals.c	/^void	handler(int sig)$/
-handler_	src/parser_utils.c	/^void handler_(int sig)$/
+handler_herdoc	src/signals.c	/^void	handler_herdoc(int sig)$/
 heredoc	src/parser_utils.c	/^bool	heredoc(char *eof, t_cmd *cmd)$/
 init_pipes	src/execute_utils.c	/^int	*init_pipes(int size)$/
 is_assignment	src/string_operators.c	/^bool	is_assignment(char *str, char **name)$/
@@ -59,7 +59,7 @@ join_tokens	src/string_operators.c	/^void	join_tokens(t_token_list *lst)$/
 merge	src/lexer_utils.c	/^bool	merge(char c1, char c2, t_token *t)$/
 merge_input	src/execute_utils.c	/^void	merge_input(int fdpipe, int fdfile)$/
 n_parser	src/parser.c	/^bool	n_parser(t_token_list *lst)$/
-open_file	src/parser_utils.c	/^bool	open_file(t_cmd *cmd, t_token *t, char *file_/
+open_file	src/file_ctl.c	/^bool	open_file(t_cmd *cmd, t_token *t, char *file_/
 output_tofile	src/execute_utils.c	/^void	output_tofile(t_cmd *cmd)$/
 parse_command	src/main.c	/^t_list	*parse_command(char *cmd)$/
 parser_one	src/parser_one.c	/^t_list	*parser_one(t_token_list *lst)$/
@@ -67,7 +67,9 @@ print_command_data	src/print.c	/^void	print_command_data(t_list *lst)$/
 print_env	src/print.c	/^void	print_env(t_list *env)$/
 print_env_g	src/print.c	/^void	print_env_g()$/
 print_tokens	src/print.c	/^void	print_tokens(t_token_list *lst)$/
+run_child	src/parser_utils.c	/^void	run_child(int fd, char *eof, t_list **str_lst/
 slice_nl	src/initers.c	/^char	*slice_nl(char *line)$/
 trim_expand_token	src/parser.c	/^void	trim_expand_token(struct s_pvars *vars)$/
+update_exec_status	src/execute.c	/^void	update_exec_status(int status)$/
 wrape_command	src/string_operators.c	/^void	wrape_command(t_list **cmd_lst, t_cmd **cmd, /
 wrappup_exapnded_token	src/expander_utils.c	/^char	*wrappup_exapnded_token(t_list *lst, int tota/
