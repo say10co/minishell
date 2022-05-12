@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:47:11 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/11 22:47:27 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/12 01:56:19 by macplus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -43,6 +43,7 @@ void	close_pipes(int *fd, int size)
 		close(fd[i]);
 		i++;
 	}
+	free(fd);
 }
 
 void	output_tofile(t_cmd *cmd)
