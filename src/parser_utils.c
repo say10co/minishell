@@ -53,6 +53,7 @@ bool	heredoc(char *eof, t_cmd *cmd)
 		wait(NULL);
 	if (kill(pid, 0) != -1)
 	{
+		kill(pid, SIGINT);
 		close(fd);
 		fd = open("/tmp/dumy_file-0ew3d", O_RDONLY);
 		cmd->fd_in = fd;

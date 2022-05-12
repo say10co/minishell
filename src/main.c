@@ -78,6 +78,7 @@ int	main(int ac, char **av, char **env)
 		cmd = get_cmd();
 		if (!cmd)
 			b_exit();
+		add_history(cmd);
 		command_list = parse_command(cmd);
 		if (command_list)
 		{

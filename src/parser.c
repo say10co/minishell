@@ -100,7 +100,7 @@ bool	n_parser(t_token_list *lst)
 	{
 		if (check_syntax(vars.t, lst))
 			return (1);
-		if (vars.t->quoted == '"')
+		if (!vars.t->quoted || vars.t->quoted == '"')
 			trim_expand_token(&vars);
 		vars.last = vars.t->type;
 		vars.t = vars.t->next_token;
