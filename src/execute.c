@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/11 22:21:16 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/12 01:55:29 by macplus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,15 @@ static void	handle_cmd(t_cmd *cmd, int *fd, int i, int size)
 	}
 }
 
+void	update_exec_status(int status)
+{
+	char	*s;
+
+	s = ft_itoa(status);
+	ft_updateenv("$", s);
+	free(s);
+}
+
 void	exec_cmd(t_list *icmd)
 {
 	t_cmd	*cmd;
@@ -88,11 +97,11 @@ void	exec_cmd(t_list *icmd)
 			handle_cmd(cmd, fd, i, size);
 		close_iofd(cmd);
 		i++;
+		destroy_command(cmd);
 		icmd = icmd->next;
 	}
 	close_pipes(fd, size);
-	i = 0;
-	while (i++ < size)
+	while (i-- > 0)
 		wait(&status);
-	ft_updateenv("$", ft_itoa(status));
+	update_exec_status(status);
 }
