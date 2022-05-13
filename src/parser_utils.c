@@ -55,8 +55,7 @@ bool	heredoc(char *eof, t_cmd *cmd)
 	{
 		kill(pid, SIGINT);
 		close(fd);
-		fd = open("/tmp/dumy_file-0ew3d", O_RDONLY);
-		cmd->fd_in = fd;
+		cmd->fd_in = open("/tmp/dumy_file-0ew3d", O_RDONLY);
 		cmd->error_free = tmp;
 	}
 	signal(SIGINT, handler);

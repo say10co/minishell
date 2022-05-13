@@ -118,6 +118,7 @@ void	ft_updateenv(char *key, char *new_val);
 void	exec_builtin(int ncmd, t_cmd *cmd);
 char	**gen_env(void);
 char	*ft_getenv(char *key);
+void	print_env_g(const char *prefix);
 
 //******************* tmp ***************
 

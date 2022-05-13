@@ -22,6 +22,7 @@ void	__init_lexer_vars(t_lexer *vars, t_token_list *lst, int size)
 	vars->j = 0;
 	vars->start = 1;
 	vars->token = lst->all;
+	vars->quote_type = 0;
 }
 
 bool	check_arguments(char *text, t_token_list *lst)

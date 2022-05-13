@@ -19,8 +19,11 @@ void	export(char **command)
 
 	i = 1;
 	name = NULL;
-	if (!*command)
+	if (!command[i])
+	{
+		print_env_g("declare -x");
 		return ;
+	}
 	while (command[i])
 	{
 		if (is_assignment(command[i], &name))
