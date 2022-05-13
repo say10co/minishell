@@ -10,7 +10,7 @@ int	echo(char **command)
 	nl_option = 0;
 	if (!command[1])
 		return (write(1, "\n", 1) * 0);
-	while (!ft_strcmp(command[i], "-n"))
+	while (command[i] && !ft_strcmp(command[i], "-n"))
 		i++;
 	nl_option = (i != 1);
 	while (command[i])
