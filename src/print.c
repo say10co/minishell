@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/23 00:32:01 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/11 21:54:18 by adriouic         ###   ########.fr       */
+/*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
+/*   Updated: 2022/05/14 15:43:53 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,11 @@ s++;
 }
 }
 */
-
-void display_logo(void)
+void	display_logo(void)
 {
 	char	*logo;
-	int	fd;
-	int	r;
+	int		fd;
+	int		r;
 
 	logo = (char *)malloc(sizeof(char) * (330 + 1));
 	fd = open("logo.txt", O_RDONLY);
@@ -100,8 +99,8 @@ void display_logo(void)
 
 void	print_env_g(const char *prefix)
 {
-	t_env *content;
-	t_list *curr;
+	t_env	*content;
+	t_list	*curr;
 
 	curr = g_env;
 	while (curr)
@@ -110,5 +109,5 @@ void	print_env_g(const char *prefix)
 		printf("%s %s=%s\n", prefix, content->key, content->val);
 		curr = curr->next;
 	}
-	return;
+	return ;
 }
