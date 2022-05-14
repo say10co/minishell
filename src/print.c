@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/14 20:18:22 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 00:05:24 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	print_tokens(t_token_list *lst)
 		t = t->next_token;
 	}
 }
-
 void	print_command_data(t_list *lst)
 {
 	t_list *curr;
@@ -80,6 +79,7 @@ void ft_putenv_fd(char *s, int fd)
 		s++;
 	}
 }
+
 */
 void	display_logo(void)
 {
