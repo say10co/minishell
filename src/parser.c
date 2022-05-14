@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/09 22:03:56 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/11 23:38:03 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/14 17:42:18 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -76,7 +76,7 @@ void	trim_expand_token(struct s_pvars *vars)
 {
 	char	*polished;
 
-	if (ft_strchr(vars->t->data, '$'))
+	if (vars->t->data && ft_strchr(vars->t->data, '$'))
 	{
 		polished = vars->t->data;
 		vars->t->data = get_values(vars->t->data,

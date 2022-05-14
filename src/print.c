@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/14 15:43:53 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/05/14 20:18:22 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,71 +14,71 @@
 
 /* Debuging Tools 
 
-   void	print_env(t_list *env)
-   {
-   while (env)
-   {
-   printf("=%s\n", (char *)env->content);
-   env = env->next;
-   }
-   printf("Done printing env\n");
-   }
-
-
-
-   void	print_tokens(t_token_list *lst)
-   {
-   t_token		*t;
-
-   t = lst->all;
-   while (t)
-   {
-   printf("--/-: [%s] {%p}\n", t->data, t->next_token);
-   t = t->next_token;
-   }
-   }
-
-   void	print_command_data(t_list *lst)
-   {
-   t_list *curr;
-   t_cmd 	*cmd;
-
-   curr = lst;
-   while (curr)
-   {
-   cmd = (t_cmd *)curr->content;
-
-   if (!cmd->error_free)
-   {
-   destroy_command(cmd);		
-   curr = curr->next;
-   continue;
-   }
-   if (1){
-   printf("-----------------------\n");
-   printf("-/--: input fd : %d\n", cmd->fd_in);
-   printf("-/--: output fd : %d\n", cmd->fd_out);
-   printf("-/--: Command : ");
-   for (int y = 0;  cmd->command && (cmd->command)[y] != NULL; y++)
-   printf("%s ",(cmd->command)[y]);
-   printf("\n");
-   printf("-/--: Error Free : %d\n", cmd->error_free);
-   }
-   curr = curr->next;
-//destroy_command(cmd);		
+void	print_env(t_list *env)
+{
+	while (env)
+	{
+		printf("=%s\n", (char *)env->content);
+		env = env->next;
+	}
+	printf("Done printing env\n");
 }
+
+
+
+void	print_tokens(t_token_list *lst)
+{
+	t_token		*t;
+
+	t = lst->all;
+	while (t)
+	{
+		printf("--/-: [%s] {%p}\n", t->data, t->next_token);
+		t = t->next_token;
+	}
+}
+
+void	print_command_data(t_list *lst)
+{
+	t_list *curr;
+	t_cmd 	*cmd;
+
+	curr = lst;
+	while (curr)
+	{
+		cmd = (t_cmd *)curr->content;
+
+		if (!cmd->error_free)
+		{
+			destroy_command(cmd);		
+			curr = curr->next;
+			continue;
+		}
+		if (1){
+			printf("-----------------------\n");
+			printf("-/--: input fd : %d\n", cmd->fd_in);
+			printf("-/--: output fd : %d\n", cmd->fd_out);
+			printf("-/--: Command : ");
+			for (int y = 0;  cmd->command && (cmd->command)[y] != NULL; y++)
+				printf("%s ",(cmd->command)[y]);
+			printf("\n");
+			printf("-/--: Error Free : %d\n", cmd->error_free);
+		}
+		curr = curr->next;
+		//destroy_command(cmd);		
+	}
 
 }
 
 void ft_putenv_fd(char *s, int fd)
 {
-if (!s)
-return ;
-while (*s)
-{
-write(fd, s, 1);
-s++;
-}
+	if (!s)
+		return ;
+	while (*s)
+	{
+		write(fd, s, 1);
+		s++;
+	}
 }
 */
 void	display_logo(void)

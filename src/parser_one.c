@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/29 01:00:58 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/14 20:17:44 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ bool	check_file(t_token *token, t_cmd *cmd)
 
 	i = 0;
 	error = CMDNOTFOUND;
-	if (cmd->command || !access(token->data, F_OK) || is_builtin(token->data))
+	if (cmd->command || is_builtin(token->data)
+		|| (ft_strchr(token->data, '/') && !access(token->data, X_OK)))
 		return (0);
 	paths = ft_split(ft_getenv("PATH"), ':');
 	while (paths && paths[i])
@@ -79,7 +80,7 @@ t_list	*parser_one(t_token_list *lst)
 			t = t->next_token;
 		else if (t->is_key && open_file(cmd, t, t->next_token->data))
 			t = t->next_token;
-		else if (!check_file(t, cmd) || 0)
+		else if (!check_file(t, cmd))
 			append_to_lst(&(cmd->command), t->data, &vector_size);
 		if (!cmd->error_free)
 			close_files(cmd);

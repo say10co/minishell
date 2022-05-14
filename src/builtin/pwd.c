@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/14 15:48:13 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/05/14 20:29:00 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@ void	pwd(char **arg)
 
 	(void)arg;
 	pwd = ft_getenv("PWD");
-	printf("%s\n", pwd);
+	if (pwd)
+		printf("%s\n", pwd);
 }

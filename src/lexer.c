@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 00:31:44 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/28 23:10:00 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/14 20:16:45 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ t_token_list	*get_tokens(char *text)
 	}
 	if (vars.quote)
 		(vars.token)->quote_err = 1;
-	else if (lst->nb_tokens == 0)
-		lst->all->data = ft_strdup("");
 	free(vars.buffer);
 	return (lst);
 }
