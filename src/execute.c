@@ -73,7 +73,7 @@ void	update_exec_status(int status)
 	char	*s;
 
 	s = ft_itoa(status);
-	ft_updateenv("$", s);
+	ft_updateenv("?", s);
 	free(s);
 }
 

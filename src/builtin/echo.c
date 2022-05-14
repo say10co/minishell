@@ -4,7 +4,7 @@
 int	echo(char **command)
 {
 	bool	nl_option;
-	int	i;
+	int		i;
 
 	i = 1;
 	nl_option = 0;
