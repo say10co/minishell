@@ -21,6 +21,7 @@ void	del_node(char *key)
 			free(e->key);
 			free(e->val);
 			free(e);
+			free(curr);
 			break ;
 		}
 		prev = curr;
