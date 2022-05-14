@@ -18,10 +18,10 @@ void	pwd(char **arg)
 
 	(void)arg;
 	
-  pwd = getcwd(NULL, 0);
+  	pwd = getcwd(NULL, 0);
 	if (pwd)
-  {
+	{
 		printf("%s\n", pwd);
-    free(pwd);
-  }
+		free(pwd);
+	}
 }
