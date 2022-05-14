@@ -56,11 +56,11 @@ static void	handle_cmd(t_cmd *cmd, int *fd, int i, int size)
 		if (i != 0)
 			dup2(fd[(i - 1) * 2], 0);
 		if (cmd->fd_out > 2 && size > 1 && i < size - 1)
-			output_tofile(cmd);
+			dup2(cmd->fd_out, 1);
 		else if ((cmd->fd_out > 2 && size == 1)
 			|| (cmd->fd_out > 2 && size > 1 && i == size - 1))
 			dup2(cmd->fd_out, 1);
-		if (i < size - 1)
+		if (i < size - 1 && cmd->fd_out <= 2)
 			dup2(fd[i * 2 + 1], 1);
 		close_pipes(fd, size);
 		execve(cmd->command[0], cmd->command, gen_env());
