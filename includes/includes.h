@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/11 23:09:17 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/14 16:43:53 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_variables
 
 }t_variables;
 
-extern t_list *g_env;
+extern t_list	*g_env;
 
 char	*append(char *prefix, const char *sufix);
 char	**my_ft_split(const char *str, char c);
@@ -75,16 +75,16 @@ void	free_befor_end(char **lst, int end);
 
 //*******************Expander************ 
 
-char *get_values(char *token, t_list **str_lst, char q);
-char    *get_value_of_key(char *key, t_list *local_env);
+char	*get_values(char *token, t_list **str_lst, char q);
+char	*get_value_of_key(char *key, t_list *local_env);
 
 //******************** PARSER ONE ********
 
-bool	 is_assignment(char *str, char **name);
+bool	is_assignment(char *str, char **name);
 
 //*******************PARSER***************
 
-t_list *parser_one(t_token_list *lst);
+t_list	*parser_one(t_token_list *lst);
 t_list	*create_env(char **env);
 bool	n_parser(t_token_list *lst);
 bool	heredoc(char *eof, t_cmd *cmd);
@@ -97,7 +97,7 @@ int		close_old_open_new(t_cmd *cmd, char *file_name, int mode, int old_fd);
 //***************** EXECUTION ***************
 
 void	echo(char **command);
-void    exec_cmd(t_list *icmd);
+void	exec_cmd(t_list *icmd);
 
 int		is_builtin(char *cmd);
 void	exec_builtin(int ncmd, t_cmd *cmd);
@@ -107,9 +107,9 @@ void	pwd(char **arg);
 void	env(t_cmd *cmd);
 void	b_exit(void);
 void	unset(char **command);
-void copy_file(int fdi, int pipe_fdo, int file_fdo);
+void	copy_file(int fdi, int pipe_fdo, int file_fdo);
 
-int is_builtin(char *cmd);
+int		is_builtin(char *cmd);
 
 //***************** ENV **********************
 
@@ -122,7 +122,7 @@ void	print_env_g(const char *prefix);
 
 //******************* tmp ***************
 
-void export(char **cmd);
+void	export(char **cmd);
 
 // ****************** SIGNALS ****************
 
@@ -148,9 +148,9 @@ void	merge_input(int fdpipe, int fdfile);
 
 //****************** Distructor **************
 
-void	destroy_command(t_cmd * cmd);
-void	destroy_command(t_cmd * cmd);
-void destroy_token_list(t_token_list *tokens);
+void	destroy_command(t_cmd *cmd);
+void	destroy_command(t_cmd *cmd);
+void	destroy_token_list(t_token_list *tokens);
 void	deallocate(char **s);
 
 //********************* lex ******************

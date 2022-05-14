@@ -6,12 +6,13 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 03:07:59 by adriouic          #+#    #+#             */
-/*   Updated: 2022/04/27 03:24:01 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/14 16:46:57 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
+
 # define D_QUOTE '"'
 # define S_QUOTE '\''
 # define L_ARROW '<'
@@ -25,17 +26,17 @@
 
 # include <stdbool.h>
 
-typedef struct s_token t_token;
-typedef struct s_token_list t_token_list;
+typedef struct s_token		t_token;
+typedef struct s_token_list	t_token_list;
 
 struct s_token
 {
 	char	*data;
+	char	quoted;
 	int		type;
 	int		length;
 	bool	is_key;
 	bool	found_space;
-	char	quoted;
 	bool	quote_err;
 	bool	join;
 	t_token	*next_token;
@@ -43,9 +44,8 @@ struct s_token
 
 struct s_token_list
 {
-	t_token *all;
-	int	nb_tokens;
-
+	t_token	*all;
+	int		nb_tokens;
 };
 
 typedef struct s_lexer
