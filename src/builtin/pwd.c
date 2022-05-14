@@ -17,7 +17,11 @@ void	pwd(char **arg)
 	char	*pwd;
 
 	(void)arg;
-	pwd = ft_getenv("PWD");
+	
+  pwd = getcwd(NULL, 0);
 	if (pwd)
+  {
 		printf("%s\n", pwd);
+    free(pwd);
+  }
 }
