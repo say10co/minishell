@@ -36,14 +36,14 @@ PRINT:
 %.o: %.c
 	@echo  "\n\033[0;33m Compiling minishell src"
 	@echo  "\033[1;32m"
-	cc $(FLAGS) -I /Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/include -c $< -o  $@
-	#cc $(FLAGS) -I /Users/adriouic/.brew/Cellar/readline/8.1.2/include -c $< -o  $@
+	#cc $(FLAGS) -I /Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/include -c $< -o  $@
+	cc $(FLAGS) -I /Users/adriouic/.brew/Cellar/readline/8.1.2/include -c $< -o  $@
 	@clear
 
 $(NAME) : $(OBJECTS) $(GNL_OBJ) 
 	
-	#@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/Users/adriouic/.brew/opt/readline/lib  -L./libft -lft $(READLINE) -o $(NAME)
-	@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/lib -L./libft -lft $(READLINE) -o $(NAME)
+	@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/Users/adriouic/.brew/opt/readline/lib  -L./libft -lft $(READLINE) -o $(NAME)
+	#@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/lib -L./libft -lft $(READLINE) -o $(NAME)
 	@echo "\n\033[0;33m Linking object files Done" "\033[1;32m"
 	
 LIB :
