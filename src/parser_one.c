@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/14 22:58:39 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 00:29:53 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_list	*parser_one(t_token_list *lst)
 	{
 		if (t->type == PIPE)
 			wrape_command(&cmd_lst, &cmd, &vector_size);
-		else if ((t->is_key && t->type == DL_ARROW)
+		else if ((t->is_key && t->type == DL_ARROW) && cmd->error_free
 			&& heredoc(t->next_token->data, cmd))
 			t = t->next_token;
 		else if (t->is_key && open_file(cmd, t, t->next_token->data))

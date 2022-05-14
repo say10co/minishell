@@ -6,13 +6,9 @@
 #    By: adriouic <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/14 14:28:34 by adriouic          #+#    #+#              #
-#    Updated: 2022/05/14 23:35:08 by adriouic         ###   ########.fr        #
+#    Updated: 2022/05/15 00:09:30 by adriouic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-#@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/opt/homebrew/Cellar/readline/8.1.2/lib -L./libft -lft $(READLINE) -fsanitize=address -o $(NAME)
-	#@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/lib  -L./libft -lft $(READLINE) -o $(NAME)
-
-#@cc $(FLAGS) $(OBJECTS) -lreadline -L/Users/adriouic/.brew/opt/readline/lib  -L./libft -lft $(READLINE) -fsanitize=address -o $(NAME)
 
 SRC = src/destructors.c src/env.c src/execute.c src/execute_utils.c src/expander.c src/expander_utils.c src/initers.c src/lex_utils.c src/lexer.c src/lexer_utils.c src/main.c src/parser.c src/parser_one.c src/parser_utils.c  src/signals.c src/string_operators.c src/utils.c src/builtin/b_cd.c src/builtin/b_cd_utils.c src/builtin/b_env.c src/builtin/exec_builtin.c src/builtin/exit.c src/builtin/export.c src/builtin/pwd.c src/builtin/unset.c src/builtin/utils.c src/builtin/echo.c src/print.c src/file_ctl.c
 

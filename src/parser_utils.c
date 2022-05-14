@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 02:33:48 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/15 00:06:13 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 00:24:22 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ bool	heredoc(char *eof, t_cmd *cmd)
 	int		tmp;
 	pid_t	pid;
 
+	unlink("/tmp/dumy_file-0ew3d");
 	tmp = cmd->error_free;
 	cmd->fd_in = 0;
 	str_lst = NULL;

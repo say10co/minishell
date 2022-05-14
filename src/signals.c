@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:51:12 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/15 00:00:21 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 00:21:43 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	handler_herdoc(int sig)
 {
 	(void)sig;
-	close(0);
 	unlink("/tmp/dumy_file-0ew3d");
+	exit(42);
 }
 
 void	handler(int sig)
