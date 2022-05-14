@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 02:33:48 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/11 23:26:20 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 00:06:13 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,11 @@ bool	heredoc(char *eof, t_cmd *cmd)
 	else
 		wait(NULL);
 	if (kill(pid, 0) != -1)
-	{
-		kill(pid, SIGINT);
-		close(fd);
-		cmd->fd_in = open("/tmp/dumy_file-0ew3d", O_RDONLY);
+		exit(42);
+	close(fd);
+	cmd->fd_in = open("/tmp/dumy_file-0ew3d", O_RDONLY);
+	if (cmd->fd_in > 0)
 		cmd->error_free = tmp;
-	}
 	signal(SIGINT, handler);
 	return (1);
 }
