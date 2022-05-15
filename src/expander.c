@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 19:56:34 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/14 20:49:09 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 11:53:08 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	expand(t_variables *v, t_list **str_lst, int *length)
 		v->i++;
 	while ((v->token[v->i])
 		&& (ft_isalpha(v->token[v->i]) || v->token[v->i] == '_'))
+		(v->buffer)[v->j++] = (v->token[v->i++]);
+	if (v->token[v->i])
 		(v->buffer)[v->j++] = (v->token[v->i++]);
 	buffer[v->j] = 0;
 	t = ft_getenv(buffer);
