@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 02:07:55 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/15 15:20:00 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 18:28:47 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,18 @@ bool	check_file(t_token *token, t_cmd *cmd)
 	char		*buffer;
 	int			i;
 	char		**paths;
-	const char	*error;
 
 	i = 0;
-	error = CMDNOTFOUND;
 	if (cmd->command || is_builtin(token->data)
 		|| (ft_strchr(token->data, '/') && !access(token->data, X_OK)))
 		return (0);
+	if (!ft_strcmp(token->data, "..") || !ft_strcmp(token->data, "."))
+		return (printf("msh: %s: %s\n", token->data, CMDNOTFOUND));
 	paths = ft_split(ft_getenv("PATH"), ':');
 	while (paths && paths[i])
 	{
 		buffer = add_prefix(paths[i++], token->data);
-		error = file_fr_ok(buffer, &(token->data));
-		if (!error)
+		if (!file_fr_ok(buffer, &(token->data)))
 		{
 			deallocate(paths);
 			return (0);
@@ -58,7 +57,7 @@ bool	check_file(t_token *token, t_cmd *cmd)
 	}
 	cmd->error_free = 0;
 	deallocate(paths);
-	return (printf("msh: %s: %s\n", token->data, error));
+	return (printf("msh: %s: %s\n", token->data, CMDNOTFOUND));
 }
 
 t_list	*parser_one(t_token_list *lst)
