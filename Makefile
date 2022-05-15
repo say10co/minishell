@@ -6,7 +6,7 @@
 #    By: adriouic <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/14 14:28:34 by adriouic          #+#    #+#              #
-#    Updated: 2022/05/15 14:35:14 by adriouic         ###   ########.fr        #
+#    Updated: 2022/05/15 16:40:30 by adriouic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,14 +32,14 @@ PRINT:
 %.o: %.c
 	@echo  "\n\033[0;33m Compiling minishell src"
 	@echo  "\033[1;32m"
-	cc $(FLAGS) -I /Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/include -c $< -o  $@
-	#cc $(FLAGS) -I /Users/adriouic/.brew/Cellar/readline/8.1.2/include -c $< -o  $@
+	#cc $(FLAGS) -I /Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/include -c $< -o  $@
+	cc $(FLAGS) -I /Users/adriouic/.brew/Cellar/readline/8.1.2/include -c $< -o  $@
 	@clear
 
 $(NAME) : $(OBJECTS) $(GNL_OBJ) 
 
-	#@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/Users/adriouic/.brew/opt/readline/lib  -L./libft -lft $(READLINE)  -o $(NAME)
-	@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/lib -L./libft -lft $(READLINE) -o $(NAME)
+	@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/Users/adriouic/.brew/opt/readline/lib  -L./libft -lft $(READLINE)  -o $(NAME)
+	#@cc $(FLAGS) $(OBJECTS) $(GNL_OBJ) -lreadline -L/Users/macplus/Developer/homebrew/Cellar/readline/8.1.2/lib -L./libft -lft $(READLINE) -o $(NAME)
 
 	@echo "\n\033[0;33m Linking object files Done" "\033[1;32m"
 	
