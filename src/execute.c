@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/15 17:21:21 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/05/15 18:54:31 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,5 @@ void	exec_cmd(t_list *icmd)
 	close_pipes(fd, size);
 	while (i-- > 0)
 		wait(&status);
-	update_exec_status(status);
+	update_exec_status(WEXITSTATUS(status));
 }
