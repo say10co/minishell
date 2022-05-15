@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:48:17 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/15 15:20:06 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 17:13:07 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(int ac, char **av, char **env)
 	{
 		cmd = get_cmd();
 		if (!cmd)
-			b_exit();
+			b_exit(NULL);
 		add_history(cmd);
 		command_list = parse_command(cmd);
 		if (command_list)

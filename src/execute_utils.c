@@ -6,10 +6,11 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:47:11 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/15 16:25:22 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/05/15 17:06:08 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/includes.h"
 
 int	*init_pipes(int size)
 {

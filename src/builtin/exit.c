@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/14 15:44:15 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/05/15 17:17:10 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,35 @@ void	del(void *content)
 		free(content);
 }
 
-void	b_exit(void)
+static int	args_len(char **arg)
 {
+	int	l;
+
+	if(!arg)
+		return (0);
+	l = 0;
+	while(arg[l])
+		l++;
+	return (l);
+}
+
+void	b_exit(char **command)
+{
+	int	s;
+	int	l;
+
+	s = 0;
+	if (command)
+	{
+		l = args_len(command);
+		if (l > 2)
+		{
+			printf("exit: too many arguments\n");
+			return ;
+		}
+		if (l == 2)
+			s = ft_atoi(command[1]);
+	}
 	ft_lstclear(&g_env, del);
-	exit(0);
+	exit(s);
 }
