@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 00:43:30 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/15 14:33:33 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 15:19:47 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -16,6 +16,8 @@ void	join_next_token(char **old, char *new)
 	char	*tmp;
 
 	tmp = *old;
+	if (!new)
+		new = "";
 	*old = ft_strjoin(*old, new);
 	free(tmp);
 }

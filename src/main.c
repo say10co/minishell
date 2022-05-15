@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:48:17 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/15 14:20:29 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 15:20:06 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 t_list	*g_env;
 
+void	print_tokens(t_token_list *lst);
 char	*get_foldername(void)
 
 {
@@ -42,6 +43,7 @@ t_list	*parse_command(char *cmd)
 		destroy_token_list(tokens);
 		return (NULL);
 	}
+	//print_tokens(tokens);
 	command_list = parser_one(tokens);
 	destroy_token_list(tokens);
 	return (command_list);

@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/15 14:19:12 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 15:10:51 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_env(t_list *env)
 }
 
 
-
+*/
 void	print_tokens(t_token_list *lst)
 {
 	t_token		*t;
@@ -37,6 +37,7 @@ void	print_tokens(t_token_list *lst)
 		t = t->next_token;
 	}
 }
+/*
 void	print_command_data(t_list *lst)
 {
 	t_list *curr;
