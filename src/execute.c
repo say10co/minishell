@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 18:01:00 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/15 16:24:47 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/05/15 17:21:21 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ static void	handle_cmd(t_cmd *cmd, int *fd, int i, int size)
 		close_pipes(fd, size);
 		execve(cmd->command[0], cmd->command, gen_env());
 		perror("exec faild");
-	  exit(4);
-  }
+		exit(4);
+	}
 }
 
 void	update_exec_status(int status)

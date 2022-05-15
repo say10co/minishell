@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/15 15:10:51 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 17:20:06 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void ft_putenv_fd(char *s, int fd)
 }
 
 */
+
 void	display_logo(void)
 {
 	char	*logo;

@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/15 17:11:11 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/05/15 17:22:24 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ static int	args_len(char **arg)
 {
 	int	l;
 
-	if(!arg)
+	if (!arg)
 		return (0);
 	l = 0;
-	while(arg[l])
+	while (arg[l])
 		l++;
 	return (l);
-} 
+}
 
 void	pwd(char **arg)
 {
 	char	*pwd;
 
-	if(args_len(arg) > 1)
+	if (args_len(arg) > 1)
 	{
 		printf("pwd: too many arguments\n");
 		return ;

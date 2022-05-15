@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/15 17:17:10 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/05/15 17:21:53 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static int	args_len(char **arg)
 {
 	int	l;
 
-	if(!arg)
+	if (!arg)
 		return (0);
 	l = 0;
-	while(arg[l])
+	while (arg[l])
 		l++;
 	return (l);
 }
