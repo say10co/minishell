@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/15 17:21:53 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/05/15 18:54:21 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	b_exit(char **command)
 	int	s;
 	int	l;
 
-	s = 0;
+	s = 2;
 	if (command)
 	{
 		l = args_len(command);
