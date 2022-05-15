@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 00:43:30 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/15 11:37:30 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 14:33:33 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/includes.h"
@@ -60,7 +60,7 @@ bool	is_assignment(char *str, char **name)
 		if (!ft_isalnum(tmp_str[i]) && tmp_str[i] != '_')
 		{
 			free(tmp_str);
-			perror("msh: export: not a valid identifier\n");
+			write(2, "msh: export: not a valid identifier\n", 36);
 			return (0);
 		}
 	}

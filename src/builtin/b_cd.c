@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/14 15:43:48 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/05/15 12:50:49 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	core_cd(char **arg, int size)
 	return (1);
 }
 
-void	cd(char **arg)
+int	cd(char **arg)
 {
 	int		size;
 	char	path[4096];
@@ -72,8 +72,9 @@ void	cd(char **arg)
 	size = arg_size(arg);
 	getcwd(path, 4096);
 	if (!core_cd(arg, size))
-		return ;
+		return (42);
 	ft_updateenv("OLDPWD", path);
 	getcwd(path, 4096);
 	ft_updateenv("PWD", path);
+	return (0);
 }

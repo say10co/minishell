@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/14 15:45:00 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/05/15 13:26:45 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 void	exec_builtin(int ncmd, t_cmd *cmd)
 {
+	int	status;
+
+	status = 0;
 	if (ncmd == B_CD)
-		cd(cmd->command);
+		status = cd(cmd->command);
 	else if (ncmd == B_EXPORT)
-		export(cmd->command);
+		status = export(cmd->command);
 	else if (ncmd == B_ENV)
-		env(cmd);
+		status = env(cmd);
 	else if (ncmd == B_UNSET)
 		unset(cmd->command);
 	else if (ncmd == B_PWD)
@@ -28,6 +31,5 @@ void	exec_builtin(int ncmd, t_cmd *cmd)
 		b_exit();
 	else if (ncmd == B_ECHO)
 		echo(cmd->command);
-	else
-		printf("STILL UNSUPORTED ?\n");
+	update_exec_status(status);
 }

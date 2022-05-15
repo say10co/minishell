@@ -6,7 +6,7 @@
 /*   By: adriouic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 16:40:08 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/14 16:40:38 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 13:17:29 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	unset(char **command)
 
 	i = 1;
 	if (!command[1])
-		perror("unset : Use:  unset <key> ... \n");
+		return ;
 	while (command[i])
 		del_node(command[i++]);
 }

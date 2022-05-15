@@ -6,7 +6,7 @@
 /*   By: macplus <macplus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/14 16:43:53 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 13:25:11 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ void	exec_cmd(t_list *icmd);
 
 int		is_builtin(char *cmd);
 void	exec_builtin(int ncmd, t_cmd *cmd);
-void	cd(char **arg);
+int		cd(char **arg);
 void	pwd(char **arg);
 
-void	env(t_cmd *cmd);
+int		env(t_cmd *cmd);
 void	b_exit(void);
 void	unset(char **command);
 void	copy_file(int fdi, int pipe_fdo, int file_fdo);
@@ -122,7 +122,7 @@ void	print_env_g(const char *prefix);
 
 //******************* tmp ***************
 
-void	export(char **cmd);
+int		export(char **cmd);
 
 // ****************** SIGNALS ****************
 
@@ -179,5 +179,7 @@ void	__init_cmd(t_cmd *cmd);
 void	__init_list(t_token_list *lst);
 void	__init_new_command(t_lexer *v, t_token **t, bool join, bool is_key);
 char	*slice_nl(char *line);
+
+void	update_exec_status(int status);
 
 #endif

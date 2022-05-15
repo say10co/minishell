@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 19:38:16 by bberkass          #+#    #+#             */
-/*   Updated: 2022/05/15 00:05:24 by adriouic         ###   ########.fr       */
+/*   Updated: 2022/05/15 14:19:12 by adriouic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	print_command_data(t_list *lst)
 			printf("-/--: output fd : %d\n", cmd->fd_out);
 			printf("-/--: Command : ");
 			for (int y = 0;  cmd->command && (cmd->command)[y] != NULL; y++)
-				printf("%s ",(cmd->command)[y]);
+				printf("[%s] ",(cmd->command)[y]);
 			printf("\n");
 			printf("-/--: Error Free : %d\n", cmd->error_free);
 		}
@@ -68,7 +68,6 @@ void	print_command_data(t_list *lst)
 	}
 
 }
-
 void ft_putenv_fd(char *s, int fd)
 {
 	if (!s)
