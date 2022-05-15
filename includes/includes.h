@@ -6,7 +6,7 @@
 /*   By: bberkass <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 10:13:57 by adriouic          #+#    #+#             */
-/*   Updated: 2022/05/15 16:24:58 by bberkass         ###   ########.fr       */
+/*   Updated: 2022/05/15 17:12:23 by bberkass         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int		cd(char **arg);
 void	pwd(char **arg);
 
 int		env(t_cmd *cmd);
-void	b_exit(void);
+void	b_exit(char **command);
 void	unset(char **command);
 void	copy_file(int fdi, int pipe_fdo, int file_fdo);
 
